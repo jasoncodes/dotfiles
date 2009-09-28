@@ -1,0 +1,113 @@
+#!/usr/bin/python
+# git-switch-branch: switch branches with uncommitted changes automatically saved
+# CopyRight (C) 2008 Chen Zheng <nkchenz@gmail.com> 
+# Distributed under terms of GPL v2
+
+import os
+import sys
+import commands
+
+GIT_CONF_DIR = '.git'
+
+def get_top_level_dir():
+    """Look upward until we found the .git dir, then it's top level """
+    dir = os.getcwd()
+    while True:
+        if os.path.isdir(os.path.join(dir, '.git')):
+            return dir
+        if dir == '/':
+            return None
+        dir = os.path.dirname(dir)
+
+def get_branches():
+    cb = ''
+    branches=[]
+    out = commands.getoutput('git branch')
+    for b in out.splitlines():
+        tmp = b.split()
+        if tmp[0] == '*':
+            cb = tmp[1]
+            branches.append(cb)
+        else:
+            branches.append(tmp[0])
+    return (branches, cb)
+
+def get_git_dir(top_dir):
+    return os.path.join(top_dir, GIT_CONF_DIR)
+
+def get_uncommitted_changes_diff(git_dir, branch):
+    return os.path.join(git_dir, 'uncommitted_changes', branch)
+
+def get_uncommitted_changes_index(git_dir, branch):
+    return os.path.join(git_dir, 'uncommitted_changes', branch + '.index')
+
+def get_git_index(git_dir):
+    return os.path.join(git_dir, 'index')
+
+def save_uncommitted_changes(top_dir, cb):
+    git_dir = get_git_dir(top_dir)
+    diff = get_uncommitted_changes_diff(git_dir, cb)
+    saved_index = get_uncommitted_changes_index(git_dir, cb)
+    index = get_git_index(git_dir)
+
+    if os.path.exists(diff):
+        print '''Error: %s exists, abort overwriting.
+        If you are sure the diff is useless, please delete it manually''' % diff
+        sys.exit(-1)
+
+    os.system('mkdir -p ' + os.path.dirname(diff))
+    os.system('git diff HEAD > %s' % diff)
+    os.system('cp %s %s' % (index, saved_index))
+
+def load_uncommitted_changes(top_dir, cb):
+    git_dir = get_git_dir(top_dir)
+    diff = get_uncommitted_changes_diff(git_dir, cb)
+    saved_index = get_uncommitted_changes_index(git_dir, cb)
+    index = get_git_index(git_dir)
+ 
+    if not os.path.isfile(diff):
+        return
+
+    # Restore index
+    if os.path.isfile(saved_index):
+        os.system('cp %s %s' % (saved_index, index))
+        os.remove(saved_index)
+
+    # Better apply patches at the top level dir
+    cwd = os.getcwd()
+    os.system('cd %s; git apply %s --whitespace nowarn; cd %s' % (top_dir, diff, cwd))
+    # Remove uncommitted changes file after loading
+    # Fixme! Make sure no error happens when applying
+    os.remove(diff)
+
+top_dir = get_top_level_dir()
+branches, cb = get_branches()
+
+if len(sys.argv) != 2:
+    print 'usage: git switch-branch branch'
+    sys.exit(-1)
+
+b = sys.argv[1]
+if b == cb:
+    print 'Already on branch "%s"' % cb
+    sys.exit(-1)
+
+if b not in branches:
+    print '"%s" is not a branch' % b
+    sys.exit(-1)
+
+# Save uncommitted changes on current branch
+save_uncommitted_changes(top_dir, cb)
+
+# Reset current branch to last committed status
+os.system('git reset --hard HEAD > /dev/null')
+
+# Call original git checkout
+os.system('git checkout ' + b)
+
+# Fixme: we should check and make sure that branch is not touched after
+# last switching. If it's not at HEAD, there might be errors while applying
+# diff.
+load_uncommitted_changes(top_dir, b)
+
+sys.exit(0)

@@ -1,0 +1,2 @@
+#!/bin/bash -e
+sudo watch "lsof -p `pidof backupd` -a -d ^txt -b -F0tn 2> /dev/null | grep -a ^tREG | tr '\0' '\n' | grep ^n | cut -d n -f 2- | grep -v '^/Volumes/Backup of'"

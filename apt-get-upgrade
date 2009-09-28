@@ -1,0 +1,10 @@
+#!/bin/bash -e
+for X in "$@"
+do
+	if [ "$TERM_PROGRAM" == "Apple_Terminal" ]
+	then
+		term -t ssh -t "$X" sudo apt-get upgrade
+	else
+		ssh -t "$X" sudo apt-get upgrade
+	fi
+done

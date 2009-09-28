@@ -1,0 +1,79 @@
+#!/bin/bash -e
+# sedmv
+# 2008-05-11 13:26:54 +1000
+# hostmaster@spawncamp.net
+#
+# 2008-05-11 Initial release
+
+SHOW_USAGE=0
+SED_FLAGS=""
+VERBOSE=0
+DRY=0
+
+while echo "" "$1" | grep "^ -" > /dev/null
+do
+	OPTION="$1"
+	shift
+	
+	case "$OPTION" in
+		--help)
+			SHOW_USAGE=1
+			;;
+		-E|--extended|--regexp-extended)
+			if sed --version 2>&1 | head -1 | grep ^GNU > /dev/null
+			then
+				SED_FLAGS="$SED_FLAGS --regexp-extended"
+			else
+				SED_FLAGS="$SED_FLAGS -E"
+			fi
+			;;
+		--dry-run)
+			VERBOSE=1
+			DRY=1
+			;;
+		-v|--verbose)
+			VERBOSE=1
+			;;
+		*)
+			exec >&2
+			echo "`basename "$0"`: invalid option: $OPTION"
+			SHOW_USAGE=1
+			;;
+	esac
+	
+done
+
+EXPRESSION="$1"
+shift || true
+
+if [ -z "$EXPRESSION" -o -z "$1" ]
+then
+	SHOW_USAGE=1
+fi
+
+
+if [ "$SHOW_USAGE" -ne 0 ]
+then
+	echo "Usage: `basename "$0"` [options] expression paths.."
+	echo ""
+	echo "Options:"
+	echo "	-E, --extended, --regexp-extended"
+	echo "		use extended regular expressions in the script"
+	echo "	--dry-run"
+	echo "		show what would be done but don't do anything"
+	echo "	-v, --verbose"
+	echo "		show files as they are being moved"
+	echo "	--help"
+	echo "		show this help message"
+	exit;
+fi
+
+for SRC in "$@"
+do
+	DST=`echo "$SRC" | sed $SED_FLAGS "$EXPRESSION"`
+	if [ "$SRC" != "$DST" ]
+	then
+		[ "$VERBOSE" -eq 0 ] || echo "\"$SRC\"" -\> "\"$DST\""
+		[ "$DRY" -eq 1 ] || mv "$SRC" "$DST"
+	fi
+done

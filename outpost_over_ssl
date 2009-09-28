@@ -1,0 +1,148 @@
+#!/bin/bash
+# outpost_over_ssl
+# hostmaster@spawncamp.net
+#
+# 2006-07-11 Original release.
+# 2007-02-27 Usage info now has absolute path
+# 2007-02-27 Now warns if socat is missing
+# 2009-09-07 Fix SSL certificate. Use mktemp instead of $RANDOM.
+
+if which socat > /dev/null
+then
+	true # socat found, all good
+else
+	echo Error: socat not found >&2
+	echo >&2
+	if [ "`uname -s`" == "Darwin" ]
+	then
+		echo Install MacPorts \<http://macports.org/\> and then type:>&2
+		echo -e \\tport install socat>&2
+	else
+		if [ -f /etc/debian_version ]
+		then
+			echo You can install socat by typing:>&2
+			echo -e \\tapt-get install socat>&2
+		else
+			echo Visit \<http://www.dest-unreach.org/socat/\> to download.>&2
+		fi
+		
+	fi
+	echo>&2
+	exit 1;
+fi
+
+if [ "$2" == "" -a "$1" != "NONE" ]
+then
+	SELF=$0
+	if [ -n "${SELF%%/*}" ]
+	then
+		SELF="${PWD}/$SELF"
+	fi
+	cat >&2 <<EOF
+Add something like the following to your ~/.ssh/config file:
+
+	Host outpost-ssl
+		ProxyCommand $SELF proxy-host 3128 user:pass
+		User `whoami`
+		ServerAliveInterval 30
+		DynamicForward 1080
+		LocalForward 3128 localhost:3128
+		HostKeyAlias spawncamp.net
+		
+Replace "proxy-host 3128" with the hostname and port of your local
+proxy server or use NONE if you connect directly. user:pass is optional.
+If your outpost username is not "`whoami`" you can change that as well.
+
+Once done, type "ssh outpost-ssl" to SSH over SSL.
+If you used the above SSH configuration, you will now
+have a HTTP proxy avaialable on localhost:3128 and
+a SOCKS proxy on localhost:1080.
+
+EOF
+	exit 1;
+fi
+
+function socat_local_bind
+{
+	TMPFILE="`mktemp -t outpost_over_ssl.XXXXXX`"
+	(socat -d -d tcp4-listen:0,bind=127.0.0.1 $* 2> $TMPFILE) &
+	SOCAT_PID=$!
+	LINE1=""
+	while [ -z "$LINE1" ] && kill -0 $SOCAT_PID 2> /dev/null
+	do
+		LINE1=`head -1 $TMPFILE`
+		sleep 0.1
+	done
+	LISTEN_PORT=`echo $LINE1 | sed -n 's/.*127\.0\.0\.1://p'`
+	if [ -z "$LISTEN_PORT" ]
+	then
+		echo Failed to run socat >&2
+		cat $TMPFILE >&2
+		exit 1;
+	fi
+}
+
+if [ "$1" == "NONE" ]
+then
+	# we don't need to connect to the proxy server
+	# so lets just create a listening socket that connects direct to outpost:443
+	socat_local_bind tcp4:spawncamp.net:443
+	LISTEN_PORT_SSL=$LISTEN_PORT
+else
+	# we need to connect to outpost:443 via the local proxy server
+	socat_local_bind proxy:$1:spawncamp.net:443,proxyport=$2,proxyauth=$3
+	LISTEN_PORT_SSL=$LISTEN_PORT
+fi
+
+# we now have a listening socket that connects to outpost:443
+# create a socket that connects to the httpd over the outpost:443 forwarder 
+socat_local_bind openssl:localhost:$LISTEN_PORT_SSL,openssl-verify=1,cafile=$0
+LISTEN_PORT_REMOTE_PROXY=$LISTEN_PORT
+
+# we now have a port that connects us to a proxy on outpost that we can use to
+# get a connection to the SSH daemon. Lets use this proxy to connect stdio
+# to the sshd.
+socat stdio proxy:localhost:spawncamp.net:22,proxyport=$LISTEN_PORT_REMOTE_PROXY
+
+rm -f /tmp/outpost_over_ssl.$$.*
+
+false <<SPAWNCAMP_CERT
+-----BEGIN CERTIFICATE-----
+MIIDkzCCAvygAwIBAgICQJowDQYJKoZIhvcNAQEEBQAwUzELMAkGA1UEBhMCVVMx
+HDAaBgNVBAoTE0VxdWlmYXggU2VjdXJlIEluYy4xJjAkBgNVBAMTHUVxdWlmYXgg
+U2VjdXJlIGVCdXNpbmVzcyBDQS0xMB4XDTA1MDcxOTEwMjAyM1oXDTEwMDcxOTEw
+MjAyM1owgdYxCzAJBgNVBAYTAkFVMRYwFAYDVQQKEw1zcGF3bmNhbXAubmV0MTww
+OgYDVQQLEzNodHRwczovL3NlcnZpY2VzLmNob2ljZXBvaW50Lm5ldC9nZXQuanNw
+P0dUMTk2Nzk5NTAxJzAlBgNVBAsTHlNlZSB3d3cucmFwaWRzc2wuY29tL2NwcyAo
+YykwNTEwMC4GA1UECxMnRG9tYWluIENvbnRyb2wgVmFsaWRhdGVkIC0gUmFwaWRT
+U0woVE0pMRYwFAYDVQQDEw1zcGF3bmNhbXAubmV0MIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAswdE2ZyPNsCKNYI6Lj/IdgaAt+5SCkAT75O8MEwbq/hk
+CIckmrmY14l6jOW3R5f3N4tnDvMyLtEPSHo8vjhEY8nJp0FosHvIgK9Ux3eO/JBy
+hn+te899gtzUs81ZWG6IDp7tKpjA26xkPG2mPXhcc3YV4wIZ2JMmO3m8BfodsIv1
+ZJYRZxpAp4eNDopTQ4wpAkLAmjoTeA2sa1H/sWShtQRDemNbdNxKeLBQnV4ba6d+
+Dryk+1pw7Uh0M84Y2QPzQvrBvArXZX7wumuDVglzlBA6D8vPaH8eEKIKL9e/xdLG
+w8p8ux8dbIe+CHJQCKennjoJWl71itXclJx9kSVgtQIDAQABo24wbDAOBgNVHQ8B
+Af8EBAMCBPAwOQYDVR0fBDIwMDAuoCygKoYoaHR0cDovL2NybC5nZW90cnVzdC5j
+b20vY3Jscy9lYml6Y2ExLmNybDAfBgNVHSMEGDAWgBRKeDJSEdtZFjZe38EUNkBq
+R3xMoTANBgkqhkiG9w0BAQQFAAOBgQBO/+/QgkDMFSo0+DAS6eCiZeC6beZt9JwN
++pyKueSdfORcV5h5qH8zCKYgi7osdCzf4DB3RdengS1NnDbDJ+u4HFAsKTPVOb7d
+2XdOZpdcK5fiym00CwK7PqpWM8HYfMmOrHTqtU+mDqG8eRIzwAsCWPxyHviNrdBv
+2E/t9bv8aA==
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIICgjCCAeugAwIBAgIBBDANBgkqhkiG9w0BAQQFADBTMQswCQYDVQQGEwJVUzEc
+MBoGA1UEChMTRXF1aWZheCBTZWN1cmUgSW5jLjEmMCQGA1UEAxMdRXF1aWZheCBT
+ZWN1cmUgZUJ1c2luZXNzIENBLTEwHhcNOTkwNjIxMDQwMDAwWhcNMjAwNjIxMDQw
+MDAwWjBTMQswCQYDVQQGEwJVUzEcMBoGA1UEChMTRXF1aWZheCBTZWN1cmUgSW5j
+LjEmMCQGA1UEAxMdRXF1aWZheCBTZWN1cmUgZUJ1c2luZXNzIENBLTEwgZ8wDQYJ
+KoZIhvcNAQEBBQADgY0AMIGJAoGBAM4vGbwXt3fek6lfWg0XTzQaDJj0ItlZ1MRo
+RvC0NcWFAyDGr0WlIVFFQesWWDYyb+JQYmT5/VGcqiTZ9J2DKocKIdMSODRsjQBu
+WqDZQu4aIZX5UkxVWsUPOE9G+m34LjXWHXzr4vCwdYDIqROsvojvOm6rXyo4YgKw
+Env+j6YDAgMBAAGjZjBkMBEGCWCGSAGG+EIBAQQEAwIABzAPBgNVHRMBAf8EBTAD
+AQH/MB8GA1UdIwQYMBaAFEp4MlIR21kWNl7fwRQ2QGpHfEyhMB0GA1UdDgQWBBRK
+eDJSEdtZFjZe38EUNkBqR3xMoTANBgkqhkiG9w0BAQQFAAOBgQB1W6ibAxHm6VZM
+zfmpTMANmvPMZWnmJXbMWbfWVMMdzZmsGd20hdXgPfxiIKeES1hl8eL5lSE/9dR+
+WB5Hh1Q+WKG1tfgq73HnvMP2sUlG4tega+VWeponmHxGYhTnyfxuAxJ5gDgdSIKN
+/Bf+KpYrtWKmpj29f5JZzVoqgrI3eQ==
+-----END CERTIFICATE-----
+SPAWNCAMP_CERT

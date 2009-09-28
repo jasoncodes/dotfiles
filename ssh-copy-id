@@ -1,0 +1,2 @@
+#!/bin/bash -e
+ssh "$@" 'umask 0077 && mkdir -p ~/.ssh/ && cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
