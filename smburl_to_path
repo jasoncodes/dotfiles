@@ -1,0 +1,21 @@
+#!/bin/bash -e
+SMBURL="$1"
+if echo "$SMBURL" | grep ^smb:// > /dev/null
+then
+	DEST_URL=`echo "$SMBURL" | cut -d/ -f 1-4 | /usr/bin/tr 'A-Z' 'a-z'`
+	DEST_DIR=`echo "$SMBURL" | cut -d/ -f 5-`
+	while read MOUNT_URL MOUNT_TMP1 MOUNT_PATH MOUNT_TMP2
+	do
+		MOUNT_URL=`echo "$MOUNT_URL" | tr 'A-Z' 'a-z'`
+		if [ "$MOUNT_URL" = "$DEST_URL" ]
+		then
+			echo "$MOUNT_PATH"/"$DEST_DIR"
+			exit 0
+		fi
+	done < <( /sbin/mount | /usr/bin/grep ^// | /usr/bin/sed -E 's/^\/\/(.*@)?/smb:\/\//' )
+	echo `osascript -e "POSIX path of (mount volume \"$DEST_URL\")"`"$DEST_DIR"
+	exit 0
+else
+	echo Usage: `basename $0` smb://host/share
+	exit 1
+fi
