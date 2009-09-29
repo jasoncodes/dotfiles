@@ -1,0 +1,4 @@
+cvs -z6 -q
+update -P -d
+checkout -P
+diff -bu2
