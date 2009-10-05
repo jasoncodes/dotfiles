@@ -20,8 +20,6 @@ $SIG{INT} = $SIG{TERM} = \&HUNTSMAN;
 our $tempdir = tempdir("smate-dir-XXXXXXXX", TMPDIR => 1, CLEANUP => 1);
 our $olddir = cwd;
 
-#print "tempdir: $tempdir\n";
-
 chdir($tempdir);
 
 our $use_sudo = 0;
@@ -131,7 +129,6 @@ sub edit_file
 	{
 		$SIG{HUP} = $SIG{CHLD} = $SIG{INT} = $SIG{TERM} = 'DEFAULT';
 		$SIG{PIPE} = 'IGNORE';
-		print "Editing file: $full_path\n";
 		exec("mate", "-w", $full_path);
 	}
 }
