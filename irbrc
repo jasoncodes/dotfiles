@@ -1,6 +1,7 @@
 require 'pp'
 require 'rubygems'
 require 'duration'
+require 'chronic'
 require 'wirble'
 require 'irb/completion'
 require 'irb/ext/save-history'
