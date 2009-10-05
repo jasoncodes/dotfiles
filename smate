@@ -9,6 +9,7 @@ use Getopt::Long qw(GetOptions);
 use File::Find;
 use File::Path qw(rmtree);
 use File::Spec;
+use File::stat;
 use Cwd;
 use POSIX qw(WNOHANG SIGCHLD);
 use IO::KQueue;
@@ -40,10 +41,14 @@ EOT
 	exit;
 }
 
+our %lastmods = ();
+
 main(@ARGV);
 
 sub do_rsync
 {
+	
+	$|++;
 	
 	if ($use_sudo)
 	{
@@ -51,7 +56,7 @@ sub do_rsync
 		{
 			if ($arg =~ /^([^:]+):/)
 			{
-				system('ssh', '-qt', $1, 'sudo', '-v');
+				system('ssh', '-qt', $1, 'sudo', '-v') == 0 || return 1;
 			}
 		}
 	}
@@ -62,7 +67,7 @@ sub do_rsync
 		push @rsync_args, '--rsync-path=sudo rsync'
 	}
 	push @rsync_args, @_;
-	system(@rsync_args);
+	return system(@rsync_args) == 0;
 	
 }
 
@@ -85,7 +90,7 @@ sub main
 	
 	foreach my $item (@files)
 	{
-		my $dir = tempdir("smate-subdir-XXXXXXXX");
+		my $dir = tempdir("smate-subdir-XXXXXXXX", TMPDIR => 1);
 		chdir($dir);
 		do_rsync($item, ".");
 		my $item_dir = $item;
@@ -112,6 +117,8 @@ sub edit_file
 	return unless -f $File::Find::name;
 	
 	my $full_path = File::Spec->rel2abs($File::Find::name);
+	$lastmods{$full_path} = stat($full_path)->mtime;
+	
 	my $pid = fork();
 	if ($pid)
 	{
@@ -161,10 +168,14 @@ sub save_file
 {
 	my ($remote, $rpath, $local) = @_;
 	
-	$|++;
-	print "Re-uploading file: $remote/$rpath...";
-	do_rsync($local, "$remote/$rpath");
-	print "Done\n";
+	my $lastmod_new = stat($local)->mtime;
+	if ($lastmods{$local} < $lastmod_new)
+	{
+		if (do_rsync($local, "$remote/$rpath"))
+		{
+			$lastmods{$local} = $lastmod_new;
+		}
+	}
 }
 
 sub sanitize
