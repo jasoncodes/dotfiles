@@ -24,8 +24,10 @@ our $olddir = cwd;
 
 chdir($tempdir);
 
+our $use_sudo = 0;
 GetOptions(
 	'h|help' => \&usage,
+	'sudo' => \$use_sudo,
 );
 
 usage() unless @ARGV;
@@ -34,12 +36,37 @@ sub usage
 {
 	print <<EOT;
 Usage: $0 [options] [user@]host:/path/to/file
+    --sudo  Use sudo on the remote to access file
 
 EOT
 	exit;
 }
 
 main(@ARGV);
+
+sub do_rsync
+{
+	
+	if ($use_sudo)
+	{
+		foreach my $arg (@_)
+		{
+			if ($arg =~ /^([^:]+):/)
+			{
+				system('ssh', '-qt', $1, 'sudo', '-v');
+			}
+		}
+	}
+	
+	my @rsync_args = ("rsync", "-e", "ssh", "-ar");
+	if ($use_sudo)
+	{
+		push @rsync_args, '--rsync-path=sudo rsync'
+	}
+	push @rsync_args, @_;
+	system(@rsync_args);
+	
+}
 
 sub HUNTSMAN
 {
@@ -62,7 +89,7 @@ sub main
 	{
 		my $dir = tempdir("smate-subdir-XXXXXXXX");
 		chdir($dir);
-		system("rsync", "-e", "ssh", "-ar", $item, ".");
+		do_rsync($item, ".");
 		my $item_dir = $item;
 		$item_dir =~ s/\/[^\/]*$//;
 		find(sub { edit_file($item_dir, $kq) }, '.');
@@ -139,7 +166,7 @@ sub save_file
 	
 	$|++;
 	print "Re-uploading file: $remote/$rpath...";
-	system("rsync", "-e", "ssh", "-ar", $local, "$remote/$rpath");
+	do_rsync($local, "$remote/$rpath");
 	print "Done\n";
 }
 
