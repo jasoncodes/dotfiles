@@ -28,6 +28,9 @@ Wirble::Colorize::Color::COLORS.merge!({
 
 Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
 
+Kernel.at_exit do
+  puts
+end
 
 
 # BEGIN http://eigenclass.org/hiki/irb+ri+completion
