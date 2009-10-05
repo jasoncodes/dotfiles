@@ -33,6 +33,11 @@ Kernel.at_exit do
 end
 
 
+require 'hirb'
+extend Hirb::Console
+Hirb.enable
+
+
 # BEGIN http://eigenclass.org/hiki/irb+ri+completion
 
 module Kernel
