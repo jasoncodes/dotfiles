@@ -29,6 +29,9 @@ export GREP_OPTIONS='--color=auto'
 alias ls='ls --color --classify'
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
 
+# handy aliases
+alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
+
 # awesome history tracking
 export HISTSIZE=10000
 export HISTFILESIZE=10000
