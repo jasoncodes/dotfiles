@@ -25,5 +25,9 @@ ci = commit
 co = checkout
 br = branch
 
+[branch "master"]
+remote = origin
+merge = master
+
 [push]
 default = tracking
