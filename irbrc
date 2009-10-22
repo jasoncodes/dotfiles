@@ -35,7 +35,7 @@ end
 
 require 'hirb'
 extend Hirb::Console
-Hirb.enable
+Hirb.enable :pager=>false
 
 
 # BEGIN http://eigenclass.org/hiki/irb+ri+completion
