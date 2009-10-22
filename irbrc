@@ -166,3 +166,13 @@ class Object
 end
 
 # END http://snippets.dzone.com/posts/show/2916
+
+
+# This is only done when using the Rails console
+if rails_env = ENV['RAILS_ENV']
+  # This is only done when the irb session rails are fully loaded
+  IRB.conf[:IRB_RC] = Proc.new do
+    # Log ActiveRecord calls to standard out
+    ActiveRecord::Base.logger = Logger.new(STDOUT)
+  end
+end
