@@ -36,8 +36,10 @@ alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 export HISTCONTROL=ignoredups
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
 export PROMPT_COMMAND='history -a'
 shopt -s histappend
+PROMPT_COMMAND='history -a; echo "$$ $USER $(history 1)" >> ~/.bash_eternal_history'
 
 # I like backspace being ^H
 [ ! -z "$TERM" ] && [ "$TERM" != "dumb" ] && stty erase `tput kbs`
