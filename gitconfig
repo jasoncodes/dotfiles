@@ -24,6 +24,7 @@ st = status
 ci = commit
 co = checkout
 br = branch
+lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
 [push]
 default = tracking
