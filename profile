@@ -41,6 +41,9 @@ export PROMPT_COMMAND='history -a'
 shopt -s histappend
 PROMPT_COMMAND='history -a; echo "$$ $USER $(history 1)" >> ~/.bash_eternal_history'
 
+# notify of bg job completion immediately
+set -o notify
+
 # I like backspace being ^H
 [ ! -z "$TERM" ] && [ "$TERM" != "dumb" ] && stty erase `tput kbs`
 # check for window resizing when ever the prompt is displayed
