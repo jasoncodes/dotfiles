@@ -26,7 +26,7 @@ fi
 
 # I love colour
 export GREP_OPTIONS='--color=auto'
-alias ls='ls --color --classify'
+alias ls='ls --color=auto --classify'
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
 
 # handy aliases
