@@ -44,6 +44,10 @@ PROMPT_COMMAND='history -a; echo "$$ $USER $(history 1)" >> ~/.bash_eternal_hist
 # notify of bg job completion immediately
 set -o notify
 
+# no mail notifications
+shopt -u mailwarn
+unset MAILCHECK
+
 # I like backspace being ^H
 [ ! -z "$TERM" ] && [ "$TERM" != "dumb" ] && stty erase `tput kbs`
 # check for window resizing when ever the prompt is displayed
