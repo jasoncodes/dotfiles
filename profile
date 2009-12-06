@@ -85,7 +85,7 @@ fi
 export PATH=~/bin:/usr/local/bin:"$PATH"
 
 # be able to 'cd' into SMB URLs
-# requires <http://github.com/jasonw/scripts/blob/master/smburl_to_path>
+# requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
 function cd_smburl()
 {
 	cd "`smburl_to_path "$1"`"
