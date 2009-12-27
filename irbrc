@@ -186,3 +186,18 @@ unless defined? Module::alias_method_chain
     end
   end
 end
+
+# always render single records in vertical mode. This is handy for inspecting objects attributes.
+if defined? Hirb
+  class Hirb::Helpers::ActiveRecordTable
+    class <<self
+      def render_with_vertical_singular(rows, options={})
+        if !rows.is_a?(Array) or rows.size == 1
+          options[:vertical] = true
+        end
+        render_without_vertical_singular(rows, options)
+      end
+      alias_method_chain :render, :vertical_singular
+    end
+  end
+end
