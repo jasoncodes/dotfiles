@@ -176,3 +176,13 @@ if rails_env = ENV['RAILS_ENV']
     ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
 end
+
+# add ActiveSupport's alias_method_chain
+unless defined? Module::alias_method_chain
+  class Module
+    def alias_method_chain(target, feature)
+      alias_method "#{target}_without_#{feature}", target
+      alias_method target, "#{target}_with_#{feature}"
+    end
+  end
+end
