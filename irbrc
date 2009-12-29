@@ -177,15 +177,6 @@ if rails_env = ENV['RAILS_ENV']
   end
 end
 
-# add ActiveSupport's alias_method_chain
-unless defined? Module::alias_method_chain
-  class Module
-    def alias_method_chain(target, feature)
-      alias_method "#{target}_without_#{feature}", target
-      alias_method target, "#{target}_with_#{feature}"
-    end
-  end
-end
 
 # always render single records in vertical mode. This is handy for inspecting objects attributes.
 if defined? Hirb
@@ -197,7 +188,8 @@ if defined? Hirb
         end
         render_without_vertical_singular(rows, options)
       end
-      alias_method_chain :render, :vertical_singular
+      alias_method :render_without_vertical_singular, :render
+      alias_method :render, :render_with_vertical_singular
     end
   end
 end
