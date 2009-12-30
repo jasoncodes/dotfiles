@@ -168,6 +168,32 @@ end
 # END http://snippets.dzone.com/posts/show/2916
 
 
+# BEGIN http://rhnh.net/2009/12/29/ruby-debugging-with-puts-tap-and-hirb
+
+class Object
+  def tapp(prefix = nil, &block)
+    block ||= lambda {|x| x }
+    
+    tap do |x|
+      value = block[x]
+      value = Hirb::View.formatter.format_output(value) || value.inspect
+      
+      if prefix
+        print prefix
+        if value.lines.count > 1
+          print ":\n"
+        else
+          print ": "
+        end
+      end
+      puts value
+    end
+  end
+end
+
+# END http://rhnh.net/2009/12/29/ruby-debugging-with-puts-tap-and-hirb
+
+
 # This is only done when using the Rails console
 if rails_env = ENV['RAILS_ENV']
   # This is only done when the irb session rails are fully loaded
