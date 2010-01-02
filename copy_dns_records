@@ -1,0 +1,168 @@
+#!/bin/bash -e
+
+SELF_NAME="`basename $0`"
+
+OPTS=$(getopt --options '' --long 'help,source:,dest:,types:,server:,cache-path:,key-file:' -n "$SELF_NAME" -- "$@")
+eval set -- $OPTS
+
+SRC=""
+DST=""
+TYPES="AAAA A"
+SERVER="localhost"
+KEY_FILE=""
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		--help)
+			echo "Usage: $SELF_NAME [options]"
+			echo ""
+			echo "--help        : print this."
+			echo "--source      : source FQDN"
+			echo "--dest        : destination FQDN"
+			echo "--types       : record types to copy [default: $TYPES]"
+			echo "--server      : destination nameserver [default: $SERVER]"
+			echo "--cache-path  : location to store cache data"
+			echo "--key-file    : path to DNSSEC key"
+			exit 0
+			;;
+		--source)
+			SRC="$2"
+			shift 2
+			;;
+		--dest)
+			DST="$2"
+			shift 2
+			;;
+		--types)
+			TYPES="$2"
+			shift 2
+			;;
+		--server)
+			SERVER="$2"
+			shift 2
+			;;
+		--key-file)
+			KEY_FILE="$2"
+			shift 2
+			;;
+		--cache-path)
+			CACHE_PATH="$2"
+			shift 2
+			;;
+		--)
+			shift
+			break
+			;;
+		*)
+			echo "$SELF_NAME: Unknown option: $1" >&2
+			exit 1
+			;;
+	esac
+done
+
+if [ ! -z "$1" ]
+then
+	echo "$SELF_NAME: Unknown parameter: $1" >&2
+	exit 1
+fi
+
+if [ -z "$SRC" ]
+then
+	echo "$SELF_NAME: Missing source FQDN" >&2
+	exit 1
+fi
+if [ -z "$DST" ]
+then
+	echo "$SELF_NAME: Missing destination FQDN" >&2
+	exit 1
+fi
+if [ -z "$KEY_FILE" ]
+then
+	echo "$SELF_NAME: Missing key file" >&2
+	exit 1
+fi
+if [ ! -f "$KEY_FILE" ]
+then
+	echo "$SELF_NAME: Key file not found: $KEY_FILE" >&2
+	exit 1
+fi
+
+if ! echo -n "$SRC" | grep '\.$'
+then
+	SRC="${SRC}."
+fi
+if ! echo -n "$DST" | grep '\.$'
+then
+	DST="${DST}."
+fi
+
+WORK_DIR="`mktemp -d -t "${SELF_NAME}.XXXXXX"`"
+trap '{ rm -rf "$WORK_DIR"; }' EXIT
+
+CACHE_FILE_SRC="$WORK_DIR/cache_response_src.txt"
+CACHE_FILE_DST="$WORK_DIR/cache_response_dst.txt"
+
+for TYPE in $TYPES
+do
+	dig +noall +nottlid +answer -t "$TYPE" "$SRC" | sed -r 's/^\S+\s+//' | sort >> "$CACHE_FILE_SRC"
+	dig +noall +nottlid +answer -t "$TYPE" "$DST" @"$SERVER" | sed -r 's/^\S+\s+//' | sort >> "$CACHE_FILE_DST"
+done
+
+if ! cmp -s "$CACHE_FILE_SRC" "$CACHE_FILE_DST"
+then
+	
+	echo \""$SRC"\" changed:
+	diff -B -U 0 "$CACHE_FILE_DST" "$CACHE_FILE_SRC" | egrep '^[+-]' | egrep -v '^(\+\+\+|---)'
+	echo
+	
+	dig "$SRC" +noall +authority | gawk '{ if ($3=="IN" && $4=="NS") { print $5; } }' > "$WORK_DIR/src_ns.txt"
+	
+	if [ ! "${PIPESTATUS[0]}" -eq 0 ]
+	then
+		echo "Cannot locate source name servers" >&2
+		exit 1
+	fi
+	
+	SRC_RECORDS="$WORK_DIR/src_records.txt"
+	
+	SRC_REGEX="`echo -n "$SRC" | awk '{gsub("[^A-Za-z0-9]", "\\\\\\\\&");print}'`"
+	
+	cat "$WORK_DIR/src_ns.txt" | while read SRC_NS
+	do
+		
+		[ ! -f "$SRC_RECORDS" ] || rm "$SRC_RECORDS"
+		touch "$SRC_RECORDS"
+		
+		for TYPE in $TYPES
+		do
+			dig +noall +answer -t "$TYPE" "$SRC" @"$SRC_NS" >> $SRC_RECORDS
+		done
+		
+		if [ "`cat "$SRC_RECORDS" | egrep "^$SRC_REGEX" | wc -l`" -gt 0 ]
+		then
+			break
+		fi
+		
+	done
+	
+	if [ "`cat "$SRC_RECORDS" | egrep "^$SRC_REGEX" | wc -l`" -eq 0 ]
+	then
+		echo Cannot find any records to copy >&2
+		exit 1
+	fi
+	
+	NSUPDATE_SCRIPT="$WORK_DIR/nsupdate_script.txt"
+	echo "server $SERVER" > "$NSUPDATE_SCRIPT"
+	for TYPE in $TYPES
+	do
+		echo "update delete $DST $TYPE" >> "$NSUPDATE_SCRIPT"
+	done
+	cat "$SRC_RECORDS" | cut -f 2- | while read LINE
+	do
+		echo "update add $DST $LINE" >> "$NSUPDATE_SCRIPT"
+	done
+	echo "send" >> "$NSUPDATE_SCRIPT"
+	
+	nsupdate -k "$KEY_FILE" -v "$NSUPDATE_SCRIPT"
+	
+fi
