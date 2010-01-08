@@ -26,7 +26,11 @@ do
 	[ -f "$TEMP_MP4" ] && rm "$TEMP_MP4"
 	
 	ffmpeg -v -1 -y -i "$SRC" -vn -acodec copy "$TEMP_MP4" 2>&1 | \
-		(egrep -v -e '^FFmpeg version' -e '^ *(configuration:|lib[a-z]+ version:|built on )' || true) 1>&2
+		(egrep -v \
+			-e '^FFmpeg version' \
+			-e '^  lib[a-z]+ ' \
+			-e '^ *(configuration:|lib[a-z]+ version:|built on )' \
+			|| true) 1>&2
 	
 	CMD_FILE="$WORK_DIR/cmd.sh"
 	(
