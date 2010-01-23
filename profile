@@ -82,6 +82,12 @@ then
 	export MANPATH="/opt/local/share/man:$MANPATH"
 fi
 
+# set JAVA_HOME if on Mac OS
+if [ -z "$JAVA_HOME" -a -d /System/Library/Frameworks/JavaVM.framework/Home ]
+then
+	export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+fi
+
 # our own bin dir at the highest priority, followed by /usr/local/bin
 export PATH=~/bin:/usr/local/bin:"$PATH"
 
