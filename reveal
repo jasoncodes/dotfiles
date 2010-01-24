@@ -1,0 +1,10 @@
+#!/bin/bash -e
+for FILE in "$@"
+do
+	FILE="`readlink -f "$FILE"`"
+	osascript \
+		-e 'tell application "Finder"' \
+		-e '	reveal POSIX file "'"$FILE"'"' \
+		-e '	activate' \
+		-e 'end tell' > /dev/null
+done
