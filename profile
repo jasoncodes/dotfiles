@@ -91,6 +91,15 @@ fi
 # our own bin dir at the highest priority, followed by /usr/local/bin
 export PATH=~/bin:/usr/local/bin:"$PATH"
 
+# lesspipe lets us do cool things like view gzipped files
+if [ -x "`which lesspipe`" ]
+then
+	eval "$(lesspipe)"
+elif [ -x "`which lesspipe.sh`" ]
+then
+	eval "$(lesspipe.sh)"
+fi
+
 # be able to 'cd' into SMB URLs
 # requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
 function cd_smburl()
