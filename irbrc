@@ -206,7 +206,7 @@ end
 
 # always render single records in vertical mode. This is handy for inspecting objects attributes.
 if defined? Hirb
-  class Hirb::Helpers::ActiveRecordTable
+  class Hirb::Helpers::Table
     class <<self
       def render_with_vertical_singular(rows, options={})
         if !rows.is_a?(Array) or rows.size == 1
