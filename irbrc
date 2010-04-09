@@ -26,7 +26,7 @@ Wirble::Colorize::Color::COLORS.merge!({
   :blue => '0;35'
 })
 
-Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
+Wirble.init(:skip_prompt => true, :skip_history => false, :init_colors => true)
 
 Kernel.at_exit do
   puts
