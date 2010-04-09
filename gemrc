@@ -8,4 +8,4 @@
 - http://gems.github.com
 :backtrace: false
 :bulk_threshold: 1000
-gem: --format-executable
+gem: --format-executable --no-ri --no-rdoc
