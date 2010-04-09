@@ -1,13 +1,10 @@
-require 'pp'
-require 'rubygems'
-require 'duration'
-require 'chronic'
-require 'wirble'
-require 'irb/completion'
-require 'irb/ext/save-history'
-
-require 'date'
-require 'time'
+%w(rubygems pp duration chronic wirble irb/completion hirb date time).each do |lib|
+  begin
+    require lib
+  rescue LoadError => err
+    warn "Couldn't load #{lib}: #{err}"
+  end
+end
 
 IRB.conf[:PROMPT][:SHORT] = {
   :PROMPT_C=>"%03n:%i* ",
@@ -33,7 +30,6 @@ Kernel.at_exit do
 end
 
 
-require 'hirb'
 extend Hirb::Console
 Hirb.enable :pager=>false
 
