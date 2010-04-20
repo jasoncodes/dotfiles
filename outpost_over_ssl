@@ -7,6 +7,7 @@
 # 2007-02-27 Now warns if socat is missing
 # 2009-09-07 Fix SSL certificate. Use mktemp instead of $RANDOM.
 # 2010-04-20 Updated SSL certificate (expiring 2011-04-21)
+# 2010-04-20 Cleanup temp files automatically
 
 if which socat > /dev/null
 then
@@ -63,9 +64,13 @@ EOF
 	exit 1;
 fi
 
+BASENAME="`basename "$0"`"
+WORK_DIR="`mktemp -d -t "$BASENAME.XXXXXX"`"
+trap '{ rm -rf "$WORK_DIR"; }' EXIT
+
 function socat_local_bind
 {
-	TMPFILE="`mktemp -t outpost_over_ssl.XXXXXX`"
+	TMPFILE="`TMPDIR="$WORK_DIR" mktemp -t local_bind.XXXXXX`"
 	(socat -d -d tcp4-listen:0,bind=127.0.0.1 $* 2> $TMPFILE) &
 	SOCAT_PID=$!
 	LINE1=""
@@ -104,8 +109,6 @@ LISTEN_PORT_REMOTE_PROXY=$LISTEN_PORT
 # get a connection to the SSH daemon. Lets use this proxy to connect stdio
 # to the sshd.
 socat stdio proxy:localhost:spawncamp.net:22,proxyport=$LISTEN_PORT_REMOTE_PROXY
-
-rm -f /tmp/outpost_over_ssl.$$.*
 
 false <<SPAWNCAMP_CERT
 -----BEGIN CERTIFICATE-----
