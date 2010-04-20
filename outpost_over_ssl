@@ -8,6 +8,7 @@
 # 2009-09-07 Fix SSL certificate. Use mktemp instead of $RANDOM.
 # 2010-04-20 Updated SSL certificate (expiring 2011-04-21)
 # 2010-04-20 Cleanup temp files automatically
+# 2010-04-20 Rewritten help text and sample usage
 
 if which socat > /dev/null
 then
@@ -41,24 +42,27 @@ then
 		SELF="${PWD}/$SELF"
 	fi
 	cat >&2 <<EOF
-Add something like the following to your ~/.ssh/config file:
 
-	Host outpost-ssl
-		ProxyCommand $SELF proxy-host 3128 user:pass
-		User `whoami`
-		ServerAliveInterval 30
-		DynamicForward 1080
-		LocalForward 3128 localhost:3128
-		HostKeyAlias spawncamp.net
-		
-Replace "proxy-host 3128" with the hostname and port of your local
-proxy server or use NONE if you connect directly. user:pass is optional.
-If your outpost username is not "`whoami`" you can change that as well.
+`basename "$SELF"` usage:
+    Direct connection:
+        ProxyCommand "$SELF" NONE
+    Via HTTP proxy:
+        ProxyCommand "$SELF" proxy-host port [user:pass]
 
-Once done, type "ssh outpost-ssl" to SSH over SSL.
-If you used the above SSH configuration, you will now
-have a HTTP proxy avaialable on localhost:3128 and
-a SOCKS proxy on localhost:1080.
+Example ~/.ssh/config entry:
+    
+    Host outpost-ssl
+        ProxyCommand "$SELF" NONE
+        User `whoami`
+        HostKeyAlias spawncamp.net
+        ServerAliveInterval 30
+        #LocalForward 3128 localhost:3128
+        #DynamicForward 1080
+    
+    Change the User if your outpost username is not "`whoami`".
+    
+    Uncomment the LocalForward and/or DynamicForward entries if you want a
+    HTTP proxy on localhost:3128 and/or a SOCKS proxy on localhost:1080.
 
 EOF
 	exit 1;
