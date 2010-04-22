@@ -68,6 +68,8 @@ if [ -f "$GIT_COMPLETION_PATH" ]
 then
 	source "$GIT_COMPLETION_PATH"
 	export GIT_PS1_SHOWDIRTYSTATE=1
+	export GIT_PS1_SHOWSTASHSTATE=1
+	export GIT_PS1_SHOWUNTRACKEDFILES=1
 	export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
 fi
 
