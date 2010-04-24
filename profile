@@ -24,6 +24,17 @@ then
 	export LESSEDIT='mate -l %lm %f' # press V in less to edit the file in TextMate
 fi
 
+# if we're in Terminal.app we can add a few key bindings (Ctrl-T for new tab in pwd, Ctrl-N for new window)
+if [ "$TERM_PROGRAM" == "Apple_Terminal" ]
+then
+	function term-bind()
+	{
+		term "$@" > /dev/null && echo -en "\033[1A"
+	}
+	bind -x '"\C-t":term-bind -t'
+	bind -x '"\C-n":term-bind'
+fi
+
 # I love colour
 export GREP_OPTIONS='--color=auto'
 alias ls='ls --color=auto --classify'
