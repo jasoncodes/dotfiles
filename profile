@@ -70,23 +70,6 @@ then
 	export PROMPT_COMMAND="$PROMPT_COMMAND; "'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 fi
 
-# begin awesome colour prompt..
-export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w'
-
-# add git status if available
-GIT_COMPLETION_PATH="/opt/local/share/doc/git-core/contrib/completion/git-completion.bash"
-if [ -f "$GIT_COMPLETION_PATH" ]
-then
-	source "$GIT_COMPLETION_PATH"
-	export GIT_PS1_SHOWDIRTYSTATE=1
-	export GIT_PS1_SHOWSTASHSTATE=1
-	export GIT_PS1_SHOWUNTRACKEDFILES=1
-	export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
-fi
-
-# finish off the prompt
-export PS1="$PS1"'\[\033[00m\]\$ '
-
 # add /usr/local (MacPorts) stuff to path
 if [ -d '/usr/local' ]
 then
@@ -123,3 +106,20 @@ function cd_smburl()
 {
 	cd "`smburl_to_path "$1"`"
 }
+
+# begin awesome colour prompt..
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w'
+
+# add git status if available
+GIT_COMPLETION_PATH="/opt/local/share/doc/git-core/contrib/completion/git-completion.bash"
+if [ -f "$GIT_COMPLETION_PATH" ]
+then
+	source "$GIT_COMPLETION_PATH"
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	export GIT_PS1_SHOWSTASHSTATE=1
+	export GIT_PS1_SHOWUNTRACKEDFILES=1
+	export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
+fi
+
+# finish off the prompt
+export PS1="$PS1"'\[\033[00m\]\$ '
