@@ -108,7 +108,26 @@ function cd_smburl()
 }
 
 # begin awesome colour prompt..
-export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w'
+export PS1=""
+
+# add rvm version@gemset
+if [[ -n "$rvm_path" ]]
+then
+	function __my_rvm_ps1()
+	{
+		local full=$("$rvm_path/bin/rvm-prompt" v p g | grep -v ^system$)
+		# local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
+		# [ "$gemset" != "" ] && gemset="@$gemset"
+		# local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
+		# [ "$version" == "1.8.7" ] && version=""
+		# local full="$version$gemset"
+		[ -n "$full" ] && echo "$full "
+	}
+	export PS1="$PS1"'\[\033[01;30m\]$(__my_rvm_ps1)'
+fi
+
+# add user@host:path
+export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
 
 # add git status if available
 GIT_COMPLETION_PATH="/opt/local/share/doc/git-core/contrib/completion/git-completion.bash"
