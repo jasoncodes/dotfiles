@@ -1,4 +1,4 @@
-%w(rubygems pp ap duration chronic wirble irb/completion hirb date time).each do |lib|
+%w(rubygems pp ap wirble irb/completion hirb date time).each do |lib|
   begin
     require lib
   rescue LoadError => err
