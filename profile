@@ -95,6 +95,10 @@ then
 	export MANPATH="/opt/local/share/man:$MANPATH"
 fi
 
+# enable rvm if available
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -n "$rvm_path" ]] && [[ -r "$rvm_path/scripts/completion" ]] && source "$rvm_path/scripts/completion"
+
 # set JAVA_HOME if on Mac OS
 if [ -z "$JAVA_HOME" -a -d /System/Library/Frameworks/JavaVM.framework/Home ]
 then
