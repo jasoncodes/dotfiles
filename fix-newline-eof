@@ -1,0 +1,84 @@
+#!/bin/bash -e
+
+# fix "No newline at end of file" errors
+
+SELF_NAME="`basename "$0"`"
+
+if getopt --version | grep -q '^getopt'
+then
+	OPTS=$(getopt --options 'hnv' --long 'help,dry-run,verbose' -n "$SELF_NAME" -- "$@")
+else
+	OPTS=$(getopt 'hnv' $*)
+fi
+eval set -- $OPTS
+
+VERBOSE=0
+DRY=0
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-h|--help)
+			echo "Usage: $SELF_NAME [OPTION]... [FILE]..."
+			echo ""
+			echo "-h, --help     print this help message"
+			echo "-n, --dry-run  show which files would be fixed but don't do anything"
+			echo "-v, --verbose  show files as they are being fixed"
+			exit 0
+			;;
+		-n|--dry-run)
+			VERBOSE=1
+			DRY=1
+			shift
+			;;
+		-v|--verbose)
+			VERBOSE=1
+			shift
+			;;
+		--)
+			shift
+			break
+			;;
+		*)
+			echo "$SELF_NAME: Unknown option: $1" >&2
+			exit 1
+			;;
+	esac
+done
+
+if [ $# -eq 0 ]
+then
+	awk '{print}'
+else
+	
+	RETVAL=0
+	
+	for FILE in "$@"
+	do
+		
+		if [ ! -e "$FILE" ]
+		then
+			echo "$SELF_NAME: $FILE: file not found" >&2
+			RETVAL=1
+			continue
+		fi
+		
+		if file --brief --mime-type -- "$FILE" | grep -vq -e '^text/' -e '^application/xml$'
+		then
+			echo "$SELF_NAME: $FILE: not a text file" >&2
+			RETVAL=1
+			continue
+		fi
+		
+		if [ `tail -1 "$FILE" | wc -l` -ne 1 ]
+		then
+			
+			[ "$VERBOSE" -eq 0 ] || echo "$FILE"
+			[ "$DRY" -eq 1 ] || echo >> "$FILE"
+			
+		fi
+		
+	done
+	
+	exit $RETVAL
+	
+fi
