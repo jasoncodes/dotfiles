@@ -100,6 +100,30 @@ then
 	eval "$(lesspipe.sh)"
 fi
 
+# mategem makes it easy to open a gem in TextMate
+# original src: <http://effectif.com/articles/opening-ruby-gems-in-textmate>
+function mategem()
+{
+	local GEM="$1"
+	if [ -z "$GEM" ]
+	then
+		echo "Usage: mategem <gem>" 1>&2
+		false
+	else
+		mate "$(gem environment gemdir)/gems/$GEM"
+	fi
+}
+_mategem()
+{
+	local curw
+	COMPREPLY=()
+	curw=${COMP_WORDS[COMP_CWORD]}
+	local gems="$(gem environment gemdir)/gems"
+	COMPREPLY=($(compgen -W '$(ls $gems)' -- $curw));
+	return 0
+}
+complete -F _mategem -o dirnames mategem
+
 # be able to 'cd' into SMB URLs
 # requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
 function cd_smburl()
