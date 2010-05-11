@@ -2,8 +2,12 @@
   begin
     require lib
   rescue LoadError => err
-    warn "Couldn't load #{lib}: #{err}"
+    warn "Warning: Couldn't load #{lib}: #{err}"
   end
+end
+
+if Readline::VERSION =~ /editline/i
+  warn "Warning: Using Editline instead of Readline."
 end
 
 module Readline
