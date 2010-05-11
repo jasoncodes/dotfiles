@@ -35,12 +35,13 @@ module Readline
     
   end
   
-  alias_method :readline_without_log, :readline
-  def readline(*args)
+  def readline_with_log(*args)
     line = readline_without_log(*args)
     History.write_log line
     line
   end
+  alias_method :readline_without_log, :readline
+  alias_method :readline, :readline_with_log
   
 end
 Readline::History.load_history
