@@ -1,4 +1,4 @@
-%w(rubygems pp ap wirble hirb date time).each do |lib|
+%w(rubygems pp ap wirble hirb bond date time).each do |lib|
   begin
     require lib
   rescue LoadError => err
@@ -50,6 +50,7 @@ module Readline
 end
 Readline::History.load_history
 
+
 IRB.conf[:PROMPT][:SHORT] = {
   :PROMPT_C=>"%03n:%i* ",
   :RETURN=>"%s\n",
@@ -70,6 +71,7 @@ Kernel.at_exit do
   puts
 end
 
+Bond.start
 
 extend Hirb::Console
 Hirb.enable :pager=>false
@@ -103,11 +105,28 @@ end
 
 # This is only done when using the Rails console
 if rails_env = ENV['RAILS_ENV']
+  
   # This is only done when the irb session rails are fully loaded
   IRB.conf[:IRB_RC] = Proc.new do
     # Log ActiveRecord calls to standard out
     ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
+  
+  # supress the ActiveRecord debug output when autocompleting
+  class Bond::Agent
+    def call_with_log_supression(obj)
+      org_level = ActiveRecord::Base.logger.level
+      begin
+        ActiveRecord::Base.logger.level = Logger::INFO if org_level < Logger::INFO
+        return call_without_log_supression(obj)
+      ensure
+        ActiveRecord::Base.logger.level = org_level
+      end
+    end
+    alias_method :call_without_log_supression, :call
+    alias_method :call, :call_with_log_supression
+  end
+  
 end
 
 
