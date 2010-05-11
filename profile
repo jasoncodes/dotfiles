@@ -116,11 +116,6 @@ then
 	function __my_rvm_ps1()
 	{
 		local full=$("$rvm_path/bin/rvm-prompt" v p g | grep -v ^system$)
-		# local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-		# [ "$gemset" != "" ] && gemset="@$gemset"
-		# local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-		# [ "$version" == "1.8.7" ] && version=""
-		# local full="$version$gemset"
 		[ -n "$full" ] && echo "$full "
 	}
 	export PS1="$PS1"'\[\033[01;30m\]$(__my_rvm_ps1)'
