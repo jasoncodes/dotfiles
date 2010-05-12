@@ -149,7 +149,10 @@ fi
 export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
 
 # add git status if available
-GIT_COMPLETION_PATH="/opt/local/share/doc/git-core/contrib/completion/git-completion.bash"
+GIT_COMPLETION_PATH=$(which \
+	"/usr/local/git/contrib/completion/git-completion.bash" \
+	"/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
+	| head -1)
 if [ -f "$GIT_COMPLETION_PATH" ]
 then
 	source "$GIT_COMPLETION_PATH"
