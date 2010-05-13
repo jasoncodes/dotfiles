@@ -139,6 +139,7 @@ if [[ -n "$rvm_path" ]]
 then
 	function __my_rvm_ps1()
 	{
+		[ -z "$rvm_ruby_string" -o "$rvm_ruby_string" == 'system' ] && return
 		local full=$(
 			"$rvm_path/bin/rvm-prompt" i v p g |
 			sed -e 's/^system$//' -e 's/ruby-//' -e 's/-head/H/' -e 's/-@/@/' -e 's/-$//')
