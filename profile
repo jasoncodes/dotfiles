@@ -139,7 +139,9 @@ if [[ -n "$rvm_path" ]]
 then
 	function __my_rvm_ps1()
 	{
-		local full=$("$rvm_path/bin/rvm-prompt" v p g | grep -v ^system$)
+		local full=$(
+			"$rvm_path/bin/rvm-prompt" i v p g |
+			sed -e 's/^system$//' -e 's/ruby-//' -e 's/-head/H/' -e 's/-@/@/' -e 's/-$//')
 		[ -n "$full" ] && echo "$full "
 	}
 	export PS1="$PS1"'\[\033[01;30m\]$(__my_rvm_ps1)'
