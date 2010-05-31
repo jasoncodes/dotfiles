@@ -1,4 +1,4 @@
-%w(rubygems pp ap wirble hirb bond date time).each do |lib|
+%w(rubygems pp ap wirble bond date time).each do |lib|
   begin
     require lib
   rescue LoadError => err
@@ -73,34 +73,11 @@ end
 
 Bond.start
 
-extend Hirb::Console
-Hirb.enable :pager=>false
-
-
-# BEGIN http://rhnh.net/2009/12/29/ruby-debugging-with-puts-tap-and-hirb
-
-class Object
-  def tapp(prefix = nil, &block)
-    block ||= lambda {|x| x }
-    
-    tap do |x|
-      value = block[x]
-      value = Hirb::View.formatter.format_output(value) || value.inspect
-      
-      if prefix
-        print prefix
-        if value.lines.count > 1
-          print ":\n"
-        else
-          print ": "
-        end
-      end
-      puts value
-    end
+IRB::Irb.class_eval do
+  def output_value
+    ap @context.last_value
   end
 end
-
-# END http://rhnh.net/2009/12/29/ruby-debugging-with-puts-tap-and-hirb
 
 
 # This is only done when using the Rails console
@@ -127,21 +104,4 @@ if rails_env = ENV['RAILS_ENV']
     alias_method :call, :call_with_log_supression
   end
   
-end
-
-
-# always render single records in vertical mode. This is handy for inspecting objects attributes.
-if defined? Hirb
-  class Hirb::Helpers::Table
-    class <<self
-      def render_with_vertical_singular(rows, options={})
-        if !rows.is_a?(Array) or rows.size == 1
-          options[:vertical] = true
-        end
-        render_without_vertical_singular(rows, options)
-      end
-      alias_method :render_without_vertical_singular, :render
-      alias_method :render, :render_with_vertical_singular
-    end
-  end
 end
