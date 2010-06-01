@@ -80,6 +80,14 @@ IRB::Irb.class_eval do
 end
 
 
+# methods that are defined directly on this object's class
+class Object
+  def local_methods
+    (methods - self.class.superclass.instance_methods).sort
+  end
+end
+
+
 # This is only done when using the Rails console
 if rails_env = ENV['RAILS_ENV']
   
