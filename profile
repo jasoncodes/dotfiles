@@ -151,11 +151,28 @@ fi
 # add user@host:path
 export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
 
+function first_file_match()
+{
+	local OP="$1"
+	shift
+	while [ $# -gt 0 ]
+	do
+		if [ $OP "$1" ]
+		then
+			echo "$1"
+			return 0
+		fi
+		shift
+	done
+	return 1
+}
+
 # add git status if available
-GIT_COMPLETION_PATH=$(which \
+GIT_COMPLETION_PATH=$(first_file_match -f \
 	"/usr/local/git/contrib/completion/git-completion.bash" \
 	"/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
-	| head -1)
+	"/etc/bash_completion.d/git" \
+)
 if [ -f "$GIT_COMPLETION_PATH" ]
 then
 	source "$GIT_COMPLETION_PATH"
