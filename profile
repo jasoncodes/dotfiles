@@ -110,6 +110,66 @@ then
 	eval "$(lesspipe.sh)"
 fi
 
+
+# this is more code than I had hoped in order to create aliases for gem commands I use a lot
+# this caches the path to the gem's binary (and clears it if the gem path changes (i.e. rvm))
+# the caching is most useful for snailgun but also others if they don't require rubygems themselves
+function gem_bin_path
+{
+	
+	local GEM_NAME="$1"
+	local EXEC_NAME="$2"
+	
+	local GEMBIN_KEY="$GEM_PATH:`which ruby`" # expire if GEM_PATH or current Ruby changes
+	
+	if [ "`eval echo \\\$"GEMBIN_${GEM_NAME}_${EXEC_NAME}_KEY"`" == "$GEMBIN_KEY" ]
+	then
+		eval echo "\$GEMBIN_${GEM_NAME}_${EXEC_NAME}_VALUE"
+		return
+	fi
+	
+	local GEM_BIN_PATH=$(
+		ruby <<-EOF
+			require 'rubygems'
+			gem "$GEM_NAME"
+			if "$GEM_NAME".empty?
+				puts Gem.dir
+			else
+				puts Gem.bin_path "$GEM_NAME", "$EXEC_NAME"
+			end
+		EOF
+	)
+	
+	eval "GEMBIN_${GEM_NAME}_${EXEC_NAME}_KEY"='"$GEMBIN_KEY"'
+	eval "GEMBIN_${GEM_NAME}_${EXEC_NAME}_VALUE"='"$GEM_BIN_PATH"'
+	
+	echo "$GEM_BIN_PATH"
+	
+}
+
+function gem_exec
+{
+	local GEM_NAME="$1"
+	local EXEC_NAME="$2"
+	shift 2
+	if gem_bin_path "$GEM_NAME" "$EXEC_NAME" | grep -q ^/ # ensure path is cached
+	then
+		"`gem_bin_path "$GEM_NAME" "$EXEC_NAME"`" "$@"
+	else
+		echo "gem_exec: $EXEC_NAME: command not found" >&2
+	fi
+}
+
+function alias_gem_bin
+{
+	alias $2="gem_exec $1 $2"
+}
+
+alias_gem_bin snailgun fruby
+alias_gem_bin snailgun fconsole
+alias_gem_bin snailgun frake
+
+
 # mategem makes it easy to open a gem in TextMate
 # original src: <http://effectif.com/articles/opening-ruby-gems-in-textmate>
 function mategem()
@@ -120,7 +180,8 @@ function mategem()
 		echo "Usage: mategem <gem>" 1>&2
 		false
 	else
-		mate "$(gem environment gemdir)/gems/$GEM"
+		gem_bin_path > /dev/null # init path
+		mate "$(gem_bin_path)/gems/$GEM"
 	fi
 }
 _mategem()
@@ -128,7 +189,8 @@ _mategem()
 	local curw
 	COMPREPLY=()
 	curw=${COMP_WORDS[COMP_CWORD]}
-	local gems="$(gem environment gemdir)/gems"
+	gem_bin_path > /dev/null # init path
+	local gems="$(gem_bin_path)/gems"
 	COMPREPLY=($(compgen -W '$(ls $gems)' -- $curw));
 	return 0
 }
