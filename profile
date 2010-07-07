@@ -35,6 +35,16 @@ then
 	bind -x '"\C-n":term-bind'
 fi
 
+# open man pages in Preview.app
+if [ -d "/Applications/Preview.app" ]
+then
+	pman () {
+		man -t "$@" |
+		( which ps2pdf > /dev/null && ps2pdf - - || cat) |
+		open -f -a /Applications/Preview.app
+	}
+fi
+
 # I love colour
 export GREP_OPTIONS='--color=auto'
 alias ls='ls --color=auto --classify'
