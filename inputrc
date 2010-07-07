@@ -1,4 +1,4 @@
-"\e[3~": delete-char
+# UTF-8 support
 set meta-flag on
 set input-meta on
 set output-meta on
@@ -22,6 +22,10 @@ set convert-meta off
 "\e[5D": backward-word
 "\e\e[C": forward-word
 "\e\e[D": backward-word
+
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
 
 $if Bash
   # F10 toggles mc on and off
