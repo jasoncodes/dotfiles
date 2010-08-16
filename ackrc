@@ -3,7 +3,7 @@
 --context=1
 --follow
 --group
---type-add=ruby=.haml
+--type-add=ruby=.haml,.feature
 --type-add=css=.sass
 --type-add=objc=.pch
 --type-set=xcode=.pbxproj,.pbxuser,.perspectivev3
