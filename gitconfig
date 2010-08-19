@@ -31,3 +31,4 @@ default = tracking
 
 [merge]
 log = true
+conflictstyle = diff3
