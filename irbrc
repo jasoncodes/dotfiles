@@ -1,4 +1,4 @@
-%w(rubygems ap wirble bond).each do |lib|
+%w(rubygems wirble bond).each do |lib|
   begin
     require lib
   rescue LoadError => err
@@ -127,9 +127,17 @@ end
 
 Bond.start
 
-IRB::Irb.class_eval do
-  def output_value
-    ap @context.last_value
+
+# awesome_print is awesome
+on_irb_init do
+  extend_console 'ap' do
+    IRB::Irb.class_eval do
+      def output_value
+        value = @context.last_value
+        value = value.proxy_target if value.respond_to? :proxy_target
+        ap value
+      end
+    end
   end
 end
 
