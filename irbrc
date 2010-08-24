@@ -150,14 +150,6 @@ on_irb_init do
 end
 
 
-# methods that are defined directly on this object's class
-class Object
-  def local_methods
-    (methods - self.class.superclass.instance_methods).sort
-  end
-end
-
-
 # Show ActiveRecord queries in the console
 extend_console 'rails', :require => false, :if => ENV['RAILS_ENV'] do
   
@@ -180,4 +172,12 @@ extend_console 'rails', :require => false, :if => ENV['RAILS_ENV'] do
     alias_method :call, :call_with_log_supression
   end
   
+end
+
+
+# Helper to show methods that are defined directly on an object
+class Object
+  def local_methods
+    (methods - self.class.superclass.instance_methods).sort
+  end
 end
