@@ -6,6 +6,54 @@
   end
 end
 
+
+# ANSI colour constants
+ANSI = {}
+ANSI[:RESET]     = "\e[0m"
+ANSI[:BOLD]      = "\e[1m"
+ANSI[:UNDERLINE] = "\e[4m"
+ANSI[:LGRAY]     = "\e[0;37m"
+ANSI[:GRAY]      = "\e[1;30m"
+ANSI[:RED]       = "\e[31m"
+ANSI[:GREEN]     = "\e[32m"
+ANSI[:YELLOW]    = "\e[33m"
+ANSI[:BLUE]      = "\e[34m"
+ANSI[:MAGENTA]   = "\e[35m"
+ANSI[:CYAN]      = "\e[36m"
+ANSI[:WHITE]     = "\e[37m"
+# wrap ANSI escape sequences in Readline ignore markers
+ANSI.each do |k,v|
+  v.replace "\001#{v}\002"
+end
+
+
+# utility method for running code after IRB loads
+$on_irb_init = []
+def on_irb_init(&proc)
+  $on_irb_init << proc
+end
+IRB.conf[:IRB_RC] = Proc.new do
+  $on_irb_init.each &:call
+end
+
+
+# utility method for rescuing external dependency errors
+def extend_console(name, options = {})
+  options = {:require => true}.merge(options)
+  if options.include? :if
+    if options[:if].is_a? Proc
+      return unless options[:if].call
+    else
+      return unless options[:if]
+    end
+  end
+  require name if options[:require]
+  yield if block_given?
+rescue LoadError
+  warn "#{ANSI[:RED]}Warning: could not load #{name}#{ANSI[:RESET]}"
+end
+
+
 if Readline::VERSION =~ /editline/i
   warn "Warning: Using Editline instead of Readline."
 end
