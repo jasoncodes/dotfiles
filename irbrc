@@ -1,4 +1,4 @@
-%w(rubygems pp ap wirble bond date time).each do |lib|
+%w(rubygems ap wirble bond).each do |lib|
   begin
     require lib
   rescue LoadError => err
@@ -52,6 +52,12 @@ def extend_console(name, options = {})
 rescue LoadError
   warn "#{ANSI[:RED]}Warning: could not load #{name}#{ANSI[:RESET]}"
 end
+
+
+# require some core stuff which I use a bit
+require 'pp'
+require 'date'
+require 'time'
 
 
 if Readline::VERSION =~ /editline/i
