@@ -158,12 +158,10 @@ class Object
 end
 
 
-# This is only done when using the Rails console
-if rails_env = ENV['RAILS_ENV']
+# Show ActiveRecord queries in the console
+extend_console 'rails', :require => false, :if => ENV['RAILS_ENV'] do
   
-  # This is only done when the irb session rails are fully loaded
-  IRB.conf[:IRB_RC] = Proc.new do
-    # Log ActiveRecord calls to standard out
+  on_irb_init do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
   
