@@ -113,6 +113,13 @@ extend_console 'readline' do
     alias_method :readline_without_log, :readline
     alias_method :readline, :readline_with_log
     
+    old_winch = trap 'WINCH' do
+      if `stty size` =~ /\A(\d+) (\d+)\n\z/
+        Readline.set_screen_size $1.to_i, $2.to_i
+      end
+      old_winch.call unless old_winch.nil?
+    end
+    
   end
   Readline::History.load_history
   
