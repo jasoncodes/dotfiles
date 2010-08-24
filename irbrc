@@ -113,11 +113,13 @@ extend_console 'readline' do
     alias_method :readline_without_log, :readline
     alias_method :readline, :readline_with_log
     
-    old_winch = trap 'WINCH' do
-      if `stty size` =~ /\A(\d+) (\d+)\n\z/
-        Readline.set_screen_size $1.to_i, $2.to_i
+    if Readline.respond_to? :set_screen_size
+      old_winch = trap 'WINCH' do
+        if `stty size` =~ /\A(\d+) (\d+)\n\z/
+          Readline.set_screen_size $1.to_i, $2.to_i
+        end
+        old_winch.call unless old_winch.nil?
       end
-      old_winch.call unless old_winch.nil?
     end
     
   end
