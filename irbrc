@@ -76,49 +76,53 @@ Kernel.at_exit do
 end
 
 
-if Readline::VERSION =~ /editline/i
-  warn "Warning: Using Editline instead of Readline."
-end
-
-module Readline
+extend_console 'readline' do
   
-  module History
-    HISTORY_FILE = "#{ENV['HOME']}/.irb_history"
+  if Readline::VERSION =~ /editline/i
+    warn "Warning: Using Editline instead of Readline."
+  end
+  
+  module Readline
     
-    def self.load_history
-      File.open HISTORY_FILE, 'r' do |file|
-        file.each do |line|
-          line.strip!
-          unless line.empty? or line.start_with?("#")
-            if Readline::HISTORY.empty? or line != Readline::HISTORY[-1]
-              HISTORY << line
+    module History
+      HISTORY_FILE = "#{ENV['HOME']}/.irb_history"
+      
+      def self.load_history
+        File.open HISTORY_FILE, 'r' do |file|
+          file.each do |line|
+            line.strip!
+            unless line.empty? or line.start_with?("#")
+              if Readline::HISTORY.empty? or line != Readline::HISTORY[-1]
+                HISTORY << line
+              end
             end
           end
         end
       end
-    end
-    
-    def self.write_log(line)
-      return if line.nil?
-      line = line.strip
-      return if line.empty?
-      File.open HISTORY_FILE, 'ab' do |file|
-        file << "#{line}\n"
+      
+      def self.write_log(line)
+        return if line.nil?
+        line = line.strip
+        return if line.empty?
+        File.open HISTORY_FILE, 'ab' do |file|
+          file << "#{line}\n"
+        end
       end
+      
     end
     
+    def readline_with_log(*args)
+      line = readline_without_log(*args)
+      History.write_log line
+      line
+    end
+    alias_method :readline_without_log, :readline
+    alias_method :readline, :readline_with_log
+    
   end
-  
-  def readline_with_log(*args)
-    line = readline_without_log(*args)
-    History.write_log line
-    line
-  end
-  alias_method :readline_without_log, :readline
-  alias_method :readline, :readline_with_log
+  Readline::History.load_history
   
 end
-Readline::History.load_history
 
 
 # blue is hard to see on black, so replace all blues with purple
