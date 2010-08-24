@@ -1,10 +1,4 @@
-%w(rubygems wirble bond).each do |lib|
-  begin
-    require lib
-  rescue LoadError => err
-    warn "Warning: Couldn't load #{lib}: #{err}"
-  end
-end
+require 'rubygems'
 
 
 # ANSI colour constants
@@ -125,14 +119,21 @@ extend_console 'readline' do
 end
 
 
-# blue is hard to see on black, so replace all blues with purple
-Wirble::Colorize::Color::COLORS.merge!({
-  :blue => '0;35'
-})
+extend_console 'wirble' do
+  
+  # blue is hard to see on black, so replace all blues with purple
+  Wirble::Colorize::Color::COLORS.merge!({
+    :blue => '0;35'
+  })
+  
+  Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
+  
+end
 
-Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
 
-Bond.start
+extend_console 'bond' do
+  Bond.start
+end
 
 
 # awesome_print is awesome
