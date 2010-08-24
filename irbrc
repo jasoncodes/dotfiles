@@ -60,6 +60,22 @@ require 'date'
 require 'time'
 
 
+# Build a simple colourful IRB prompt
+IRB.conf[:PROMPT][:SIMPLE_COLOR] = {
+  :PROMPT_I => "#{ANSI[:BLUE]}>>#{ANSI[:RESET]} ",
+  :PROMPT_N => "#{ANSI[:BLUE]}>>#{ANSI[:RESET]} ",
+  :PROMPT_C => "#{ANSI[:RED]}?>#{ANSI[:RESET]} ",
+  :PROMPT_S => "#{ANSI[:YELLOW]}?>#{ANSI[:RESET]} ",
+  :RETURN   => "#{ANSI[:GREEN]}=>#{ANSI[:RESET]} %s\n",
+  :AUTO_INDENT => true }
+IRB.conf[:PROMPT_MODE] = :SIMPLE_COLOR
+
+# ensure terminal is reset at exist
+Kernel.at_exit do
+  puts "#{ANSI[:RESET]}"
+end
+
+
 if Readline::VERSION =~ /editline/i
   warn "Warning: Using Editline instead of Readline."
 end
@@ -105,25 +121,12 @@ end
 Readline::History.load_history
 
 
-IRB.conf[:PROMPT][:SHORT] = {
-  :PROMPT_C=>"%03n:%i* ",
-  :RETURN=>"%s\n",
-  :PROMPT_I=>"%03n:%i> ",
-  :PROMPT_N=>"%03n:%i> ",
-  :PROMPT_S=>"%03n:%i%l "
-}
-IRB.conf[:PROMPT_MODE] = :SHORT
-
 # blue is hard to see on black, so replace all blues with purple
 Wirble::Colorize::Color::COLORS.merge!({
   :blue => '0;35'
 })
 
 Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
-
-Kernel.at_exit do
-  puts
-end
 
 Bond.start
 
