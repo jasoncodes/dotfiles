@@ -151,7 +151,10 @@ on_irb_init do
     IRB::Irb.class_eval do
       def output_value
         value = @context.last_value
-        value = value.proxy_target if value.respond_to? :proxy_target
+        if value.respond_to? :proxy_target
+          value.reload unless value.loaded?
+          value = value.proxy_target
+        end
         ap value
       end
     end
