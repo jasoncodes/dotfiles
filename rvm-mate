@@ -1,0 +1,135 @@
+#!/bin/bash -e
+
+source "$HOME/.rvm/scripts/rvm"
+
+OPT_END=0
+MATE_OPTS=()
+MATE_PATHS=()
+TMPROJ_PATHS=()
+for ARG in "$@"
+do
+	
+	# detect --` end of options argument
+	if [ "$ARG" == '--' -a "$OPT_END" -eq 0 ]
+	then
+		OPT_END=1
+		continue
+	fi
+	
+	# detect option
+	if [ "$OPT_END" -eq 0 ] && [[ "$ARG" == -* ]]
+	then
+		
+		# pass options straight through to `mate`
+		MATE_OPTS+=("$ARG")
+		
+	else
+		
+		if [ ! -d "$ARG" ]
+		then
+			# pass through anything which is not a directory
+			MATE_PATHS+=("$ARG")
+		else
+			
+			# load RVM config via a subshell
+			IFS='|' read RVM_GUARD1 RVM_RUBY RVM_GEM_HOME RVM_GEM_PATH RVM_GUARD2 < <(
+				builtin cd "$ARG"
+				set +e
+				__rvm_project_rvmrc
+				echo ">|`which ruby`|$GEM_HOME|$GEM_PATH|\<"
+			)
+			if [ "$RVM_GUARD1" != '>' -o "$RVM_GUARD2" != '<' ]
+			then
+				echo "RVM detection failed for $ARG" >&2
+				exit 1
+			fi
+			
+			# echo $RVM_RUBY
+			# echo $RVM_GEM_HOME
+			# echo $RVM_GEM_PATH
+			
+			FULLPATH=$(builtin cd "$ARG" && echo $PWD)
+			
+			BASENAME=$(basename "$FULLPATH")
+			if echo "$BASENAME" | grep -q '^[a-z]*$'
+			then
+				BASENAME=$(echo "$BASENAME" | awk 'BEGIN{OFS=FS=""}{$1=toupper($1);print}')
+			fi
+			
+			TMPROJ="$FULLPATH/$BASENAME.tmproj"
+			if [ -f "$TMPROJ" -o -n "$RVM_GEM_HOME" ]
+			then
+				
+				if [ ! -f "$TMPROJ" ]
+				then
+					# create TextMate project file
+					cat > "$TMPROJ" <<HTML
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>documents</key>
+	<array>
+		<dict>
+			<key>expanded</key>
+			<true/>
+			<key>name</key>
+			<string>$BASENAME</string>
+			<key>sourceDirectory</key>
+			<string></string>
+			<key>regexFolderFilter</key>
+			<string>!.*/(\.[^/]*|tmp|log|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))\$</string>
+		</dict>
+	</array>
+	<key>showFileHierarchyDrawer</key>
+	<true/>
+	<key>fileHierarchyDrawerWidth</key>
+	<integer>250</integer>
+	<key>windowFrame</key>
+	<string>{{400, 200}, {950, 700}}</string>
+</dict>
+</plist>
+HTML
+				fi
+				
+				# replace the environment variables section in the TextMate project file
+				osascript - <<APPLESCRIPT
+				tell application "System Events"
+					tell property list file "$TMPROJ"
+						tell contents
+							set value to (value & {|shellVariables|:[]})
+						end tell
+						set value of property list item "shellVariables" to {{enabled_rvm_mate:true, value_rvm_mate:"$RVM_RUBY", variable:"TM_RUBY"}, {enabled_rvm_mate:true, value_rvm_mate:"$RVM_GEM_HOME", variable:"GEM_HOME"}, {enabled_rvm_mate:true, value_rvm_mate:"$RVM_GEM_PATH", variable:"GEM_PATH"}}
+					end tell
+				end tell
+APPLESCRIPT
+				
+				# setting "value" and "enabled" don't work properly with AppleScript records
+				# replace our temporary names with the actual ones
+				sed -i.rvm-mate 's/_rvm_mate</</' "$TMPROJ"
+				rm "${TMPROJ}.rvm-mate"
+				
+				TMPROJ_PATHS+=("$TMPROJ")
+			else
+				MATE_PATHS+=("$ARG")
+			fi
+			
+		fi
+		
+	fi
+done
+
+if [ ${#MATE_OPTS[@]} -ne 0 -a ${#TMPROJ_PATHS[@]} -ne 0 ]
+then
+	echo "`basename "$0"`: Options with TextMate projects are not supported" >&2
+	exit 1
+fi
+
+if [ ${#MATE_OPTS[@]} -ne 0 -o ${#MATE_PATHS[@]} -ne 0 ]
+then
+	mate "${MATE_OPTS[@]}" -- "${MATE_PATHS[@]}"
+fi
+if [ ${#TMPROJ_PATHS[@]} -ne 0 ]
+then
+	open -- "${TMPROJ_PATHS[@]}"
+fi
