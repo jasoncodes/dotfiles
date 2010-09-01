@@ -1,6 +1,8 @@
 #!/bin/bash -e
 
+set +e
 source "$HOME/.rvm/scripts/rvm"
+set -e
 
 OPT_END=0
 MATE_OPTS=()
