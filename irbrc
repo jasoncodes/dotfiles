@@ -173,18 +173,20 @@ extend_console 'rails', :require => false, :if => ENV['RAILS_ENV'] do
   end
   
   # supress the ActiveRecord debug output when autocompleting
-  class Bond::Agent
-    def call_with_log_supression(obj)
-      org_level = ActiveRecord::Base.logger.level
-      begin
-        ActiveRecord::Base.logger.level = Logger::INFO if org_level < Logger::INFO
-        return call_without_log_supression(obj)
-      ensure
-        ActiveRecord::Base.logger.level = org_level
+  if defined? Bond
+    class Bond::Agent
+      def call_with_log_supression(obj)
+        org_level = ActiveRecord::Base.logger.level
+        begin
+          ActiveRecord::Base.logger.level = Logger::INFO if org_level < Logger::INFO
+          return call_without_log_supression(obj)
+        ensure
+          ActiveRecord::Base.logger.level = org_level
+        end
       end
+      alias_method :call_without_log_supression, :call
+      alias_method :call, :call_with_log_supression
     end
-    alias_method :call_without_log_supression, :call
-    alias_method :call, :call_with_log_supression
   end
   
 end
