@@ -45,6 +45,17 @@ then
 	}
 fi
 
+# add MacPorts to path if present
+if [ -d '/opt/local' ]
+then
+	export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+	export PATH="$PATH:/opt/local/lib/postgresql84/bin"
+	export MANPATH="/opt/local/share/man:$MANPATH"
+fi
+
+# our own bin dir at the highest priority, followed by /usr/local/bin
+export PATH=~/bin:/usr/local/bin:"$PATH"
+
 # I love colour
 export GREP_OPTIONS='--color=auto'
 alias ls='ls --color=auto --classify'
@@ -81,14 +92,6 @@ then
 	export PROMPT_COMMAND="$PROMPT_COMMAND; "'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 fi
 
-# add /usr/local (MacPorts) stuff to path
-if [ -d '/usr/local' ]
-then
-	export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-	export PATH="$PATH:/opt/local/lib/postgresql84/bin"
-	export MANPATH="/opt/local/share/man:$MANPATH"
-fi
-
 # enable rvm if available
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 [[ -n "$rvm_path" ]] && [[ -r "$rvm_path/scripts/completion" ]] && source "$rvm_path/scripts/completion"
@@ -98,9 +101,6 @@ if [ -z "$JAVA_HOME" -a -d /System/Library/Frameworks/JavaVM.framework/Home ]
 then
 	export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 fi
-
-# our own bin dir at the highest priority, followed by /usr/local/bin
-export PATH=~/bin:/usr/local/bin:"$PATH"
 
 # lesspipe lets us do cool things like view gzipped files
 if [ -x "`which lesspipe`" ]
