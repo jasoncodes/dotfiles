@@ -57,8 +57,11 @@ fi
 export PATH=~/bin:/usr/local/bin:"$PATH"
 
 # I love colour
-export GREP_OPTIONS='--color=auto'
-alias ls='ls --color=auto --classify'
+if ls --version 2> /dev/null | grep -q 'GNU coreutils'
+then
+	export GREP_OPTIONS='--color=auto'
+	alias ls='ls --color=auto --classify'
+fi
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
 
 # handy aliases
