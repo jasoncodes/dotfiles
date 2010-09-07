@@ -221,10 +221,18 @@ if [[ -n "$rvm_path" ]]
 then
 	function __my_rvm_ps1()
 	{
-		[ -z "$rvm_ruby_string" -o "$rvm_ruby_string" == 'system' ] && return
+		[[ -z "$rvm_ruby_string" ]] && return
+		if [[ -z "$rvm_gemset_name" ]]
+		then
+			[[ "$rvm_ruby_string" = "system" && ! -s "$rvm_path/config/alias" ]] && return
+			grep -q -F "default=$rvm_ruby_string" "$rvm_path/config/alias" && return
+		fi
 		local full=$(
-			"$rvm_path/bin/rvm-prompt" i v p g |
-			sed -e 's/^system$//' -e 's/ruby-//' -e 's/-head/H/' -e 's/-@/@/' -e 's/-$//')
+			"$rvm_path/bin/rvm-prompt" i v p g s |
+			sed \
+				-e 's/jruby-jruby-/jruby-/' -e 's/ruby-//' \
+				-e 's/-head/H/' \
+				-e 's/-@/@/' -e 's/-$//')
 		[ -n "$full" ] && echo "$full "
 	}
 	export PS1="$PS1"'\[\033[01;30m\]$(__my_rvm_ps1)'
