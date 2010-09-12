@@ -37,7 +37,7 @@ do
 			IFS='|' read RVM_GUARD1 RVM_RUBY RVM_GEM_HOME RVM_GEM_PATH RVM_GUARD2 < <(
 				builtin cd "$ARG"
 				set +e
-				__rvm_project_rvmrc
+				rvm_promptless=1 __rvm_project_rvmrc > /dev/null
 				echo ">|`which ruby`|$GEM_HOME|$GEM_PATH|\<"
 			)
 			if [ "$RVM_GUARD1" != '>' -o "$RVM_GUARD2" != '<' ]
