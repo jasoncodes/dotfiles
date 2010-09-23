@@ -54,7 +54,7 @@ then
 fi
 
 # our own bin dir at the highest priority, followed by /usr/local/bin
-export PATH=~/bin:/usr/local/bin:"$PATH"
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:"$PATH"
 
 # I love colour
 if ls --version 2> /dev/null | grep -q 'GNU coreutils'
