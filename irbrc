@@ -27,7 +27,7 @@ def on_irb_init(&proc)
   $on_irb_init << proc
 end
 IRB.conf[:IRB_RC] = Proc.new do
-  $on_irb_init.each &:call
+  $on_irb_init.each(&:call)
 end
 
 
