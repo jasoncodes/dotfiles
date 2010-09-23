@@ -166,7 +166,7 @@ end
 
 
 # Show ActiveRecord queries in the console
-extend_console 'rails', :require => false, :if => ENV['RAILS_ENV'] do
+extend_console 'rails', :require => false, :if => lambda { defined?(Rails) || ENV['RAILS_ENV'] } do
   
   on_irb_init do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
