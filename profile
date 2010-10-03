@@ -222,7 +222,7 @@ then
 	function __my_rvm_ps1()
 	{
 		[[ -z "$rvm_ruby_string" ]] && return
-		if [[ -z "$rvm_gemset_name" ]]
+		if [[ -z "$rvm_gemset_name" && "$rvm_sticky_flag" -ne 1 ]]
 		then
 			[[ "$rvm_ruby_string" = "system" && ! -s "$rvm_path/config/alias" ]] && return
 			grep -q -F "default=$rvm_ruby_string" "$rvm_path/config/alias" && return
