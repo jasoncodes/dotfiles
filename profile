@@ -232,6 +232,7 @@ then
 			sed \
 				-e 's/jruby-jruby-/jruby-/' -e 's/ruby-//' \
 				-e 's/-head/H/' \
+				-e 's/-2[0-9][0-9][0-9]\.[0-9][0-9]//' \
 				-e 's/-@/@/' -e 's/-$//')
 		[ -n "$full" ] && echo "$full "
 	}
