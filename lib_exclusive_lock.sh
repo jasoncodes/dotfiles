@@ -1,3 +1,30 @@
+function trap_add() # FUNC SIGSPEC...
+{
+
+    local FUNC="$1"
+    shift
+
+    for SIGSPEC
+    do
+        if [ "`trap -p $SIGSPEC`" == "" ]
+        then
+            # no existing trap
+            trap "$FUNC;" "$SIGSPEC"
+        else
+            if [[ "$(trap -p "$SIGSPEC")" =~ ^trap\ --\ \'([^\']+)\;\'\ $SIGSPEC$ ]]
+            then
+                # add to existing trap
+                trap "${BASH_REMATCH[1]};$FUNC;" "$SIGSPEC"
+            else
+                echo "Failed to extract existing trap:" >&2
+                trap -p "$SIGSPEC" >&2
+                exit 1
+            fi
+        fi
+    done
+
+}
+
 function exclusive_lock_try() # [lockname]
 {
 
@@ -19,12 +46,6 @@ function exclusive_lock_try() # [lockname]
             ( echo $$ > "$LOCK_PID_FILE" ) 2> /dev/null && local LOCK_PID="$$"
         fi
     fi
-    if [ "`trap -p EXIT`" != "" ]
-    then
-        # already have an EXIT trap
-        echo "Cannot get lock, already have an EXIT trap"
-        return 1
-    fi
     if [ "$LOCK_PID" != "$$" ] &&
         ! ( umask 077 && mkdir "$LOCK_DIR" && umask 177 && echo $$ > "$LOCK_PID_FILE" ) 2> /dev/null
     then
@@ -33,7 +54,7 @@ function exclusive_lock_try() # [lockname]
         echo "\"$LOCK_NAME\" lock currently held by PID $LOCK_PID"
         return 1
     fi
-    trap "/bin/rm -rf \"$LOCK_DIR\"; exit;" EXIT
+    trap_add "/bin/rm -rf \"$LOCK_DIR\"" EXIT
 
     return 0 # got lock
 
