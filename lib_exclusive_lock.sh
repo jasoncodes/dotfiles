@@ -47,7 +47,7 @@ function exclusive_lock_try() # [lockname]
         fi
     fi
     if [ "$LOCK_PID" != "$$" ] &&
-        ! ( umask 077 && mkdir "$LOCK_DIR" && umask 177 && echo $$ > "$LOCK_PID_FILE" ) 2> /dev/null
+        ! ( umask 0022 && mkdir "$LOCK_DIR" && echo $$ > "$LOCK_PID_FILE" ) 2> /dev/null
     then
         local LOCK_PID="`cat "$LOCK_PID_FILE" 2> /dev/null`"
         # unable to acquire lock, new process got in first
