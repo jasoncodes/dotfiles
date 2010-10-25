@@ -1,0 +1,8 @@
+# disable "Wuff,  Wuff!!"
+vbell off
+
+# increase default scroll back from a tiny 100 to something more reasonable.
+defscrollback 2000
+
+# skip the startup message
+startup_message off
