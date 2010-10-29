@@ -200,6 +200,52 @@ _mategem()
 }
 complete -F _mategem -o dirnames mategem
 
+function gup
+{
+	# subshell for `set -e` and `trap`
+	(
+		set -e # fail immediately if there's a problem
+		
+		# fetch upstream changes
+		git fetch
+		
+		# create a temp file for capturing command output
+		TEMPFILE="`mktemp -t gup.XXXXXX`"
+		trap '{ rm -f "$TEMPFILE"; }' EXIT
+		
+		# if we're behind upstream, we need to update
+		if git status | grep "# Your branch is behind" > "$TEMPFILE"
+		then
+			
+			# extract tracking branch from message
+			UPSTREAM=$(cat "$TEMPFILE" | cut -d "'" -f 2)
+			if [ -z "$UPSTREAM" ]
+			then
+				echo Could not detect upstream branch >&2
+				exit 1
+			fi
+			
+			# stash any uncommitted changes
+			git stash | tee "$TEMPFILE"
+			RETVAL=${PIPESTATUS[0]}
+			if grep -q "No local changes" "$TEMPFILE"
+			then
+				APPLY_STASH_CMD="true"
+			else
+				APPLY_STASH_CMD="git stash pop -q"
+			fi
+			[ "$RETVAL" -eq 0 ] || exit 1
+			
+			# rebase our change on top of upstream, but keep any merges
+			git rebase -p "$UPSTREAM"
+			
+			$APPLY_STASH_CMD
+			
+		fi
+		
+	)
+}
+
 # be able to 'cd' into SMB URLs
 # requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
 function cd_smburl()
