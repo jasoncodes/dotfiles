@@ -68,6 +68,10 @@ alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away fr
 alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
 alias qt='open -a "QuickTime Player"'
 alias gc='EDITOR="mate -wl1" git commit -v'
+alias gap='git add -p'
+alias gca='gc --amend'
+alias ber='bundle exec rspec'
+alias bec='bundle exec cucumber'
 
 # awesome history tracking
 export HISTSIZE=10000
