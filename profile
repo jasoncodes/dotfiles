@@ -250,6 +250,13 @@ function gup
 	)
 }
 
+# http://github.com/therubymug/hitch
+hitch() {
+  command hitch "$@"
+  if [[ -s "$HOME/.hitch_export_authors" ]] ; then source "$HOME/.hitch_export_authors" ; fi
+}
+alias unhitch='hitch -u'
+
 # be able to 'cd' into SMB URLs
 # requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
 function cd_smburl()
