@@ -218,7 +218,7 @@ function gup
 		trap '{ rm -f "$TEMPFILE"; }' EXIT
 		
 		# if we're behind upstream, we need to update
-		if git status | grep "# Your branch is behind" > "$TEMPFILE"
+		if git status | grep "# Your branch" > "$TEMPFILE"
 		then
 			
 			# extract tracking branch from message
