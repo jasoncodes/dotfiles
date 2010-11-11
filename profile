@@ -264,12 +264,6 @@ function cd_smburl()
 	cd "`smburl_to_path "$1"`"
 }
 
-# use rvm-mate if available
-if [ -x "`which rvm-mate`" -a -x "`which mate`" ]
-then
-	alias mate=rvm-mate
-fi
-
 # begin awesome colour prompt..
 export PS1=""
 
