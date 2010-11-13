@@ -4,7 +4,6 @@
 :update_sources: true
 :sources: 
 - http://rubygems.org
-- http://gems.github.com
 :backtrace: false
 :bulk_threshold: 1000
 gem: --format-executable --no-ri --no-rdoc
