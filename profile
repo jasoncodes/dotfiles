@@ -213,6 +213,13 @@ function gup
 		# fetch upstream changes
 		git fetch
 		
+		BRANCH=$(git describe --contains --all HEAD)
+		if [ -z "$(git config branch.$BRANCH.remote)" -o -z "$(git config branch.$BRANCH.merge)" ]
+		then
+			echo "\"$BRANCH\" is not a tracking branch." >&2
+			exit 1
+		fi
+		
 		# create a temp file for capturing command output
 		TEMPFILE="`mktemp -t gup.XXXXXX`"
 		trap '{ rm -f "$TEMPFILE"; }' EXIT
