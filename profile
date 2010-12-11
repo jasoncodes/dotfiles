@@ -238,19 +238,17 @@ function gup
 			
 			# stash any uncommitted changes
 			git stash | tee "$TEMPFILE"
-			RETVAL=${PIPESTATUS[0]}
-			if grep -q "No local changes" "$TEMPFILE"
-			then
-				APPLY_STASH_CMD="true"
-			else
-				APPLY_STASH_CMD="git stash pop -q"
-			fi
-			[ "$RETVAL" -eq 0 ] || exit 1
+			[ "${PIPESTATUS[0]}" -eq 0 ] || exit 1
 			
-			# rebase our change on top of upstream, but keep any merges
+			# take note if anything was stashed
+			HAVE_STASH=0
+			grep -q "No local changes" "$TEMPFILE" || HAVE_STASH=1
+			
+			# rebase our changes on top of upstream, but keep any merges
 			git rebase -p "$UPSTREAM"
 			
-			$APPLY_STASH_CMD
+			# restore any stashed changed
+			[ "$HAVE_STASH" -ne 0 ] && git stash pop -q
 			
 		fi
 		
