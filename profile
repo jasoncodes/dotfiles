@@ -298,6 +298,11 @@ fi
 # add user@host:path
 export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
 
+function realpath()
+{
+	python -c 'import os,sys;print os.path.realpath(sys.argv[1])' "$@"
+}
+
 function first_file_match()
 {
 	local OP="$1"
@@ -315,11 +320,18 @@ function first_file_match()
 }
 
 # add git status if available
-GIT_COMPLETION_PATH=$(first_file_match -f \
-	"/usr/local/git/contrib/completion/git-completion.bash" \
-	"/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
-	"/etc/bash_completion.d/git" \
-)
+if which git > /dev/null
+then
+	GIT_COMPLETION_PATH="$(dirname $(realpath "$(which git)"))/../etc/bash_completion.d/git-completion.bash"
+fi
+if [ ! -f "$GIT_COMPLETION_PATH" ]
+then
+	GIT_COMPLETION_PATH=$(first_file_match -f \
+		"/usr/local/git/contrib/completion/git-completion.bash" \
+		"/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
+		"/etc/bash_completion.d/git" \
+	)
+fi
 if [ -f "$GIT_COMPLETION_PATH" ]
 then
 	source "$GIT_COMPLETION_PATH"
