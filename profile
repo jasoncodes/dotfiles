@@ -76,8 +76,8 @@ alias bec='bundle exec cucumber'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
 # awesome history tracking
-export HISTSIZE=10000
-export HISTFILESIZE=10000
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
 export PROMPT_COMMAND='history -a'
