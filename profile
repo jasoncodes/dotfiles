@@ -72,6 +72,7 @@ alias gap='git add -p'
 alias gca='gc --amend'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
+alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
 # awesome history tracking
 export HISTSIZE=10000
