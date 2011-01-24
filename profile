@@ -73,6 +73,7 @@ alias gca='gc --amend'
 alias gl='git lg --all'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
+alias cuke='bec --format=pretty'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
 # awesome history tracking
