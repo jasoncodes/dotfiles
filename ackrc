@@ -4,7 +4,7 @@
 --follow
 --group
 --type-add=ruby=.haml,.feature
---type-add=css=.sass
+--type-add=css=.sass,.scss
 --type-add=objc=.pch
 --type-set=xcode=.pbxproj,.pbxuser,.perspectivev3
 --type-set=ragel=.rl
