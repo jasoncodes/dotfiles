@@ -64,13 +64,29 @@ then
 fi
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
 
+# helper for git aliases
+function git_current_tracking()
+{
+	local BRANCH="$(git describe --contains --all HEAD)"
+	local REMOTE="$(git config branch.$BRANCH.remote)"
+	local MERGE="$(git config branch.$BRANCH.merge)"
+	[ -n "$REMOTE" -a -n "$MERGE" ] && echo "$REMOTE/$(echo "$MERGE" | sed 's#^refs/heads/##')"
+}
+
 # handy aliases
 alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
 alias qt='open -a "QuickTime Player"'
-alias gc='EDITOR="mate -wl1" git commit -v'
-alias gap='git add -p'
-alias gca='gc --amend'
 alias gl='git lg --all'
+alias gco='git co'
+alias gst='git status'
+alias gd='git diff'
+alias gds='git diff --cached'
+alias gar='git reset HEAD .'
+alias gap='git add -p'
+alias gau='git add -Nv .'
+alias gc='EDITOR="mate -wl1" git commit -v'
+alias gca='gc --amend'
+alias grt='git rebase -i $(git_current_tracking)'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
 alias cuke='bec --format=pretty'
