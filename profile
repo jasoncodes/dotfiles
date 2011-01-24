@@ -74,6 +74,8 @@ alias gl='git lg --all'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
 alias cuke='bec --format=pretty'
+alias rc='if [[ -x script/console ]]; then script/console; else rails console; fi;'
+alias rs='if [[ -x script/server ]]; then script/server; else rails server; fi;'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
 # awesome history tracking
