@@ -88,6 +88,7 @@ alias gaur="git ls-files --exclude-standard --modified -z | xargs -0 git ls-file
 alias gc='EDITOR="mate -wl1" git commit -v'
 alias gca='gc --amend'
 alias grt='git rebase -i $(git_current_tracking)'
+alias gp='git push'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
 alias cuke='bec --format=pretty'
