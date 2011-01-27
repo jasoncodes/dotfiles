@@ -78,6 +78,7 @@ alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate
 alias qt='open -a "QuickTime Player"'
 alias gl='git lg --all'
 alias gco='git co'
+alias gcp='git co -p'
 alias gst='git status'
 alias gd='git diff'
 alias gds='git diff --cached'
