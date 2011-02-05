@@ -153,6 +153,12 @@ then
 	eval "$(lesspipe.sh)"
 fi
 
+# load Homebrew's shell completion
+if which brew > /dev/null && [ -f "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh" ]
+then
+	source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
+fi
+
 
 # this is more code than I had hoped in order to create aliases for gem commands I use a lot
 # this caches the path to the gem's binary (and clears it if the gem path changes (i.e. rvm))
