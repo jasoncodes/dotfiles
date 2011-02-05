@@ -70,7 +70,13 @@ function git_current_tracking()
 	local BRANCH="$(git describe --contains --all HEAD)"
 	local REMOTE="$(git config branch.$BRANCH.remote)"
 	local MERGE="$(git config branch.$BRANCH.merge)"
-	[ -n "$REMOTE" -a -n "$MERGE" ] && echo "$REMOTE/$(echo "$MERGE" | sed 's#^refs/heads/##')"
+	if [ -n "$REMOTE" -a -n "$MERGE" ]
+	then
+		echo "$REMOTE/$(echo "$MERGE" | sed 's#^refs/heads/##')"
+	else
+		echo "\"$BRANCH\" is not a tracking branch." >&2
+		return 1
+	fi
 }
 
 # handy aliases
@@ -88,7 +94,7 @@ alias gau='git ls-files --other --exclude-standard -z | xargs -0 git add -Nv'
 alias gaur="git ls-files --exclude-standard --modified -z | xargs -0 git ls-files --stage -z | awk 'BEGIN { RS=\"\0\"; FS=\"\t\"; ORS=\"\0\" } { if (\$1 ~ / e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 /) { sub(/^[^\t]+\t/, \"\", \$0); print } }' | xargs -0t -n 1 git reset -q -- 2>&1 | sed -e \"s/^git reset -q -- /reset '/\" -e \"s/$/'/\""
 alias gc='EDITOR="mate -wl1" git commit -v'
 alias gca='gc --amend'
-alias grt='git rebase -i $(git_current_tracking)'
+alias grt='git_current_tracking > /dev/null && git rebase -i $(git_current_tracking)'
 alias gp='git push'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
