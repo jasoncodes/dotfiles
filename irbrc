@@ -82,6 +82,7 @@ extend_console 'readline' do
       HISTORY_FILE = "#{ENV['HOME']}/.irb_history"
       
       def self.load_history
+        return unless File.exists? HISTORY_FILE
         File.open HISTORY_FILE, 'r' do |file|
           file.each do |line|
             line.strip!
