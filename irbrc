@@ -106,14 +106,6 @@ extend_console 'readline' do
       
     end
     
-    def readline_with_log(*args)
-      line = readline_without_log(*args)
-      History.write_log line
-      line
-    end
-    alias_method :readline_without_log, :readline
-    alias_method :readline, :readline_with_log
-    
     if Readline.respond_to? :set_screen_size
       old_winch = trap 'WINCH' do
         if `stty size` =~ /\A(\d+) (\d+)\n\z/
@@ -124,6 +116,24 @@ extend_console 'readline' do
     end
     
   end
+  
+  class IRB::ReadlineInputMethod
+    def gets
+      Readline.input = @stdin
+      Readline.output = @stdout
+      if l = readline(@prompt, false)
+        if !l.empty? && (HISTORY.empty? || l != HISTORY[-1])
+          HISTORY.push(l) if !l.empty?
+          History.write_log l
+        end
+        @line[@line_no += 1] = l + "\n"
+      else
+        @eof = true
+        l
+      end
+    end
+  end
+  
   Readline::History.load_history
   
 end
