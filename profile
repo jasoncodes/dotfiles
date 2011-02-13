@@ -277,6 +277,10 @@ function gup
 				exit 1
 			fi
 			
+			# can we fast-forward?
+			CAN_FF=0
+			grep -q "can be fast-forwarded" "$TEMPFILE" || CAN_FF=1
+			
 			# stash any uncommitted changes
 			git stash | tee "$TEMPFILE"
 			[ "${PIPESTATUS[0]}" -eq 0 ] || exit 1
@@ -285,8 +289,14 @@ function gup
 			HAVE_STASH=0
 			grep -q "No local changes" "$TEMPFILE" || HAVE_STASH=1
 			
-			# rebase our changes on top of upstream, but keep any merges
-			git rebase -p "$UPSTREAM"
+			if [ "$CAN_FF" ]
+			then
+				# if nothing has changed locally, just fast foward.
+				git merge --ff "$UPSTREAM"
+			else
+				# rebase our changes on top of upstream, but keep any merges
+				git rebase -p "$UPSTREAM"
+			fi
 			
 			# restore any stashed changed
 			[ "$HAVE_STASH" -ne 0 ] && git stash pop -q
