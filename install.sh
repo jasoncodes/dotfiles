@@ -6,16 +6,16 @@ cd
 	set -e
 	cd .dotfiles
 	
+	TEMPFILE="`mktemp -t install.XXXXXX`"
+	trap '{ rm -f "$TEMPFILE"; }' EXIT
+	
 	set +e
-	[ -e profile ] && source profile
+	git fetch origin
+	git show origin/master:profile > "$TEMPFILE"
+	source "$TEMPFILE"
 	set -e
 	
-	if type -t gup > /dev/null
-	then
-		gup
-	else
-		git pull --rebase --stat
-	fi
+	gup
 )
 
 function create_link()
