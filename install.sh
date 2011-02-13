@@ -2,7 +2,21 @@
 cd
 
 [ -d .dotfiles ] || git clone git://github.com/jasoncodes/dotfiles.git .dotfiles
-( cd .dotfiles && git pull --stat )
+(
+	set -e
+	cd .dotfiles
+	
+	set +e
+	[ -e profile ] && source profile
+	set -e
+	
+	if type -t gup > /dev/null
+	then
+		gup
+	else
+		git pull --rebase --stat
+	fi
+)
 
 function create_link()
 {
