@@ -120,7 +120,7 @@ shopt -u mailwarn
 unset MAILCHECK
 
 # I like backspace being ^H
-[ ! -z "$TERM" ] && [ "$TERM" != "dumb" ] && stty erase `tput kbs`
+[ -t 0 ] && stty erase `tput kbs`
 # check for window resizing when ever the prompt is displayed
 shopt -s checkwinsize
 # display the 
