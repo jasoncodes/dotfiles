@@ -1,5 +1,5 @@
 #!/bin/bash -e
-find . -type f \
+/usr/bin/find ${1:-.} -type f \
 	-not -regex '\./.git/.*' \
 	-not -regex '\./tmp/.*' \
 	-not -regex '\./log/.*' \
