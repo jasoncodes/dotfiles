@@ -119,8 +119,10 @@ extend_console 'readline' do
   
   class IRB::ReadlineInputMethod
     def gets
-      Readline.input = @stdin
-      Readline.output = @stdout
+      if Readline.respond_to?(:input=) && @stdin
+        Readline.input = @stdin
+        Readline.output = @stdout
+      end
       if l = readline(@prompt, false)
         if !l.empty? && (HISTORY.empty? || l != HISTORY[-1])
           HISTORY.push(l) if !l.empty?
