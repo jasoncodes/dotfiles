@@ -64,7 +64,7 @@ IRB.conf[:PROMPT][:SIMPLE_COLOR] = {
   :AUTO_INDENT => true }
 IRB.conf[:PROMPT_MODE] = :SIMPLE_COLOR
 
-# ensure terminal is reset at exist
+# ensure terminal is reset at exit
 Kernel.at_exit do
   puts "#{ANSI[:RESET]}"
 end
