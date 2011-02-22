@@ -278,8 +278,8 @@ function gup
 			fi
 			
 			# can we fast-forward?
-			CAN_FF=0
-			grep -q "can be fast-forwarded" "$TEMPFILE" || CAN_FF=1
+			CAN_FF=1
+			grep -q "can be fast-forwarded" "$TEMPFILE" || CAN_FF=0
 			
 			# stash any uncommitted changes
 			git stash | tee "$TEMPFILE"
@@ -289,7 +289,7 @@ function gup
 			HAVE_STASH=0
 			grep -q "No local changes" "$TEMPFILE" || HAVE_STASH=1
 			
-			if [ "$CAN_FF" ]
+			if [ "$CAN_FF" -ne 0 ]
 			then
 				# if nothing has changed locally, just fast foward.
 				git merge --ff "$UPSTREAM"
