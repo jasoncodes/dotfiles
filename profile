@@ -400,6 +400,14 @@ then
 	export GIT_PS1_SHOWSTASHSTATE=1
 	export GIT_PS1_SHOWUNTRACKEDFILES=1
 	export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
+	complete -o bashdefault -o default -o nospace -F _git_log gl
+	complete -o bashdefault -o default -o nospace -F _git_checkout gco gcp
+	complete -o bashdefault -o default -o nospace -F _git_status gst
+	complete -o bashdefault -o default -o nospace -F _git_diff gd gds
+	complete -o bashdefault -o default -o nospace -F _git_reset gar
+	complete -o bashdefault -o default -o nospace -F _git_add gap
+	complete -o bashdefault -o default -o nospace -F _git_commit gc gca
+	complete -o bashdefault -o default -o nospace -F _git_push gp
 fi
 
 # finish off the prompt
