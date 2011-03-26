@@ -6,4 +6,4 @@
 - http://rubygems.org
 :backtrace: false
 :bulk_threshold: 1000
-gem: --format-executable --no-ri --no-rdoc
+gem: --no-ri --no-rdoc
