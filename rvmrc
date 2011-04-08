@@ -1,5 +1,0 @@
-# workaround "miniruby: No such file or directory" issue
-rvm_make_flags="-j 1"
-
-# Run `rvm package install readline` before installing Ruby to get full readline support
-rvm_ruby_configure_flags="--with-readline-dir=$rvm_path/usr"
