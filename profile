@@ -85,10 +85,16 @@ function git_current_tracking()
 	fi
 }
 
+function glp()
+{
+	git $(echo "$*" | grep -q -- '--word-diff.*--' && echo --no-pager) log --patch $(echo "$*" | grep -q '\.\.' && echo --reverse) "$@"
+}
+
 # handy aliases
 alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
 alias qt='open -a "QuickTime Player"'
 alias gl='git lg --all'
+alias glw='glp --word-diff'
 alias gco='git co'
 alias gcp='git co -p'
 alias gst='git status'
@@ -403,7 +409,7 @@ then
 	export GIT_PS1_SHOWSTASHSTATE=1
 	export GIT_PS1_SHOWUNTRACKEDFILES=1
 	export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
-	complete -o bashdefault -o default -o nospace -F _git_log gl
+	complete -o bashdefault -o default -o nospace -F _git_log gl glp glw
 	complete -o bashdefault -o default -o nospace -F _git_checkout gco gcp
 	complete -o bashdefault -o default -o nospace -F _git_status gst
 	complete -o bashdefault -o default -o nospace -F _git_diff gd gdw gds gdsw
