@@ -93,7 +93,9 @@ alias gco='git co'
 alias gcp='git co -p'
 alias gst='git status'
 alias gd='git diff'
-alias gds='git diff --cached'
+alias gdw='git --no-pager diff --word-diff'
+alias gds='gd --cached'
+alias gdsw='gdw --cached'
 alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
 alias gap='git add -p'
@@ -404,7 +406,7 @@ then
 	complete -o bashdefault -o default -o nospace -F _git_log gl
 	complete -o bashdefault -o default -o nospace -F _git_checkout gco gcp
 	complete -o bashdefault -o default -o nospace -F _git_status gst
-	complete -o bashdefault -o default -o nospace -F _git_diff gd gds
+	complete -o bashdefault -o default -o nospace -F _git_diff gd gdw gds gdsw
 	complete -o bashdefault -o default -o nospace -F _git_reset gar garp
 	complete -o bashdefault -o default -o nospace -F _git_add gap
 	complete -o bashdefault -o default -o nospace -F _git_commit gc gca
