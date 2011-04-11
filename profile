@@ -106,6 +106,18 @@ function glp()
 	git $pager log --patch $reverse "$@" $default_range
 }
 
+# git log search
+function gls()
+{
+	local phrase="$1"
+	shift
+	if [[ $# == 0 ]]
+	then
+		local default_range=HEAD
+	fi
+	glp --pickaxe-all -S"$phrase" "$@" $default_range
+}
+
 # handy aliases
 alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
 alias qt='open -a "QuickTime Player"'
@@ -425,7 +437,7 @@ then
 	export GIT_PS1_SHOWSTASHSTATE=1
 	export GIT_PS1_SHOWUNTRACKEDFILES=1
 	export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
-	complete -o bashdefault -o default -o nospace -F _git_log gl glp glw
+	complete -o bashdefault -o default -o nospace -F _git_log gl glp gls glw
 	complete -o bashdefault -o default -o nospace -F _git_checkout gco gcp
 	complete -o bashdefault -o default -o nospace -F _git_status gst
 	complete -o bashdefault -o default -o nospace -F _git_diff gd gdw gds gdsw
