@@ -85,9 +85,25 @@ function git_current_tracking()
 	fi
 }
 
+# git log patch
 function glp()
 {
-	git $(echo "$*" | grep -q -- '--word-diff.*--' && echo --no-pager) log --patch $(echo "$*" | grep -q '\.\.' && echo --reverse) "$@"
+	# don't use the pager if in word-diff mode
+	local pager="$(echo "$*" | grep -q -- '--word-diff' && echo --no-pager)"
+	
+	# use reverse mode if we have a range
+	local reverse="$(echo "$*" | grep -q '\.\.' && echo --reverse)"
+	
+	# if we have no non-option args then default to listing unpushed commits in reverse moode
+	if ! (for ARG in "$@"; do echo "$ARG" | grep -v '^-'; done) | grep -q . && git_current_tracking > /dev/null 2>&1
+	then
+		local default_range="$(git_current_tracking)..HEAD"
+		local reverse='--reverse'
+	else
+		local default_range=''
+	fi
+	
+	git $pager log --patch $reverse "$@" $default_range
 }
 
 # handy aliases
