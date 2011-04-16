@@ -106,6 +106,12 @@ function glp()
 	git $pager log --patch $reverse "$@" $default_range
 }
 
+# git log file
+function glf()
+{
+	git log --format=%H --follow -- "$@" | xargs --no-run-if-empty git show --stat
+}
+
 # git log search
 function gls()
 {
