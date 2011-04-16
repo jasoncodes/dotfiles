@@ -40,3 +40,6 @@ trustExitCode = false
 
 [rebase]
 autosquash = true
+
+[git-up "bundler"]
+check = true

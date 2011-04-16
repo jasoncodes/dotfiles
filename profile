@@ -294,6 +294,12 @@ function gup
 	(
 		set -e # fail immediately if there's a problem
 		
+		# use `git-up` if installed
+		if type git-up > /dev/null 2>&1
+		then
+			exec git-up
+		fi
+		
 		# fetch upstream changes
 		git fetch
 		
