@@ -183,6 +183,7 @@ extend_console 'rails', :require => false, :if => lambda { defined?(Rails) || EN
   
   on_irb_init do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
+    ActiveSupport::Cache::Store.logger = Logger.new(STDOUT)
   end
   
   # supress the ActiveRecord debug output when autocompleting
