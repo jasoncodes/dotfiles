@@ -353,7 +353,7 @@ function gup
 				git rebase -p "$UPSTREAM"
 			fi
 			
-			# restore any stashed changed
+			# restore any stashed changes
 			if [ "$HAVE_STASH" -ne 0 ]
 			then
 				git stash pop -q
