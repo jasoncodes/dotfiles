@@ -62,3 +62,6 @@ insteadOf = "heroku:"
 
 [git-up "bundler"]
 check = true
+
+[rerere]
+enabled = 1
