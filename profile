@@ -184,8 +184,8 @@ unset MAILCHECK
 [ -t 0 ] && stty erase `tput kbs`
 # check for window resizing when ever the prompt is displayed
 shopt -s checkwinsize
-# display the 
-if [ "$TERM" == "xterm" -o "$TERM" == "xterm-color" ]
+# display "user@hostname: dir" in the window title
+if [[ "$TERM" =~ ^xterm ]]
 then
 	export PROMPT_COMMAND="$PROMPT_COMMAND; "'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 fi
