@@ -124,6 +124,18 @@ function gls()
 	glp --pickaxe-all -S"$phrase" "$@" $default_range
 }
 
+function rails_command
+{
+	local cmd=$1
+	shift
+	
+	if [ -e script/rails ]; then
+		script/rails "$cmd" "$@"
+	else
+		"script/$cmd" "$@"
+	fi
+}
+
 # handy aliases
 alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
 alias qt='open -a "QuickTime Player"'
@@ -148,8 +160,8 @@ alias gp='git push'
 alias ber='bundle exec rspec'
 alias bec='bundle exec cucumber'
 alias cuke='bec --format=pretty'
-alias rc='if [[ -x script/console ]]; then script/console; else rails console; fi;'
-alias rs='if [[ -x script/server ]]; then script/server; else rails server; fi;'
+alias rc='rails_command console'
+alias rs='rails_command server'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
 # awesome history tracking
