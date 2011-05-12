@@ -23,7 +23,7 @@ ci = commit
 co = checkout
 br = branch
 lg = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(black bold)- %an %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-standup = shortlog --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --since='2 days ago'
+standup = shortlog --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --since='2 days ago' --all
 
 [push]
 default = tracking
