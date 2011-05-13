@@ -159,7 +159,7 @@ alias grt='git_current_tracking > /dev/null && git rebase -i $(git_current_track
 alias gp='git push'
 alias be='bundle exec'
 alias ber='bundle exec rspec --drb --format=doc'
-alias bec='bundle exec cucumber'
+alias bec='bundle exec cucumber --drb'
 alias cuke='bec --format=pretty'
 alias rc='rails_command console'
 alias rs='rails_command server'
