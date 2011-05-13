@@ -18,8 +18,8 @@ else
 	export CVS_RSH=ssh
 fi
 
-# if TextMate is available and we're in Terminal.app...
-if [ "$TERM_PROGRAM" == "Apple_Terminal" -a -x "`which mate`" ]
+# if TextMate is available and we're in iTerm...
+if [[ "$TERM_PROGRAM" =~ ^(iTerm|Terminal)\.app$ ]] && [[ -x "`which mate`" ]]
 then
 	export LESSEDIT='mate -l %lm %f' # press V in less to edit the file in TextMate
 fi
