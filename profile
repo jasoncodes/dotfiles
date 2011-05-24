@@ -24,15 +24,27 @@ then
 	export LESSEDIT='mate -l %lm %f' # press V in less to edit the file in TextMate
 fi
 
-# if we're in Terminal.app we can add a few key bindings (Ctrl-T for new tab in pwd, Ctrl-N for new window)
-if [ "$TERM_PROGRAM" == "Apple_Terminal" ]
+# if we're in iTerm we can have Ctrl-T open a new tab in the current directory
+# src: http://refactormycode.com/codes/63-open-a-new-tab-in-current-directory-from-iterm
+if [ "$TERM_PROGRAM" == "iTerm.app" ]
 then
-	function term-bind()
+	function tab()
 	{
-		term "$@" > /dev/null && echo -en "\033[1A"
+		osascript -e "
+			tell application \"iTerm\"
+				tell the first terminal
+					set currentSession to current session
+					launch session \"Default Session\"
+					tell the last session
+						write text \"cd $(pwd)\"
+						write text \"$*\"
+					end tell
+					-- select currentSession
+				end tell
+			end tell
+		" && echo -en "\033[1A"
 	}
-	bind -x '"\C-t":term-bind -t'
-	bind -x '"\C-n":term-bind'
+	bind -x '"\C-t":tab clear'
 fi
 
 # open man pages in Preview.app
