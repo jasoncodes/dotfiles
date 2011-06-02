@@ -6,6 +6,7 @@ export LC_CTYPE=en_US.UTF-8
 export PS1='\u@\h:\w\$ ' # basic prompt. get's overwritten later
 export FIGNORE="CVS:.DS_Store:.svn:__Alfresco.url"
 export EDITOR='nano'
+export BUNDLER_EDITOR=mate
 export PAGER='less -SFX'
 export MAKEFLAGS='-j 3'
 complete -d cd mkdir rmdir
