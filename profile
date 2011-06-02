@@ -170,6 +170,7 @@ alias gc='EDITOR="mate -wl1" git commit -v'
 alias gca='gc --amend'
 alias grt='git_current_tracking > /dev/null && git rebase -i $(git_current_tracking)'
 alias gp='git push'
+alias bo='bundle open'
 alias be='bundle exec'
 alias ber='bundle exec rspec --drb --format=doc'
 alias bec='bundle exec cucumber --drb'
@@ -237,91 +238,34 @@ then
 	source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
 
-
-# this is more code than I had hoped in order to create aliases for gem commands I use a lot
-# this caches the path to the gem's binary (and clears it if the gem path changes (i.e. rvm))
-# the caching is most useful for snailgun but also others if they don't require rubygems themselves
-function gem_bin_path
-{
-	
-	local GEM_NAME="$1"
-	local EXEC_NAME="$2"
-	
-	local GEMBIN_KEY="$GEM_PATH:`which ruby`" # expire if GEM_PATH or current Ruby changes
-	
-	if [ "`eval echo \\\$"GEMBIN_${GEM_NAME}_${EXEC_NAME}_KEY"`" == "$GEMBIN_KEY" ]
-	then
-		eval echo "\$GEMBIN_${GEM_NAME}_${EXEC_NAME}_VALUE"
-		return
-	fi
-	
-	local GEM_BIN_PATH=$(
-		ruby <<-EOF
-			require 'rubygems'
-			gem "$GEM_NAME"
-			if "$GEM_NAME".empty?
-				puts Gem.dir
-			else
-				puts Gem.bin_path "$GEM_NAME", "$EXEC_NAME"
+function _bundle_spec_names() {
+	ruby <<-RUBY
+		NAME_VERSION = '(?! )(.*?)(?: \(([^-]*)(?:-(.*))?\))?'
+		File.open 'Gemfile.lock' do |io|
+			in_specs = false
+			io.lines.each do |line|
+				line.chomp!
+				case
+				when in_specs && line == ''
+					in_specs = false
+				when line =~ /^ +specs:\$/
+					in_specs = true
+				when in_specs && line =~ %r{^ +#{NAME_VERSION}\$}
+					puts \$1
+				end
 			end
-		EOF
-	)
-	
-	eval "GEMBIN_${GEM_NAME}_${EXEC_NAME}_KEY"='"$GEMBIN_KEY"'
-	eval "GEMBIN_${GEM_NAME}_${EXEC_NAME}_VALUE"='"$GEM_BIN_PATH"'
-	
-	echo "$GEM_BIN_PATH"
-	
+		end
+	RUBY
 }
 
-function gem_exec
-{
-	local GEM_NAME="$1"
-	local EXEC_NAME="$2"
-	shift 2
-	if gem_bin_path "$GEM_NAME" "$EXEC_NAME" | grep -q ^/ # ensure path is cached
-	then
-		"`gem_bin_path "$GEM_NAME" "$EXEC_NAME"`" "$@"
-	else
-		echo "gem_exec: $EXEC_NAME: command not found" >&2
-	fi
-}
-
-function alias_gem_bin
-{
-	alias $2="gem_exec $1 $2"
-}
-
-alias_gem_bin snailgun fruby
-alias_gem_bin snailgun fconsole
-alias_gem_bin snailgun frake
-
-
-# mategem makes it easy to open a gem in TextMate
-# original src: <http://effectif.com/articles/opening-ruby-gems-in-textmate>
-function mategem()
-{
-	local GEM="$1"
-	if [ -z "$GEM" ]
-	then
-		echo "Usage: mategem <gem>" 1>&2
-		false
-	else
-		gem_bin_path > /dev/null # init path
-		mate "$(gem_bin_path)/gems/$GEM"
-	fi
-}
-_mategem()
-{
+function _bundle_open() {
 	local curw
 	COMPREPLY=()
 	curw=${COMP_WORDS[COMP_CWORD]}
-	gem_bin_path > /dev/null # init path
-	local gems="$(gem_bin_path)/gems"
-	COMPREPLY=($(compgen -W '$(ls $gems)' -- $curw));
+	COMPREPLY=($(compgen -W '$(_bundle_spec_names)' -- $curw));
 	return 0
 }
-complete -F _mategem -o dirnames mategem
+complete -F _bundle_open bo
 
 function gup
 {
