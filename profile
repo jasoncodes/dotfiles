@@ -384,7 +384,7 @@ function gup
 			# restore any stashed changes
 			if [ "$HAVE_STASH" -ne 0 ]
 			then
-				git stash pop -q
+				git stash pop
 			fi
 			
 		fi
