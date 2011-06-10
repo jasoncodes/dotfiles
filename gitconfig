@@ -31,12 +31,6 @@ default = tracking
 [merge]
 log = true
 conflictstyle = diff3
-tool = chdiff
-
-[mergetool "chdiff"]
-cmd = /usr/bin/env chdiff --wait "$LOCAL" "$REMOTE"
-keepBackup = true
-trustExitCode = false
 
 [rebase]
 autosquash = true
