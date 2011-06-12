@@ -11,7 +11,7 @@ imap <Esc> <Esc><Right>
 map <Leader>n :NERDTreeToggle<CR>
 
 " Trim & save
-map <Leader>sd :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<Bar>:w<CR>
+map <Leader>sd :FixWhitespace<CR>:w<CR>
 
 " Buffer navigation
 map <Leader>, <C-^>
