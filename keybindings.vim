@@ -19,6 +19,10 @@ function CommandTWithFlush()
 endfunction
 map <Leader>T :call CommandTWithFlush()
 
+" Cycle between windows with Tab and Shift-Tab
+map <Tab> :wincmd w<CR>
+map <S-Tab> :wincmd W<CR>
+
 " Clear search
 map <silent><Leader>/ :let @/ = ""<CR>
 
