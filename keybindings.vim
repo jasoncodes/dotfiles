@@ -13,7 +13,11 @@ map <Leader>sd :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<Bar>:w<CR>
 " Buffer navigation
 map <Leader>, <C-^>
 map <Leader>t :CommandT
-map <Leader>T :CommandTFluh
+function CommandTWithFlush()
+  CommandTFlush
+  CommandT
+endfunction
+map <Leader>T :call CommandTWithFlush()
 
 " Clear search
 map <Leader>/ :let @/ = ""<CR>

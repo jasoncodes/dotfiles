@@ -5,9 +5,10 @@ macmenu &File.New\ Tab key=<nop>
 nmap <D-t> :CommandT<CR>
 imap <D-t> <Esc>:CommandT<CR>
 
-" Cmd+Shift+W for Command-T Cache Flush
-nmap <D-T> :CommandTFlush<CR>
-imap <D-T> <Esc>:CommandTFlush<CR>
+" Cmd+Shift+T for Command-T with cache flush
+macmenu &File.Open\ Tab\.\.\. key=<nop>
+nmap <D-T> :call CommandTWithFlush()<CR>
+imap <D-T> <Esc>:call CommandTWithFlush()<CR>
 
 " Cmd+F for Ack
 macmenu &Edit.Find.Find\.\.\. key=<nop>
