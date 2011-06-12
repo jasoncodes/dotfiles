@@ -20,7 +20,7 @@ endfunction
 map <Leader>T :call CommandTWithFlush()
 
 " Clear search
-map <Leader>/ :let @/ = ""<CR>
+map <silent><Leader>/ :let @/ = ""<CR>
 
 " Toggle invisibles
 noremap <Leader>i :set list!<CR>
