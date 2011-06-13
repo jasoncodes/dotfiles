@@ -76,6 +76,8 @@ then
 	alias ls="ls --color=auto --classify --block-size=\'1"
 fi
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
+alias mate='echo Use mvim :\) >&2; false'
+alias nano='echo Use vim :\) >&2; false'
 
 # helper for git aliases
 function git_current_tracking()
