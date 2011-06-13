@@ -7,7 +7,7 @@ export PS1='\u@\h:\w\$ ' # basic prompt. get's overwritten later
 export FIGNORE="CVS:.DS_Store:.svn:__Alfresco.url"
 export EDITOR='vim'
 export BUNDLER_EDITOR='mvim'
-export PAGER='less -SFX'
+export PAGER='less -SFXi'
 export MAKEFLAGS='-j 3'
 complete -d cd mkdir rmdir
 
