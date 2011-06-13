@@ -13,6 +13,7 @@ Bundle 'bufkill.vim'
 Bundle 'nathanaelkane/vim-command-w'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'airblade/vim-rooter'
+Bundle 'ciaranm/detectindent'
 
 Bundle 'rails.vim'
 Bundle 'cucumber.zip'
