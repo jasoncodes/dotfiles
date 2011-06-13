@@ -2,8 +2,16 @@ set background=dark
 colorscheme rdark
 let g:indent_guides_auto_colors = 1
 
-" set background=light
-" colorscheme bclear
+function ToggleColors()
+  if &background == 'dark'
+    colorscheme bclear
+    set background=light
+  else
+    set background=dark
+    colorscheme rdark
+  end
+endfunction
+map <Leader>C :call ToggleColors()<CR>
 
 set guioptions-=T " Hide the tool bar
 
