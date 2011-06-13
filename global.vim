@@ -2,7 +2,7 @@ syntax on                                  " Turn on syntax highlighting
 filetype plugin indent on                  " Enable automatic filetype detection, filetype-specific plugins/indentation
 set nocompatible                           " Don't need to keep compatibility with Vi
 set hidden                                 " Allow hiding buffers with unsaved changes
-set listchars=trail:.,tab:>-,eol:¬         " Change the invisible characters
+set listchars=trail:.,tab:▸\ ,eol:¬        " Change the invisible characters
 set nolist                                 " Hide invisibles by default
 set showcmd                                " Show incomplete cmds down the bottom
 set showmode                               " Show current mode down the bottom
