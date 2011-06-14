@@ -1,7 +1,12 @@
 #!/bin/bash
 if [ -d ~/.vim ]
 then
-  (cd ~/.vim && git-up)
+  if type -t git-up > /dev/null
+  then
+    (cd ~/.vim && git-up)
+  else
+    (cd ~/.vim && git pull --rebase)
+  fi
 else
   git clone git://github.com/jasoncodes/vimfiles.git ~/.vim
 fi
