@@ -16,10 +16,6 @@ map <Leader>sd :FixWhitespace<CR>:w<CR>
 " Buffer navigation
 map <Leader>, <C-^>
 map <Leader>t :CommandT
-function CommandTWithFlush()
-  CommandTFlush
-  CommandT
-endfunction
 map <Leader>T :call CommandTWithFlush()
 
 " Cycle between windows with Tab and Shift-Tab
