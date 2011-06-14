@@ -20,6 +20,11 @@ vim -e -c BundleInstall -c BundleClean -c quit
 
 (
   cd ~/.vim/bundle/Command-T/ruby/command-t
-  rvm system exec ruby extconf.rb
+  if which ruby | grep -q '\.rvm'
+  then
+    rvm system exec ruby extconf.rb
+  else
+    ruby extconf.rb
+  fi
   make
 )
