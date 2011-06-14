@@ -16,7 +16,7 @@ ln -sf .vim/gvimrc ~/.gvimrc
 
 mkdir -p ~/.vim/.{backup,undo}
 
-vim -e -c BundleInstall -c BundleClean -c quit
+vim -e -c BundleInstall\! -c BundleClean -c quit
 
 (
   cd ~/.vim/bundle/Command-T/ruby/command-t
