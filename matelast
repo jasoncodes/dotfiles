@@ -1,7 +1,0 @@
-#!/bin/bash -e
-/usr/bin/find ${1:-.} -type f \
-	-not -regex '\./.git/.*' \
-	-not -regex '\./tmp/.*' \
-	-not -regex '\./log/.*' \
-	-exec stat -c '%Y %n' {} +\; |
-	sort -n | tail -1 | cut -d ' ' -f 2- | tr '\n' '\0' | xargs -0 mate
