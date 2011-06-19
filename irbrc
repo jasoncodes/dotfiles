@@ -71,16 +71,16 @@ end
 
 
 extend_console 'readline' do
-  
+
   if Readline::VERSION =~ /editline/i
     warn "Warning: Using Editline instead of Readline."
   end
-  
+
   module Readline
-    
+
     module History
       HISTORY_FILE = "#{ENV['HOME']}/.irb_history"
-      
+
       def self.load_history
         return unless File.exists? HISTORY_FILE
         File.open HISTORY_FILE, 'r' do |file|
@@ -94,7 +94,7 @@ extend_console 'readline' do
           end
         end
       end
-      
+
       def self.write_log(line)
         return if line.nil?
         line = line.strip
@@ -103,9 +103,9 @@ extend_console 'readline' do
           file << "#{line}\n"
         end
       end
-      
+
     end
-    
+
     if Readline.respond_to? :set_screen_size
       old_winch = trap 'WINCH' do
         if `stty size` =~ /\A(\d+) (\d+)\n\z/
@@ -114,9 +114,9 @@ extend_console 'readline' do
         old_winch.call unless old_winch.nil?
       end
     end
-    
+
   end
-  
+
   class IRB::ReadlineInputMethod
     def gets
       if Readline.respond_to?(:input=) && @stdin
@@ -135,21 +135,21 @@ extend_console 'readline' do
       end
     end
   end
-  
+
   Readline::History.load_history
-  
+
 end
 
 
 extend_console 'wirble' do
-  
+
   # blue is hard to see on black, so replace all blues with purple
   Wirble::Colorize::Color::COLORS.merge!({
     :blue => '0;35'
   })
-  
+
   Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
-  
+
 end
 
 
@@ -180,12 +180,12 @@ end
 
 # Show ActiveRecord queries in the console
 extend_console 'rails', :require => false, :if => lambda { defined?(Rails) || ENV['RAILS_ENV'] } do
-  
+
   on_irb_init do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveSupport::Cache::Store.logger = Logger.new(STDOUT)
   end
-  
+
   # supress the ActiveRecord debug output when autocompleting
   if defined? Bond
     class Bond::Agent
@@ -202,7 +202,7 @@ extend_console 'rails', :require => false, :if => lambda { defined?(Rails) || EN
       alias_method :call, :call_with_log_supression
     end
   end
-  
+
 end
 
 
@@ -222,7 +222,7 @@ extend_console 'pm', :require => false do
     methods -= Object.methods unless options.include? :more
     filter  = options.select {|opt| opt.kind_of? Regexp}.first
     methods = methods.select {|name| name =~ filter} if filter
-    
+
     data = methods.sort.collect do |name|
       method = obj.method(name)
       if method.arity == 0
