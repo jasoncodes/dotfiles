@@ -333,6 +333,22 @@ function gup
   )
 }
 
+# `vimlast` opens the last modified file in Vim.
+vimlast() {
+  if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+    local EDITOR=mvim
+  fi
+  FILE=$(
+    /usr/bin/find ${1:-.} -type f \
+      -not -regex '\./\..*' \
+      -not -regex '\./tmp/.*' \
+      -not -regex '\./log/.*' \
+      -exec stat -c '%Y %n' {} +\; |
+    sort -n | tail -1 | cut -d ' ' -f 2-
+  )
+  ${EDITOR:-vim} $FILE
+}
+
 # http://github.com/therubymug/hitch
 hitch() {
   command hitch "$@"
