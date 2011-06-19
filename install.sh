@@ -29,7 +29,7 @@ VIM
 
 (
   cd ~/.vim/bundle/Command-T/ruby/command-t
-  if which ruby | grep -q '\.rvm'
+  if type -t rvm > /dev/null
   then
     rvm system exec ruby extconf.rb
   else
