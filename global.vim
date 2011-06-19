@@ -18,6 +18,7 @@ set linespace=3                            " Spacing between lines
 set noswapfile                             " Disable creation of *.swp files
 set t_Co=256                               " Support for xterm with 256 colors (gets overriden in .gvimrc)
 set modelines=1                            " Check the first line of files for a modeline (tab vs spaces, etc)
+set autoread                               " Automatically reload externally modified files when clean
 
 " Indentation
 set shiftwidth=2                           " Number of spaces to use in each autoindent step
