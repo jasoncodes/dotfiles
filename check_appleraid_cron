@@ -1,0 +1,14 @@
+#!/bin/bash -e
+LOG="`mktemp $TMPDIR/$(basename "$0").XXXXXX`"
+trap '{ rm -rf "$LOG"; }' EXIT
+
+if /usr/sbin/diskutil listRAID > "$LOG" 2>&1
+then
+	if ! grep '^Status:' "$LOG" | grep -qv ' Online$'
+	then
+		exit 0
+	fi
+fi
+
+cat "$LOG"
+exit 1
