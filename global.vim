@@ -51,6 +51,7 @@ set smartcase                              " Switch to case sensitive mode if ne
 " Backups
 set backupdir=$HOME/.vim/.backup
 set directory=$HOME/.vim/.backup
+set backupskip=/tmp/*,/private/tmp/*
 
 " Persistent Undo
 set undodir=$HOME/.vim/.undo
