@@ -449,3 +449,9 @@ fi
 
 # finish off the prompt
 export PS1="$PS1"'\[\033[00m\]\$ '
+
+# load local shell configuration if present
+if [[ -f ~/.bashrc.local ]]
+then
+   source ~/.bashrc.local
+fi
