@@ -37,10 +37,6 @@ map <C-Space> :ToggleBookmark<CR>
 map <C-Up>    :PreviousBookmark<CR>
 map <C-Down>  :NextBookmark<CR>
 
-" Colorscheme scroll
-map <C-Left>  :PREVCOLOR<CR>
-map <C-Right> :NEXTCOLOR<CR>
-
 " Movement & wrapped long lines
 " This solves the problem that pressing down jumps your cursor 'over' the current line to the next line
 nnoremap j gj
