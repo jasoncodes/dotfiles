@@ -52,14 +52,6 @@ then
   }
 fi
 
-# add MacPorts to path if present
-if [ -d '/opt/local' ]
-then
-  export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-  export PATH="$PATH:/opt/local/lib/postgresql84/bin"
-  export MANPATH="/opt/local/share/man:$MANPATH"
-fi
-
 # our own bin dir at the highest priority, followed by /usr/local/bin
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:"$PATH"
 
