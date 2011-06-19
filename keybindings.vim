@@ -26,6 +26,9 @@ map <silent><S-Tab> :wincmd W<CR>
 " Clear search
 map <silent><Leader>/ :let @/ = ""<CR>
 
+" Toggle word wrap
+map <Leader>w :set wrap!<CR>
+
 " Toggle invisibles
 noremap <Leader>i :set list!<CR>
 
