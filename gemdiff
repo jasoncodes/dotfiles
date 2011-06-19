@@ -10,12 +10,12 @@ fi
 
 gem environment gempath | sed 's/:/\n/g' | while read GEMPATH_DIR
 do
-	find "$GEMPATH_DIR/gems" -maxdepth 1 -depth 1 -type d -mtime -12h -exec basename {} \; | $ESED 's/-[0-9.]+$//' | sort | uniq | while read GEMNAME
+	/usr/bin/find "$GEMPATH_DIR/gems" -maxdepth 1 -depth 1 -type d -mtime -12h -exec basename {} \; | $ESED 's/-[0-9.]+$//' | sort | uniq | while read GEMNAME
 	do
 		
 		set -f # disable globbing
 		IFS=$'\n' # split on newlines
-		gem_version_paths=( $( find "$GEMPATH_DIR/gems" -maxdepth 1 -depth 1 -type d -name "${GEMNAME}-[0-9]*" -exec ls -1dtr {} + | tail -2 ) )
+		gem_version_paths=( $( /usr/bin/find "$GEMPATH_DIR/gems" -maxdepth 1 -depth 1 -type d -name "${GEMNAME}-[0-9]*" -exec ls -1dtr {} + | tail -2 ) )
 		unset IFS # reset to default line separator
 		set +f # re-enable globbing
 		
