@@ -220,6 +220,12 @@ then
   eval "$(lesspipe.sh)"
 fi
 
+# alias Debian's `ack-grep` to `ack`
+if type -t ack-grep > /dev/null
+then
+  alias ack=ack-grep
+fi
+
 # load Homebrew's shell completion
 if which brew > /dev/null && [ -f "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh" ]
 then
