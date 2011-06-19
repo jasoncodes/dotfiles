@@ -29,6 +29,9 @@ map <silent><Leader>/ :let @/ = ""<CR>
 " Toggle invisibles
 noremap <Leader>i :set list!<CR>
 
+" Convert between spaces and tabs
+map <Leader>I :set list<CR>:FixWhitespace<CR>:ToggleTabs<CR>
+
 " Page down with space
 map <Space> <PageDown>
 
