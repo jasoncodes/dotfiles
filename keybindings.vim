@@ -29,6 +29,9 @@ map <silent><Leader>/ :let @/ = ""<CR>
 " Toggle word wrap
 map <Leader>w :set wrap!<CR>
 
+" Toggle spell checking
+map <Leader>S :set spell!<CR>
+
 " Toggle invisibles
 noremap <Leader>i :set list!<CR>
 
