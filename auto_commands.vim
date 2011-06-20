@@ -8,7 +8,7 @@ if has("gui_running")
 endif
 
 " Markdown files
-autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown} set ft=markdown
+autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown} setlocal ft=markdown wrap
 
 " Makefile
 autocmd FileType make set noexpandtab
