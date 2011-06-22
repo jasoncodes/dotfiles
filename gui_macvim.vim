@@ -24,10 +24,6 @@ macmenu &File.Close key=<nop>
 nmap <D-w> :CommandW<CR>
 imap <D-w> <Esc>:CommandW<CR>
 
-" Cmd+Shift+W to close the current window including all open buffers
-nmap <D-W> :qall<CR>
-imap <D-W> <Esc>:qall<CR>
-
 " Cmd+K for bufkill
 nmap <D-k> :BD<CR>
 imap <D-k> <Esc>:BD<CR>
@@ -36,6 +32,3 @@ imap <D-k> <Esc>:BD<CR>
 macmenu &Tools.List\ Errors key=<nop>
 nmap <D-l> :BufExplorer<CR>
 imap <D-l> <Esc>:BufExplorer<CR>
-
-" Stop Cmd+Shift+W from closing Vim
-macmenu &File.Close\ Window key=<nop>
