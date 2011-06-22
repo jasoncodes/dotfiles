@@ -24,7 +24,7 @@ map <silent><Tab> :wincmd w<CR>
 map <silent><S-Tab> :wincmd W<CR>
 
 " Clear search
-map <silent><Leader>/ :let @/ = ""<CR>
+map <silent><Leader>/ :nohls<CR>
 
 " Toggle word wrap
 map <Leader>w :set wrap!<CR>
