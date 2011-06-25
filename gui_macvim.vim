@@ -32,3 +32,8 @@ imap <D-k> <Esc>:BD<CR>
 macmenu &Tools.List\ Errors key=<nop>
 nmap <D-l> :BufExplorer<CR>
 imap <D-l> <Esc>:BufExplorer<CR>
+
+" Disable Cmd+S to encourage `:w`
+macmenu &File.Save key=<nop>
+map <D-s> <Esc>
+imap <D-s> <Esc><Esc>i
