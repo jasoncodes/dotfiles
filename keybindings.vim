@@ -19,6 +19,9 @@ map <Leader>, <C-^>
 map <Leader>t :CommandT<CR>
 map <Leader>T :call CommandTWithFlush()<CR>
 
+" Ack
+map <Leader>f :Ack<Space>
+
 " Cycle between windows with Tab and Shift-Tab
 map <silent><Tab> :wincmd w<CR>
 map <silent><S-Tab> :wincmd W<CR>
