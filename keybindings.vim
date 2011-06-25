@@ -53,6 +53,8 @@ map <C-Down>  :NextBookmark<CR>
 " This solves the problem that pressing down jumps your cursor 'over' the current line to the next line
 nnoremap j gj
 nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
 
 " Easy window navigation
 map <C-h> <C-w>h
