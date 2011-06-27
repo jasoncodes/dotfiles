@@ -18,6 +18,7 @@ map <Leader>sd :FixWhitespace<CR>:w<CR>
 map <Leader>, <C-^>
 map <Leader>t :CommandT<CR>
 map <Leader>T :call CommandTWithFlush()<CR>
+map <Leader>w :CommandW<CR>
 
 " Ack
 map <Leader>f :Ack<Space>
