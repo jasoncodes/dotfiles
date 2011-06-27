@@ -30,7 +30,7 @@ map <silent><S-Tab> :wincmd W<CR>
 map <silent><Leader>/ :nohls<CR>
 
 " Toggle word wrap
-map <Leader>w :set wrap!<CR>
+map <Leader>W :set wrap!<CR>
 
 " Toggle spell checking
 map <Leader>S :set spell!<CR>
