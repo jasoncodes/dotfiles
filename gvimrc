@@ -2,7 +2,7 @@ set background=dark
 colorscheme rdark
 let g:indent_guides_auto_colors = 1
 
-function ToggleColors()
+function! ToggleColors()
   if &background == 'dark'
     colorscheme bclear
     set background=light
