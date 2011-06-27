@@ -24,15 +24,6 @@ macmenu &File.Close key=<nop>
 nmap <D-w> :CommandW<CR>
 imap <D-w> <Esc>:CommandW<CR>
 
-" Cmd+K for bufkill
-nmap <D-k> :BD<CR>
-imap <D-k> <Esc>:BD<CR>
-
-" Cmd+L for BufExplorer
-macmenu &Tools.List\ Errors key=<nop>
-nmap <D-l> :BufExplorer<CR>
-imap <D-l> <Esc>:BufExplorer<CR>
-
 " Disable Cmd+S to encourage `:w`
 macmenu &File.Save key=<nop>
 map <D-s> <Esc>
