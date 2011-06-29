@@ -137,6 +137,17 @@ function rails_command
   fi
 }
 
+function psql
+{
+  if [[ -f config/database.yml ]]; then
+    if [[ "$(ruby -ryaml -e "puts YAML.load_file('config/database.yml')['${RAILS_ENV:-development}']['adapter']")" == 'postgresql' ]]; then
+      PGDATABASE="$(ruby -ryaml -e "puts YAML.load_file('config/database.yml')['${RAILS_ENV:-development}']['database']")" "$(which psql)" "$@"
+      return $?
+    fi
+  fi
+  "$(which psql)" "$@"
+}
+
 # handy aliases
 alias gl='git lg --all'
 alias glw='glp --word-diff'
