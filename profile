@@ -138,7 +138,6 @@ function rails_command
 }
 
 # handy aliases
-alias qt='open -a "QuickTime Player"'
 alias gl='git lg --all'
 alias glw='glp --word-diff'
 alias gco='git co'
