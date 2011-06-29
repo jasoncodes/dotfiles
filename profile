@@ -138,7 +138,6 @@ function rails_command
 }
 
 # handy aliases
-alias gitx='open -b nl.frim.GitX' # now you can "gitx ." just like you can "mate ."
 alias qt='open -a "QuickTime Player"'
 alias gl='git lg --all'
 alias glw='glp --word-diff'
