@@ -12,3 +12,7 @@ autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown} setlocal ft=markdown wrap
 
 " Makefile
 autocmd FileType make set noexpandtab
+
+" NERDTree
+" use shift-return to keep focus when opening a file
+autocmd FileType nerdtree map <buffer> <S-CR> go
