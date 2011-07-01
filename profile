@@ -139,7 +139,7 @@ function rails_command
 
 function __database_yml {
   if [[ -f config/database.yml ]]; then
-    ruby -ryaml -e "puts YAML.load_file('config/database.yml')['${RAILS_ENV:-development}']['$1']"
+    ruby -ryaml -rerb -e "puts YAML::load(ERB.new(IO.read('config/database.yml')).result)['${RAILS_ENV:-development}']['$1']"
   fi
 }
 
