@@ -137,13 +137,17 @@ function rails_command
   fi
 }
 
+function __database_yml {
+  if [[ -f config/database.yml ]]; then
+    ruby -ryaml -e "puts YAML.load_file('config/database.yml')['${RAILS_ENV:-development}']['$1']"
+  fi
+}
+
 function psql
 {
-  if [[ -f config/database.yml ]]; then
-    if [[ "$(ruby -ryaml -e "puts YAML.load_file('config/database.yml')['${RAILS_ENV:-development}']['adapter']")" == 'postgresql' ]]; then
-      PGDATABASE="$(ruby -ryaml -e "puts YAML.load_file('config/database.yml')['${RAILS_ENV:-development}']['database']")" "$(which psql)" "$@"
-      return $?
-    fi
+  if [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
+    PGDATABASE="$(__database_yml database)" "$(which psql)" "$@"
+    return $?
   fi
   "$(which psql)" "$@"
 }
