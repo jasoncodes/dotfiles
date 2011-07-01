@@ -30,6 +30,7 @@ set autoindent                             " Keep the indent when creating a new
 set smarttab                               " Use shiftwidth and softtabstop to insert or delete (on <BS>) blanks
 set cindent                                " Recommended seting for automatic C-style indentation
 set autoindent                             " Automatic indentation in non-C files
+set foldmethod=syntax                      " Automatically fold based on syntax
 
 " Wrap
 set nowrap                                 " I don't always wrap lines...

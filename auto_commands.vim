@@ -16,3 +16,6 @@ autocmd FileType make set noexpandtab
 " NERDTree
 " use shift-return to keep focus when opening a file
 autocmd FileType nerdtree map <buffer> <S-CR> go
+
+" expand all folds by default
+autocmd BufReadPost * :silent! %foldopen!
