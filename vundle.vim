@@ -24,7 +24,6 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'Syntastic'
 Bundle 'Bookmarking'
 Bundle 'Align'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tomtom/tcomment_vim'
 
