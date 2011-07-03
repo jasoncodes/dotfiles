@@ -14,6 +14,7 @@ map <Leader>N :NERDTreeFind<CR>
 " Trim & save
 map <Leader>sd :FixWhitespace<CR>:up<CR>
 map <Leader>sw :FixWhitespace<CR>:up<CR>:CommandW<CR>
+map ZZ :up<CR>:CommandW<CR>
 
 " Buffer navigation
 map <Leader>, <C-^>
