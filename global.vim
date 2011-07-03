@@ -31,6 +31,7 @@ set smarttab                               " Use shiftwidth and softtabstop to i
 set cindent                                " Recommended seting for automatic C-style indentation
 set autoindent                             " Automatic indentation in non-C files
 set foldmethod=syntax                      " Automatically fold based on syntax
+set foldlevelstart=99											 " Expand all folds by default
 
 " Wrap
 set nowrap                                 " I don't always wrap lines...
