@@ -10,9 +10,6 @@ let g:rails_menu = 0
 " Syntastic
 let g:syntastic_enable_signs  = 1
 let g:syntastic_auto_loc_list = 0
-if !has("gui")
-  let g:loaded_syntastic_plugin = 0
-endif
 
 " Command-T
 let g:CommandTMaxFiles         = 20000
