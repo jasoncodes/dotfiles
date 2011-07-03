@@ -12,7 +12,6 @@ set incsearch                              " Find the next match as we type the 
 set hlsearch                               " Highlight searches by default
 set ruler                                  " Show ruler
 set number                                 " Show line numbers
-"set vb t_vb=                               " Turn off bell
 set mouse=a                                " Enable the mouse
 set linespace=3                            " Spacing between lines
 set noswapfile                             " Disable creation of *.swp files
