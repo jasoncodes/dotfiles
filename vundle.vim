@@ -26,6 +26,7 @@ Bundle 'dterei/VimBookmarking'
 Bundle 'Align'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tomtom/tcomment_vim'
+Bundle 'SudoEdit.vim'
 
 Bundle 'desert256.vim'
 Bundle 'rdark'
