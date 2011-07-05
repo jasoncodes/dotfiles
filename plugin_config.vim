@@ -25,3 +25,7 @@ let g:NERDSpaceDelims = 1
 
 " EasyMotion
 let g:EasyMotion_leader_key = '<Leader>e'
+
+" Disable Surround's default bindings
+" The default `ds` mapping screws with bufexplorer's `d`
+let g:surround_no_mappings = 1
