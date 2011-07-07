@@ -16,6 +16,10 @@ map <Leader>sd :FixWhitespace<CR>:up<CR>
 map <Leader>sw :FixWhitespace<CR>:up<CR>:CommandW<CR>
 map ZZ :up<CR>:CommandW<CR>
 
+" normalize whitespace
+nmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /g<CR>:S/\s*$//<CR>
+vmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /g<CR>gv:S/\s*$//<CR>
+
 " Buffer navigation
 map <Leader>, <C-^>
 map <Leader>t :CommandT<CR>
