@@ -19,29 +19,6 @@ else
   export CVS_RSH=ssh
 fi
 
-# if we're in iTerm we can have Ctrl-T open a new tab in the current directory
-# src: http://refactormycode.com/codes/63-open-a-new-tab-in-current-directory-from-iterm
-if [ "$TERM_PROGRAM" == "iTerm.app" ]
-then
-  function tab()
-  {
-    osascript -e "
-      tell application \"iTerm\"
-        tell the first terminal
-          set currentSession to current session
-          launch session \"Default Session\"
-          tell the last session
-            write text \"cd $(pwd)\"
-            write text \"$*\"
-          end tell
-          -- select currentSession
-        end tell
-      end tell
-    " && echo -en "\033[1A"
-  }
-  bind -x '"\C-t":tab clear'
-fi
-
 # open man pages in Preview.app
 if [ -d "/Applications/Preview.app" ]
 then
