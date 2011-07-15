@@ -15,4 +15,5 @@
 --nonib
 --notmstuff
 --noxcode
+--ignore-dir=log
 --smart-case
