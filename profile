@@ -128,6 +128,7 @@ function psql
   fi
   "$(which psql)" "$@"
 }
+export PSQL_EDITOR='vim +"set syntax=sql"'
 
 # handy aliases
 alias gl='git lg --all'
