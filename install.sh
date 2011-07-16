@@ -28,12 +28,12 @@ quit
 VIM
 
 (
-  cd ~/.vim/bundle/Command-T/ruby/command-t
+  builtin cd ~/.vim/bundle/Command-T/ruby/command-t
   if type -t rvm > /dev/null
   then
-    rvm system exec ruby extconf.rb
-  else
-    ruby extconf.rb
+    rvm system
   fi
+  export PATH=/usr/bin:/bin:/usr/local/bin
+  ruby extconf.rb
   make
 )
