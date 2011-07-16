@@ -35,5 +35,5 @@ VIM
   fi
   export PATH=/usr/bin:/bin:/usr/local/bin
   ruby extconf.rb
-  make
+  make clean && make
 )
