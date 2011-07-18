@@ -1,5 +1,8 @@
 set guifont=Monaco:h12
 
+" Disable left scrollbar for NERDTree
+set guioptions-=L
+
 " Cmd+T for Command-T
 macmenu &File.New\ Tab key=<nop>
 nmap <D-t> :CommandT<CR>
