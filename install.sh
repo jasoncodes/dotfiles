@@ -23,7 +23,7 @@ mkdir -p ~/.vim/.{backup,undo}
 
 vim -N -u ~/.vimrc -es - <<-VIM
 BundleInstall!
-BundleClean
+BundleClean!
 quit
 VIM
 
