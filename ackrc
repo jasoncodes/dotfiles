@@ -16,4 +16,5 @@
 --notmstuff
 --noxcode
 --ignore-dir=log
+--ignore-dir=vendor/bundle
 --smart-case
