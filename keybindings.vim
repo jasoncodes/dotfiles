@@ -83,7 +83,7 @@ vnoremap > >gv
 map <Leader>am <Plug>AM_w=
 
 " Rooter (mapping overrides)
-map <Leader>ro <Plug>RooterChangeToRootDirectory
+map <Leader>R <Plug>RooterChangeToRootDirectory
 
 " TComment
 let g:tcommentMapLeaderOp1 = '<Leader>c'
