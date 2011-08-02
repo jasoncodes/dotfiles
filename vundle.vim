@@ -29,6 +29,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'SudoEdit.vim'
 Bundle 'msanders/snipmate.vim'
+Bundle 'sjl/gundo.vim'
 
 Bundle 'desert256.vim'
 Bundle 'rdark'
