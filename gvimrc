@@ -10,6 +10,8 @@ function! ToggleColors()
     set background=dark
     colorscheme rdark
   end
+  IndentGuidesToggle
+  IndentGuidesToggle
 endfunction
 map <Leader>C :call ToggleColors()<CR>
 
