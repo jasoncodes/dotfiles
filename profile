@@ -438,6 +438,7 @@ then
   complete -o bashdefault -o default -o nospace -F _git_add gap
   complete -o bashdefault -o default -o nospace -F _git_commit gc gca
   complete -o bashdefault -o default -o nospace -F _git_push gp
+  source ~/.dotfiles/git-flow-completion.bash
 fi
 
 # finish off the prompt
