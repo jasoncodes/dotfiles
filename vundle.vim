@@ -30,6 +30,7 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'SudoEdit.vim'
 Bundle 'msanders/snipmate.vim'
 Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-fugitive'
 
 Bundle 'desert256.vim'
 Bundle 'rdark'
