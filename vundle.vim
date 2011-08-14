@@ -31,6 +31,7 @@ Bundle 'SudoEdit.vim'
 Bundle 'msanders/snipmate.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rake'
 
 Bundle 'desert256.vim'
 Bundle 'rdark'
