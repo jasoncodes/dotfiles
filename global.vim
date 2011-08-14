@@ -7,6 +7,7 @@ set nolist                                 " Hide invisibles by default
 set showcmd                                " Show incomplete cmds down the bottom
 set showmode                               " Show current mode down the bottom
 set cmdheight=2                            " Make the command line a little taller
+set history=1000													 " Remember more history for commands and search patterns
 set ttyfast                                " More smooth screen redrawing
 set incsearch                              " Find the next match as we type the search
 set hlsearch                               " Highlight searches by default
