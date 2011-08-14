@@ -28,3 +28,9 @@ endfunction
 command! -range -nargs=+ SS call SafeSearchCommand(<line1>, <line2>, <q-args>)
 " A nicer version of :s that doesn't clobber the search register
 command! -range -nargs=* S call SafeSearchCommand(<line1>, <line2>, 's' . <q-args>)
+
+function! UpdateTags()
+  if exists('b:git_dir') && executable('ctags')
+    call system('cd "'.b:git_dir.'/.." && nice ctags --tag-relative -R -f .git/tags --exclude=.git --langmap="ruby:+.rake.builder.rjs" .')
+  endif
+endfunction
