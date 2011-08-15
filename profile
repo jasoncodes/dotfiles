@@ -163,6 +163,7 @@ alias besc='bundle exec spork cucumber'
 alias rc='rails_command console'
 alias rs='rails_command server'
 alias rake='bundle exec rake'
+alias cap='bundle exec cap'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
 # awesome history tracking
