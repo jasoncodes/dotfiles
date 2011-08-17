@@ -29,7 +29,7 @@ map <Leader>w :CommandW<CR>
 nmap <silent><Leader>q :cclose<CR>
 
 " Ack
-map <Leader>f :Ack<Space>
+map <Leader>f :Ack!<Space>
 
 " Cycle between windows with Tab and Shift-Tab
 map <silent><Tab> :wincmd w<CR>
