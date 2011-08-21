@@ -16,9 +16,9 @@ autocmd FileType make set noexpandtab
 " Enable spell check by default for git commits
 autocmd FileType gitcommit set spell
 
-" NERDTree
 " use shift-return to keep focus when opening a file
-autocmd FileType nerdtree map <buffer> <S-CR> go
+" from within the quickfix list or NERDTree
+autocmd FileType nerdtree,qf map <buffer> <S-CR> go
 
 " Generate .git/tags (ctags) automatically on save
 autocmd BufWritePost * call UpdateTags()
