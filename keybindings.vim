@@ -26,7 +26,7 @@ map <Leader>, <C-^>
 map <Leader>t :CommandT<CR>
 map <Leader>T :call CommandTWithFlush()<CR>
 map <Leader>w :CommandW<CR>
-nmap <silent><Leader>q :cclose<CR>
+nmap <silent><Leader>q :call CloseWindow()<CR>
 
 " Ack
 map <Leader>f :Ack!<Space>

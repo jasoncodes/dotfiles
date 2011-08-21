@@ -34,3 +34,15 @@ function! UpdateTags()
     call system('cd "'.b:git_dir.'/.." && nice ctags --tag-relative -R -f .git/tags --exclude=.git --langmap="ruby:+.rake.builder.rjs" .')
   endif
 endfunction
+
+" Closes the quickfix window if it's open, overwise the focused window.
+function! CloseWindow()
+  for i in range(1, winnr('$'))
+    let bnum = winbufnr(i)
+    if getbufvar(bnum, '&buftype') == 'quickfix'
+      cclose
+      return
+    endif
+  endfor
+  close
+endfunction
