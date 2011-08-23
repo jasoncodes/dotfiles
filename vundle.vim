@@ -33,6 +33,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-bundler'
+Bundle 'ervandew/supertab'
 
 Bundle 'desert256.vim'
 Bundle 'rdark'
