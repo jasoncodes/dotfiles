@@ -7,7 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'AndrewRadev/ack.vim'
 Bundle 'bufexplorer.zip'
-Bundle 'wincent/Command-T'
+Bundle 'nathanaelkane/Command-T'
 Bundle 'scrooloose/nerdtree'
 Bundle 'bufkill.vim'
 Bundle 'nathanaelkane/vim-command-w'
