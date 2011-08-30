@@ -67,6 +67,8 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
 
+nnoremap = v=
+
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
