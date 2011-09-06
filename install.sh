@@ -21,11 +21,13 @@ ln -sf .vim/gvimrc ~/.gvimrc
 
 mkdir -p ~/.vim/.{backup,undo}
 
-vim -N -u ~/.vimrc -es - <<-VIM
-BundleInstall!
-BundleClean!
-quit
-VIM
+vim -N -u ~/.vimrc -s <(cat <<-EOF
+:set buftype=nofile
+iRun \`:qa\` to finish install when bundle completes.
+:BundleClean!
+:BundleInstall!
+EOF
+)
 
 (
   builtin cd ~/.vim/bundle/Command-T/ruby/command-t
