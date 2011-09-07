@@ -55,6 +55,9 @@ map <Leader>I :set list<CR>:FixWhitespace<CR>:ToggleTabs<CR>
 " Page down with space
 map <Space> <PageDown>
 
+" Highlight word at cursor without changing position
+nnoremap <leader>h *<C-O>
+
 " Bookmarking
 map <C-Space> :ToggleBookmark<CR>
 map <C-Up>    :PreviousBookmark<CR>
