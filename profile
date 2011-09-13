@@ -149,7 +149,7 @@ alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
 alias gap='git add -p'
 alias gau='git ls-files --other --exclude-standard -z | xargs -0 git add -Nv'
-alias gaur="git ls-files --exclude-standard --modified -z | xargs -0 git ls-files --stage -z | gawk 'BEGIN { RS=\"\0\"; FS=\"\t\"; ORS=\"\0\" } { if (\$1 ~ / e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 /) { sub(/^[^\t]+\t/, \"\", \$0); print } }' | xargs -0t -n 1 git reset -q -- 2>&1 | sed -e \"s/^git reset -q -- /reset '/\" -e \"s/ *$/'/\""
+alias gaur='git ls-files --exclude-standard --modified -z | xargs -0 git ls-files --stage -z | gawk '\''BEGIN { RS="\0"; FS="\t"; ORS="\0" } { if ($1 ~ / e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 /) { sub(/^[^\t]+\t/, "", $0); print } }'\'' | if git rev-parse --quiet --verify HEAD > /dev/null; then xargs -0t -n 1 git reset -q -- 2>&1 | sed -e "s/^git reset -q -- /reset '\''/" -e "s/ *$/'\''/"; else xargs -0 -n 1 --no-run-if-empty git rm --cached --; fi'
 alias gc='git commit -v'
 alias gca='gc --amend'
 alias grt='git_current_tracking > /dev/null && git rebase -i $(git_current_tracking)'
