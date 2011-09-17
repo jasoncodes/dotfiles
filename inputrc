@@ -27,6 +27,8 @@ set convert-meta off
 "\e[3~": delete-char
 "\e[2~": quoted-insert
 
+set show-all-if-ambiguous on
+
 $if Bash
   # F10 toggles mc on and off
   # Note Ctrl-o toggles panes on and off in mc
