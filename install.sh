@@ -31,7 +31,7 @@ EOF
 
 (
   builtin cd ~/.vim/bundle/Command-T/ruby/command-t
-  if type -t rvm > /dev/null
+  if [[ -n "$rvm_path" ]]
   then
     rvm system
   fi
