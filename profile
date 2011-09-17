@@ -486,6 +486,11 @@ fi
 # finish off the prompt
 export PS1="$PS1"'\[\033[00m\]\$ '
 
+# initialise rbenv
+if [[ -x "`which rbenv`" ]]; then
+  eval "$(rbenv init - --no-rehash)"
+fi
+
 # load local shell configuration if present
 if [[ -f ~/.bashrc.local ]]
 then
