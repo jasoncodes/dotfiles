@@ -1,5 +1,5 @@
 set background=dark
-colorscheme rdark
+colorscheme jellybeans
 let g:indent_guides_auto_colors = 1
 
 function! ToggleColors()
@@ -8,7 +8,7 @@ function! ToggleColors()
     set background=light
   else
     set background=dark
-    colorscheme rdark
+    colorscheme jellybeans
   end
   IndentGuidesToggle
   IndentGuidesToggle

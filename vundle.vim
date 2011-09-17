@@ -34,6 +34,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rake'
 Bundle 'ervandew/supertab'
 
-Bundle 'desert256.vim'
-Bundle 'rdark'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
+Bundle 'rdark'
