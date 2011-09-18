@@ -12,6 +12,8 @@ function! ToggleColors()
   end
   IndentGuidesToggle
   IndentGuidesToggle
+  hi Cursor guifg=black guibg=green
+  hi iCursor guifg=black guibg=green
 endfunction
 map <Leader>C :call ToggleColors()<CR>
 
