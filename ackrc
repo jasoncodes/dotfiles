@@ -3,7 +3,7 @@
 --context=1
 --follow
 --group
---type-add=ruby=.haml,.feature
+--type-add=ruby=.haml,.feature,.ru
 --type-add=css=.sass,.scss
 --type-set=markdown=.markdown,.mdown,.md
 --type-add=objc=.pch
