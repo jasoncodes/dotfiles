@@ -5,6 +5,7 @@ let g:loaded_netrwPlugin = 1 " Disable netrw
 let g:NERDTreeShowLineNumbers = 0
 let g:NERDTreeMinimalUI = 1 " Disable help message
 let g:NERDTreeDirArrows = 1
+let g:NERDTreeWinPos = 'right'
 
 " Rails
 let g:rails_menu = 0
