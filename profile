@@ -157,7 +157,7 @@ alias grt='git_current_tracking > /dev/null && git rebase -i $(git_current_track
 alias gp='git push'
 alias bo='bundle open'
 alias be='bundle exec'
-alias ber='bundle exec rspec --drb --format=doc'
+alias ber='bundle exec $(egrep -q "^ {4}rails \(2\." Gemfile.lock && echo spec --format=nested --colour || echo rspec --format=doc) --drb'
 alias bec='bundle exec cucumber --drb'
 alias cuke='CUCUMBER_FORMAT=pretty bec'
 alias besr='bundle exec spork rspec'
