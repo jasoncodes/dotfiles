@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'AndrewRadev/ack.vim'
+Bundle 'mileszs/ack.vim'
 Bundle 'bufexplorer.zip'
 Bundle 'nathanaelkane/Command-T'
 Bundle 'scrooloose/nerdtree'
