@@ -17,12 +17,12 @@ imap <D-T> <Esc>:call CommandTWithFlush()<CR>
 macmenu &Edit.Find.Find\.\.\. key=<nop>
 nmap <D-f> :Ack!<Space>
 imap <D-f> <Esc>:Ack!<Space>
+" Cmd+Shift+F to Ack from current search pattern
 nmap <D-F> :AckFromSearch<CR>
 imap <D-F> <Esc>:AckFromSearch<CR>
 
-" Cmd+Shift+F for closing Ack
+" Prevent Cmd+Shift+F from fullscreening Vim
 macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
-" TODO
 
 " Cmd+W to close current buffer and close the window if no buffers are left
 macmenu &File.Close key=<nop>
