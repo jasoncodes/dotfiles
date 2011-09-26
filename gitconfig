@@ -9,9 +9,6 @@
 # token = TOKEN
 
 [color]
-diff = auto
-branch = auto
-status = auto
 ui = auto
 
 [core]
