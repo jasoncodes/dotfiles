@@ -8,7 +8,7 @@ if has("gui_running")
 endif
 
 " Markdown files
-autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown} setlocal ft=markdown wrap
+autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown} setlocal ft=markdown wrap iskeyword+='
 
 " Treat dasherised words as whole words in stylesheets
 autocmd Filetype css,scss,sass setlocal iskeyword+=-
