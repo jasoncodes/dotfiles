@@ -74,6 +74,3 @@ colorscheme jellybeans
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=#121212 ctermbg=233
 hi IndentGuidesEven guibg=#1c1c1c ctermbg=234
-
-" Save on FocusLost
-au FocusLost * :silent! wall
