@@ -32,6 +32,7 @@ map <Leader>l :CommandTBuffer<CR>
 
 " Ack
 map <Leader>f :Ack!<Space>
+map <Leader>F :AckFromSearch<CR>
 
 " Cycle between windows with Tab and Shift-Tab
 map <silent><Tab> :wincmd w<CR>

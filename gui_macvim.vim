@@ -17,6 +17,8 @@ imap <D-T> <Esc>:call CommandTWithFlush()<CR>
 macmenu &Edit.Find.Find\.\.\. key=<nop>
 nmap <D-f> :Ack!<Space>
 imap <D-f> <Esc>:Ack!<Space>
+nmap <D-F> :AckFromSearch<CR>
+imap <D-F> <Esc>:AckFromSearch<CR>
 
 " Cmd+Shift+F for closing Ack
 macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
