@@ -18,8 +18,8 @@ macmenu &Edit.Find.Find\.\.\. key=<nop>
 nmap <D-f> :Ack!<Space>
 imap <D-f> <Esc>:Ack!<Space>
 " Cmd+Shift+F to Ack from current search pattern
-nmap <D-F> :AckFromSearch<CR>
-imap <D-F> <Esc>:AckFromSearch<CR>
+nmap <D-F> :AckFromSearch!<CR>
+imap <D-F> <Esc>:AckFromSearch!<CR>
 
 " Prevent Cmd+Shift+F from fullscreening Vim
 macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
