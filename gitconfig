@@ -11,6 +11,9 @@
 [color]
 ui = auto
 
+[color "diff"]
+commit = yellow reverse
+
 [core]
 excludesfile = ~/.gitignore
 
