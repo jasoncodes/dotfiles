@@ -27,6 +27,12 @@ map <Leader>w :CommandW<CR>
 nmap <silent><Leader>q :call CloseWindow()<CR>
 map <Leader>l :CommandTBuffer<CR>
 
+" Disable scrolling while in both insert and visual modes
+imap <ScrollWheelUp> <Nop>
+imap <ScrollWheelDown> <Nop>
+vmap <ScrollWheelUp> <Nop>
+vmap <ScrollWheelDown> <Nop>
+
 " Ack
 map <Leader>f :Ack!<Space>
 map <Leader>F :AckFromSearch!<CR>
