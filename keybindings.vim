@@ -4,9 +4,6 @@ let mapleader = ","
 " Yank from the cursor to the end of the line, to be consistent with C and D
 nnoremap Y y$
 
-" Preserve cursor position when exiting insert mode
-imap <Esc> <Esc><Right>
-
 " NERDTree
 map <Leader>n :NERDTreeToggle<CR>
 map <Leader>N :NERDTree<CR>:wincmd p<CR>:NERDTreeFind<CR>
