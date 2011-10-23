@@ -91,6 +91,10 @@ vnoremap <F1> <Esc>
 vnoremap < <gv
 vnoremap > >gv
 
+" Use ,d (or ,dd or ,dj or 20,dd) to delete a line without yanking
+nmap <silent> <leader>d "_d
+vmap <silent> <leader>d "_d
+
 " Align Maps (mapping overrides)
 map <Leader>am <Plug>AM_w=
 
