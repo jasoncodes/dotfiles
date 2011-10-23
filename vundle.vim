@@ -35,6 +35,7 @@ Bundle 'tpope/vim-rake'
 Bundle 'ervandew/supertab'
 Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'danro/rename.vim'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
