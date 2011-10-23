@@ -33,6 +33,8 @@ Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rake'
 Bundle 'ervandew/supertab'
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
