@@ -69,6 +69,9 @@ set undoreload=10000
 set statusline=%F%m%r%h%w\ [TYPE=%Y]\ \ \ \ \ \ [POS=%2l,%2v][%p%%]\ \ \ \ \ \ [LEN=%L]
 set laststatus=2
 
+" Use % to jump to matching begin/end of blocks as well as brackets/parens
+runtime macros/matchit.vim
+
 " Default colours for vim, gvimrc overrides this
 colorscheme jellybeans
 let g:indent_guides_auto_colors = 0
