@@ -95,6 +95,9 @@ vnoremap > >gv
 nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
 
+" Replace until end of line with yanked text
+nmap <silent><Leader>p "_DP
+
 " Align Maps (mapping overrides)
 map <Leader>am <Plug>AM_w=
 
