@@ -109,8 +109,8 @@ vmap <silent><Bar> :Align <Bar><CR>gv:S/\s\+$//e<CR>gv:S/^\s//e<CR>gv<Esc>
 
 " Save and restore window and cursor position
 " This prevents the default <Leader>swp from conflicting with <Leader>sw
-map <Leader>p <Plug>SaveWinPosn
-map <Leader>P <Plug>RestoreWinPosn
+map \swp <Plug>SaveWinPosn
+map \rwp <Plug>RestoreWinPosn
 
 " Restore Surround's default `cs` key binding
 nmap cs <Plug>Csurround
