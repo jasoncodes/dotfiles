@@ -106,6 +106,15 @@ function gls()
   glp --pickaxe-all -S"$phrase" "$@" $default_range
 }
 
+function rake
+{
+  if [ -f Gemfile ]; then
+    bundle exec rake "$@"
+  else
+    "$(which rake)" "$@"
+  fi
+}
+
 function rails_command
 {
   local cmd=$1
@@ -165,7 +174,6 @@ alias besr='bundle exec spork rspec'
 alias besc='bundle exec spork cucumber'
 alias rc='rails_command console'
 alias rs='rails_command server'
-alias rake='bundle exec rake'
 alias cap='bundle exec cap'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
