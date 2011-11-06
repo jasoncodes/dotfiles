@@ -182,8 +182,11 @@ end
 extend_console 'rails', :require => false, :if => lambda { defined?(Rails) || ENV['RAILS_ENV'] } do
 
   on_irb_init do
-    ActiveRecord::Base.logger = Logger.new(STDOUT)
-    ActiveSupport::Cache::Store.logger = Logger.new(STDOUT)
+    if defined? Rails
+      Rails.logger = Logger.new(STDOUT) if Rails.respond_to? :logger=
+      ActiveRecord::Base.logger = Logger.new(STDOUT)
+      ActiveSupport::Cache::Store.logger = Logger.new(STDOUT)
+    end
   end
 
   # supress the ActiveRecord debug output when autocompleting
