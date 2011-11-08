@@ -73,7 +73,7 @@ set laststatus=2
 runtime macros/matchit.vim
 
 " Default colours for vim, gvimrc overrides this
-colorscheme jellybeans
+colorscheme jellybeans_jason
 let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  guibg=#121212 ctermbg=233
-hi IndentGuidesEven guibg=#1c1c1c ctermbg=234
+hi IndentGuidesOdd  ctermbg=232
+hi IndentGuidesEven ctermbg=233
