@@ -72,8 +72,5 @@ set laststatus=2
 " Use % to jump to matching begin/end of blocks as well as brackets/parens
 runtime macros/matchit.vim
 
-" Default colours for vim, gvimrc overrides this
+" Default colourscheme
 colorscheme jellybeans_jason
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  ctermbg=232
-hi IndentGuidesEven ctermbg=233

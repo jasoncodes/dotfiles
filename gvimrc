@@ -1,16 +1,9 @@
-colorscheme jellybeans_jason
-let g:indent_guides_auto_colors = 1
-
 function! ToggleColors()
   if &background == 'dark'
     colorscheme bclear_jason
   else
     colorscheme jellybeans_jason
   end
-  IndentGuidesToggle
-  IndentGuidesToggle
-  hi Cursor guifg=black guibg=green
-  hi iCursor guifg=black guibg=green
 endfunction
 map <Leader>C :call ToggleColors()<CR>
 
@@ -28,8 +21,6 @@ if isdirectory(argv(0))
 endif
 
 " Cursor
-hi Cursor guifg=black guibg=green
-hi iCursor guifg=black guibg=green
 set guicursor=a:blinkon0 " turn off cursor blink
 
 " Color columns

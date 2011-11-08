@@ -26,6 +26,7 @@ let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 2
 
 " Indent Guides
+let g:indent_guides_auto_colors = 0
 let g:indent_guides_color_change_percent = 5
 let g:indent_guides_enable_on_vim_startup = 1
 
