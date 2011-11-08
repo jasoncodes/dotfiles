@@ -1,13 +1,10 @@
-set background=dark
 colorscheme jellybeans_jason
 let g:indent_guides_auto_colors = 1
 
 function! ToggleColors()
   if &background == 'dark'
     colorscheme bclear
-    set background=light
   else
-    set background=dark
     colorscheme jellybeans_jason
   end
   IndentGuidesToggle
