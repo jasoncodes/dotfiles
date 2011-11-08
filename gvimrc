@@ -3,7 +3,7 @@ let g:indent_guides_auto_colors = 1
 
 function! ToggleColors()
   if &background == 'dark'
-    colorscheme bclear
+    colorscheme bclear_jason
   else
     colorscheme jellybeans_jason
   end
