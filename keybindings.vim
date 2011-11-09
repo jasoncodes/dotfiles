@@ -67,6 +67,10 @@ map <C-Space> :ToggleBookmark<CR>
 map <C-Up>    :PreviousBookmark<CR>
 map <C-Down>  :NextBookmark<CR>
 
+" Jump to start and end of line using the home row keys
+map H ^
+map L $
+
 " Movement & wrapped long lines
 " This solves the problem that pressing down jumps your cursor 'over' the current line to the next line
 nnoremap j gj
