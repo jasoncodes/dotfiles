@@ -193,8 +193,6 @@ set -o notify
 shopt -u mailwarn
 unset MAILCHECK
 
-# I like backspace being ^H
-[ -t 0 ] && stty erase `tput kbs`
 # check for window resizing whenever the prompt is displayed
 shopt -s checkwinsize
 # display "user@hostname: dir" in the window title
