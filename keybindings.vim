@@ -78,6 +78,12 @@ nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
 
+" Use option-J/K to bubble lines up and down
+nmap <silent> ˚ <Plug>upAndDownUp
+nmap <silent> ∆ <Plug>upAndDownDown
+vmap <silent> ˚ <Plug>upAndDownVisualUp
+vmap <silent> ∆ <Plug>upAndDownVisualDown
+
 nnoremap = v=
 
 " Easy window navigation
