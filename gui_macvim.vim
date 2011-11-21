@@ -1,4 +1,4 @@
-set guifont=Monaco:h12
+set guifont=Monaco:h13
 
 " Disable scrollbars
 set guioptions-=rL
