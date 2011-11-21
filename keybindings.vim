@@ -16,8 +16,8 @@ map <silent><Leader>r :checktime<CR>:wall<CR>
 map <Leader>Q :qall<CR>
 
 " normalize whitespace
-nmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /g<CR>:S/\s*$//<CR>
-vmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /g<CR>gv:S/\s*$//<CR>
+nmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>:S/\s*$//e<CR>
+vmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>gv:S/\s*$//e<CR>
 
 " Buffer navigation
 map <Leader>, <C-^>
