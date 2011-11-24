@@ -2,7 +2,7 @@
 --color
 --context=1
 --follow
---group
+--nogroup
 --type-add=ruby=.haml,.feature,.ru
 --type-add=css=.sass,.scss
 --type-set=markdown=.markdown,.mdown,.md
