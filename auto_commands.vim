@@ -23,5 +23,9 @@ autocmd FileType gitcommit set spell
 " from within the quickfix list or NERDTree
 autocmd FileType nerdtree,qf map <buffer> <S-CR> go
 
+" Prevent vim-surround's `ds` from conflicting with bufexplorer
+autocmd BufWinEnter \[BufExplorer\] unmap ds
+autocmd BufWinLeave \[BufExplorer\] nmap ds <Plug>Dsurround
+
 " Generate .git/tags (ctags) automatically on save
 autocmd BufWritePost * call UpdateTags()

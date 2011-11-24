@@ -125,8 +125,5 @@ vmap <silent><Bar> :Align <Bar><CR>gv:S/\s\+$//e<CR>gv:S/^\s//e<CR>gv<Esc>
 map \swp <Plug>SaveWinPosn
 map \rwp <Plug>RestoreWinPosn
 
-" Restore Surround's default `cs` key binding
-nmap cs <Plug>Csurround
-
 " Fold everything not relevant to the current RSpec example
 nmap <silent> <Leader>rf mr:set foldmethod=syntax<CR>zMzv?\v^\s*(it\|example)<CR>zz:noh<CR>`r:delmarks r<CR>
