@@ -189,6 +189,9 @@ PROMPT_COMMAND='history -a; echo "$$ $USER $(history 1)" >> ~/.bash_eternal_hist
 # notify of bg job completion immediately
 set -o notify
 
+# use Vi mode instead of Emacs mode
+set -o vi
+
 # no mail notifications
 shopt -u mailwarn
 unset MAILCHECK
