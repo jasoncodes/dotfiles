@@ -27,6 +27,8 @@ set convert-meta off
 "\e[3~": delete-char
 "\e[2~": quoted-insert
 
+"\C-k": kill-line
+
 set show-all-if-ambiguous on
 
 $if Bash
