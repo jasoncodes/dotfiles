@@ -19,6 +19,9 @@ map <Leader>Q :qall<CR>
 nmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>:S/\s*$//e<CR>
 vmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>gv:S/\s*$//e<CR>
 
+" select all
+map <Leader>a ggVG
+
 " Buffer navigation
 map <Leader>, <C-^>
 map <Leader>t :CommandT<CR>
