@@ -115,7 +115,7 @@ vmap <silent> <leader>d "_d
 nmap <silent><Leader>p "_DP
 
 " Align Maps (mapping overrides)
-map <Leader>am <Plug>AM_w=
+map <Leader>Am <Plug>AM_w=
 
 " Rooter (mapping overrides)
 map <Leader>R <Plug>RooterChangeToRootDirectory
