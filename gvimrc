@@ -14,12 +14,6 @@ if has("gui_macvim")
   source $HOME/.vim/gui_macvim.vim
 endif
 
-" VimEnter
-if isdirectory(argv(0))
-  au VimEnter * :NERDTreeToggle
-  au VimEnter * :wincmd p
-endif
-
 " Cursor
 set guicursor=a:blinkon0 " turn off cursor blink
 
