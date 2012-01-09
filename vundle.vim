@@ -38,6 +38,7 @@ Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'danro/rename.vim'
 Bundle 'sickill/vim-pasta'
+Bundle 'Lokaltog/vim-powerline'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
