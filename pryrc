@@ -53,4 +53,18 @@ Pry.hooks[:before_session] = proc do |output, target, pry|
   if defined? ActiveRecord
     ActiveRecord::Base.logger = Logger.new STDOUT
   end
+
+  # load Rails console commands
+  if defined?(Rails) && Rails.env
+    if Rails::VERSION::MAJOR >= 3
+      require 'rails/console/app'
+      require 'rails/console/helpers'
+      if Rails.const_defined? :ConsoleMethods
+        extend Rails::ConsoleMethods
+      end
+    else
+      require 'console_app'
+      require 'console_with_helpers'
+    end
+  end
 end
