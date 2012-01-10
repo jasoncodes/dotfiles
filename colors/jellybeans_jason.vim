@@ -13,3 +13,5 @@ hi iCursor guifg=black guibg=green
 
 hi IndentGuidesOdd  guibg=#0c0c0c ctermbg=232
 hi IndentGuidesEven guibg=#181818 ctermbg=233
+
+hi VertSplit ctermbg=235
