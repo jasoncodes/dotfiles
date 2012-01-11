@@ -8,8 +8,9 @@ hi Normal guibg=#000000 ctermbg=0
 hi NonText guibg=#000000 ctermbg=0
 hi CursorLine ctermbg=233
 
-hi Cursor guifg=black guibg=green
-hi iCursor guifg=black guibg=green
+hi Cursor  guibg=#afd700 guifg=black
+hi iCursor guibg=#0087af
+hi cCursor guibg=white
 
 hi IndentGuidesOdd  guibg=#0c0c0c ctermbg=232
 hi IndentGuidesEven guibg=#181818 ctermbg=233
