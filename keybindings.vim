@@ -92,6 +92,26 @@ vmap <silent> ∆ <Plug>upAndDownVisualDown
 imap <silent> ˚ <Plug>upAndDownInsertUp
 imap <silent> ∆ <Plug>upAndDownInsertDown
 
+" Disable cursor keys
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <M-Down> <Nop>
+inoremap <M-Left> <Nop>
+inoremap <M-Right> <Nop>
+noremap <Up> <Esc>
+noremap <Down> <Esc>
+noremap <Left> <Esc>
+noremap <Right> <Esc>
+noremap <S-Up> <Esc>
+noremap <S-Down> <Esc>
+vmap <Up> <Esc><Esc>gv
+vmap <Down> <Esc><Esc>gv
+vmap <Left> <Esc><Esc>gv
+vmap <Right> <Esc><Esc>gv
+
 nnoremap = v=
 
 " Easy window navigation
