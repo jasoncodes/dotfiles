@@ -143,6 +143,15 @@ function psql
 }
 export PSQL_EDITOR='vim +"set syntax=sql"'
 
+function mysql
+{
+  if [[ $# == 0 && "$(__database_yml adapter)" =~ 'mysql' ]]; then
+    mysql -uroot "$(__database_yml database)"
+    return $?
+  fi
+  "$(which mysql)" "$@"
+}
+
 # handy aliases
 alias gl='git lg HEAD $(cd "$(git rev-parse --git-dir)" && find refs/{heads,remotes,tags} -type f)'
 alias glw='glp --word-diff'
