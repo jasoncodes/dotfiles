@@ -144,7 +144,7 @@ function psql
 export PSQL_EDITOR='vim +"set syntax=sql"'
 
 # handy aliases
-alias gl='git lg --all'
+alias gl='git lg HEAD $(cd "$(git rev-parse --git-dir)" && find refs/{heads,remotes,tags} -type f)'
 alias glw='glp --word-diff'
 alias gco='git co'
 alias gcp='git co -p'
