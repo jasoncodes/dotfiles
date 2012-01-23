@@ -1,0 +1,10 @@
+#!/bin/bash -e
+GEM_NAME=${1:?Specify name of gem to compare}
+VER_OLD=${2:?Specify old version number}
+VER_NEW=${3:?Specify old version number}
+
+function gem_path {
+  ruby -e "gem '$1', '$2'; puts Gem.loaded_specs['$1'].full_gem_path"
+}
+
+chdiff "$(gem_path $GEM_NAME $VER_OLD)" "$(gem_path $GEM_NAME $VER_NEW)"
