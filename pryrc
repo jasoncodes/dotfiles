@@ -50,8 +50,11 @@ Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
     ActiveRecord::Base.logger = Logger.new STDOUT
   end
 
-  # load Rails console commands
   if defined?(Rails) && Rails.env
+    # output all other log info such as deprecation warnings to the console
+    Rails.logger = Logger.new STDOUT
+
+    # load Rails console commands
     if Rails::VERSION::MAJOR >= 3
       require 'rails/console/app'
       require 'rails/console/helpers'
