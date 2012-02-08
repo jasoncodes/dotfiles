@@ -44,11 +44,7 @@ Pry.config.print = proc do |output, value|
   end
 end
 
-# startup hooks
-org_hook = Pry.hooks[:before_session]
-Pry.hooks[:before_session] = proc do |output, target, pry|
-  org_hook.call output, target, pry
-
+Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
   # show ActiveRecord SQL queries in the console
   if defined? ActiveRecord
     ActiveRecord::Base.logger = Logger.new STDOUT
