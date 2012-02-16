@@ -67,6 +67,8 @@ map <Space> <PageDown>
 
 " Highlight word at cursor without changing position
 nnoremap <leader>h *<C-O>
+" Highlight word at cursor and then Ack it.
+nnoremap <leader>H *<C-O>:AckFromSearch!<CR>
 
 " Bookmarking
 map <C-Space> :ToggleBookmark<CR>
