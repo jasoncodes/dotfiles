@@ -6,6 +6,7 @@ set guioptions-=rL
 " Disable MacVim keybindings
 macmenu &Edit.Find.Find\.\.\. key=<nop>
 nmap <D-f> <Esc>
+nmap <D-F> <Esc>
 macmenu &File.New\ Tab key=<nop>
 nmap <D-t> <Esc>
 macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
