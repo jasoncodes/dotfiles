@@ -52,7 +52,9 @@ Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
 
   if defined?(Rails) && Rails.env
     # output all other log info such as deprecation warnings to the console
-    Rails.logger = Logger.new STDOUT
+    if Rails.respond_to? :logger=
+      Rails.logger = Logger.new STDOUT
+    end
 
     # load Rails console commands
     if Rails::VERSION::MAJOR >= 3
