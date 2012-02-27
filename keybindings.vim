@@ -30,8 +30,11 @@ map <Leader>w :CommandW<CR>
 nmap <silent><Leader>q :call CloseWindow()<CR>
 map <Leader>l :CommandTBuffer<CR>
 
+" Copy relative path to the system pasteboard
+nnoremap <silent><Leader>cf :let @*=expand('%')<CR>
+
 " Copy relative path and line number to the system pasteboard
-nmap <silent><Leader>cf :let @*=expand('%').':'.line('.')<CR>
+nnoremap <silent><Leader>cF :let @*=expand('%').':'.line('.')<CR>
 
 " Disable scrolling while in both insert and visual modes
 imap <ScrollWheelUp> <Nop>
