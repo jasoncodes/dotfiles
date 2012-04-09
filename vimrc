@@ -11,7 +11,7 @@ if isdirectory(argv(0))
 endif
 
 " Paste in non-GUI Vim with correct indentation when using Lion's Terminal or iTerm 1.0.0.20110908b+
-" <http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x/7053522#7053522>
+" <http://stackoverflow.com/a/7053522/3736>
 if &term =~ "xterm.*"
   let &t_ti = &t_ti . "\e[?2004h"
   let &t_te = "\e[?2004l" . &t_te
@@ -22,4 +22,6 @@ if &term =~ "xterm.*"
   endfunction
   map <expr> <Esc>[200~ XTermPasteBegin("i")
   imap <expr> <Esc>[200~ XTermPasteBegin("")
+  cmap <Esc>[200~ <nop>
+  cmap <Esc>[201~ <nop>
 endif
