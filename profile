@@ -160,7 +160,7 @@ function mysql
 }
 
 # handy aliases
-alias gl='git lg HEAD $(cd "$(git rev-parse --git-dir)" && find refs/{heads,remotes,tags} -type f)'
+alias gl='git lg $(git show-ref | cut -d " " -f 2 | grep -v stash$)'
 alias glw='glp --word-diff'
 alias gco='git co'
 alias gcp='git co -p'
