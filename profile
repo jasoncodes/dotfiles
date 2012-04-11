@@ -55,7 +55,7 @@ alias nano='echo Use vim :\) >&2; false'
 # helper for git aliases
 function git_current_tracking()
 {
-  local BRANCH="$(git describe --contains --all HEAD)"
+  local BRANCH="$(basename $(git symbolic-ref -q HEAD))"
   local REMOTE="$(git config branch.$BRANCH.remote)"
   local MERGE="$(git config branch.$BRANCH.merge)"
   if [ -n "$REMOTE" -a -n "$MERGE" ]
@@ -79,7 +79,7 @@ function glp()
   # if we have no non-option args then default to listing unpushed commits in reverse moode
   if ! (for ARG in "$@"; do echo "$ARG" | grep -v '^-'; done) | grep -q . && git_current_tracking > /dev/null 2>&1
   then
-    local default_range="$(git_current_tracking)..HEAD"
+    local default_range="@{upstream}..HEAD"
     local reverse='--reverse'
   else
     local default_range=''
@@ -179,7 +179,7 @@ alias gaur='git ls-files --exclude-standard --modified -z | xargs -0 git ls-file
 alias gld="git fsck --lost-found | grep '^dangling commit' | cut -d ' ' -f 3- | xargs git show -s --format='%ct %H' | sort -nr | cut -d ' ' -f 2 | xargs git show --stat"
 alias gc='git commit -v'
 alias gca='gc --amend'
-alias grt='git_current_tracking > /dev/null && git rebase -i $(git_current_tracking)'
+alias grt='git_current_tracking > /dev/null && git rebase -i @{upstream}'
 alias gp='git push'
 alias b='bundle'
 alias bo='bundle open'
@@ -301,7 +301,7 @@ function gup
     # fetch upstream changes
     git fetch
 
-    BRANCH=$(git describe --contains --all HEAD)
+    BRANCH=$(basename $(git symbolic-ref -q HEAD))
     if [ -z "$(git config branch.$BRANCH.remote)" -o -z "$(git config branch.$BRANCH.merge)" ]
     then
       echo "\"$BRANCH\" is not a tracking branch." >&2
