@@ -38,7 +38,7 @@ org_print = Pry.config.print
 Pry.config.print = proc do |output, value|
   begin
     require 'awesome_print'
-    value = value.to_a if defined?(ActiveRecord) && value.is_a?(ActiveRecord::Relation)
+    value = value.to_a if defined?(ActiveRecord) && defined?(ActiveRecord::Relation) && value.is_a?(ActiveRecord::Relation)
     output.puts value.ai
   rescue LoadError => err
     org_print.call(output, value)
