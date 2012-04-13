@@ -15,6 +15,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'airblade/vim-rooter'
 Bundle 'ciaranm/detectindent'
 
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-repeat'
