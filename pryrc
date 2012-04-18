@@ -45,15 +45,20 @@ Pry.config.print = proc do |output, value|
   end
 end
 
+org_logger_active_record = nil
+org_logger_rails = nil
+
 Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
   # show ActiveRecord SQL queries in the console
   if defined? ActiveRecord
+    org_logger_active_record = ActiveRecord::Base.logger
     ActiveRecord::Base.logger = Logger.new STDOUT
   end
 
   if defined?(Rails) && Rails.env
     # output all other log info such as deprecation warnings to the console
     if Rails.respond_to? :logger=
+      org_logger_rails = Rails.logger
       Rails.logger = Logger.new STDOUT
     end
 
@@ -69,4 +74,9 @@ Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
       require 'console_with_helpers'
     end
   end
+end
+
+Pry.hooks.add_hook :after_session, :rails do |output, target, pry|
+  ActiveRecord::Base.logger = org_logger_active_record if org_logger_active_record
+  Rails.logger = org_logger_rails if org_logger_rails
 end
