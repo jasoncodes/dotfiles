@@ -15,7 +15,6 @@ set number                                 " Show line numbers
 set mouse=a                                " Enable the mouse
 set linespace=2                            " Spacing between lines
 set noswapfile                             " Disable creation of *.swp files
-set t_Co=256                               " Support for xterm with 256 colors (gets overriden in .gvimrc)
 set title                                  " Show title in terminal vim
 set modelines=1                            " Check the first line of files for a modeline (tab vs spaces, etc)
 set autoread                               " Automatically reload externally modified files when clean
@@ -72,4 +71,6 @@ set laststatus=2
 runtime macros/matchit.vim
 
 " Default colourscheme
-colorscheme jellybeans_jason
+if has("gui_running") || &t_Co == 88 || &t_Co == 256
+  colorscheme jellybeans_jason
+end
