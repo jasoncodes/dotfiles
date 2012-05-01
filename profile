@@ -53,9 +53,17 @@ alias mate='echo Use mvim :\) >&2; false'
 alias nano='echo Use vim :\) >&2; false'
 
 # helper for git aliases
+function git_current_branch()
+{
+  local BRANCH="$(git symbolic-ref -q HEAD)"
+  local BRANCH="${BRANCH##refs/heads/}"
+  local BRANCH="${BRANCH:-HEAD}"
+  echo "$BRANCH"
+}
+
 function git_current_tracking()
 {
-  local BRANCH="$(basename $(git symbolic-ref -q HEAD))"
+  local BRANCH="$(git_current_branch)"
   local REMOTE="$(git config branch.$BRANCH.remote)"
   local MERGE="$(git config branch.$BRANCH.merge)"
   if [ -n "$REMOTE" -a -n "$MERGE" ]
@@ -181,7 +189,7 @@ alias gc='git commit -v'
 alias gca='gc --amend'
 alias grt='git_current_tracking > /dev/null && git rebase -i @{upstream}'
 alias gp='git push'
-alias gpt='git push -u origin $(basename $(git symbolic-ref -q HEAD))'
+alias gpt='git push -u origin $(git_current_branch)'
 alias b='bundle'
 alias bo='bundle open'
 alias be='bundle exec'
@@ -302,7 +310,10 @@ function gup
     # fetch upstream changes
     git fetch
 
-    BRANCH=$(basename $(git symbolic-ref -q HEAD))
+    BRANCH=$(git symbolic-ref -q HEAD)
+    BRANCH=${BRANCH##refs/heads/}
+    BRANCH=${BRANCH:-HEAD}
+
     if [ -z "$(git config branch.$BRANCH.remote)" -o -z "$(git config branch.$BRANCH.merge)" ]
     then
       echo "\"$BRANCH\" is not a tracking branch." >&2
