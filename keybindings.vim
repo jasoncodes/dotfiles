@@ -82,6 +82,9 @@ map <C-Down>  :NextBookmark<CR>
 map H ^
 map L $
 
+" I never intentionally lookup keywords (with `man`)
+nmap K <Esc>
+
 " Movement & wrapped long lines
 " This solves the problem that pressing down jumps your cursor 'over' the current line to the next line
 nnoremap j gj
