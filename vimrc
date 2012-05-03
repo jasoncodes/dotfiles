@@ -5,10 +5,8 @@ source $HOME/.vim/keybindings.vim
 source $HOME/.vim/plugin_config.vim
 source $HOME/.vim/auto_commands.vim
 
-" `:cd` to the project root if editing a directory
-if isdirectory(argv(0))
-  au VimEnter * :Rooter
-endif
+" `:cd` to the project root
+au VimEnter * :Rooter
 
 " Paste in non-GUI Vim with correct indentation when using Lion's Terminal or iTerm 1.0.0.20110908b+
 " <http://stackoverflow.com/a/7053522/3736>
