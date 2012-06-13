@@ -154,7 +154,7 @@ map <Leader>R <Plug>RooterChangeToRootDirectory
 let g:tcommentMapLeaderOp1 = '<Leader>c'
 
 " Align selected Cucumber table with <Bar>
-vmap <silent><Bar> :Align <Bar><CR>gv:S/\s\+$//e<CR>gv:S/^\s//e<CR>gv<Esc>
+nmap <silent><Bar> :Tabularize /\|/<CR>
 
 " Save and restore window and cursor position
 " This prevents the default <Leader>swp from conflicting with <Leader>sw
