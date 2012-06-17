@@ -45,10 +45,6 @@ vmap <ScrollWheelDown> <Nop>
 map <Leader>f :Ack!<Space>
 map <Leader>F :AckFromSearch!<CR>
 
-" Cycle between windows with Tab and Shift-Tab
-map <silent><Tab> :wincmd w<CR>
-map <silent><S-Tab> :wincmd W<CR>
-
 " Clear search
 map <silent><Leader>/ :nohls<CR>
 
