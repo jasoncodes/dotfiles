@@ -23,6 +23,11 @@ autocmd FileType gitcommit set spell
 " from within the quickfix list or NERDTree
 autocmd FileType nerdtree,qf map <buffer> <S-CR> go
 
+" Show the cursorline for the focused window
+set cursorline
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+
 " Prevent vim-surround's `ds` from conflicting with bufexplorer
 autocmd BufWinEnter \[BufExplorer\] unmap ds
 autocmd BufWinLeave \[BufExplorer\] nmap ds <Plug>Dsurround
