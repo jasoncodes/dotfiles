@@ -40,6 +40,7 @@ Bundle 'danro/rename.vim'
 Bundle 'sickill/vim-pasta'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'sjl/vitality.vim'
+Bundle 'tomtom/quickfixsigns_vim'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
