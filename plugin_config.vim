@@ -15,11 +15,18 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_disabled_filetypes = ['cucumber']
 
-" Command-T
-let g:CommandTMaxFiles = 20000
-let g:CommandTMinHeight = 10
-let g:CommandTMaxHeight = 10
-let g:CommandTMatchWindowAtTop = 0
+" Ctrl-P
+let g:ctrlp_map = '<Leader>t'
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_working_path_mode = 0 " Don't manage
+let g:ctrlp_dotfiles = 0 " Ignore all dot/hidden files
+let g:ctrlp_custom_ignore = {
+ \ 'dir': '\.git$\|\.hg$\|\.svn$\|backups$\|logs$\|tmp$',
+ \ 'file': '',
+ \ 'link': '',
+ \ }
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_max_height = 10
 
 " Detect Indent
 let g:detectindent_preferred_expandtab = 1

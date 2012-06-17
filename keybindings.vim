@@ -24,11 +24,10 @@ map <Leader>a ggVG
 
 " Buffer navigation
 map <Leader>, <C-^>
-map <Leader>t :CommandT<CR>
-map <Leader>T :call CommandTWithFlush()<CR>
 map <Leader>w :CommandW<CR>
 nmap <silent><Leader>q :call CloseWindow()<CR>
-map <Leader>l :CommandTBuffer<CR>
+map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
+map <Leader>l :CtrlPBuffer<CR>
 
 " Copy relative path to the system pasteboard
 nnoremap <silent><Leader>cf :let @*=expand('%')<CR>

@@ -28,14 +28,3 @@ iRun \`:qa\` to finish install when bundle completes.
 :BundleInstall!
 EOF
 )
-
-(
-  builtin cd ~/.vim/bundle/Command-T/ruby/command-t
-  if [[ -n "$rvm_path" ]]
-  then
-    rvm system
-  fi
-  export PATH=/usr/bin:/bin:/usr/local/bin
-  ruby extconf.rb
-  make clean && make
-)
