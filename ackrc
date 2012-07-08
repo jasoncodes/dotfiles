@@ -3,7 +3,7 @@
 --context=1
 --follow
 --nogroup
---type-add=ruby=.haml,.feature,.ru
+--type-add=ruby=.haml,.hamlc,.feature,.ru
 --type-add=css=.sass,.scss
 --type-set=markdown=.markdown,.mdown,.md
 --type-add=objc=.pch
@@ -12,6 +12,7 @@
 --type-set=nib=.xib
 --type-set=plist=.plist
 --type-set=tmstuff=.tmproj,.tm_build_errors
+--type-set=coffeescript=.coffee
 --nonib
 --notmstuff
 --noxcode
