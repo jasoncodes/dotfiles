@@ -151,10 +151,10 @@ function __database_yml {
 function psql
 {
   if [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
-    PGDATABASE="$(__database_yml database)" "$(which psql)" "$@"
+    PGDATABASE="$(__database_yml database)" "$(/usr/bin/which psql)" "$@"
     return $?
   fi
-  "$(which psql)" "$@"
+  "$(/usr/bin/which psql)" "$@"
 }
 export PSQL_EDITOR='vim +"set syntax=sql"'
 
@@ -164,7 +164,7 @@ function mysql
     mysql -uroot "$(__database_yml database)"
     return $?
   fi
-  "$(which mysql)" "$@"
+  "$(/usr/bin/which mysql)" "$@"
 }
 
 # handy aliases
