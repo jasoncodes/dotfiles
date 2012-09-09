@@ -1,12 +1,5 @@
-[user]
-# These details are used for commits and default to your local machine's user account
-# name = John Appleseed
-# email = me@example.com
-
-[github]
-# These details can be found at <https://github.com/account>
-# user = USERNAME
-# token = TOKEN
+[include]
+path = .gitconfig.local
 
 [color]
 ui = auto
