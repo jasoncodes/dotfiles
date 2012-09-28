@@ -42,6 +42,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'sjl/vitality.vim'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'majutsushi/tagbar'
+Bundle 'bkad/CamelCaseMotion'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
