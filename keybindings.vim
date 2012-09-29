@@ -156,10 +156,6 @@ vnoremap <F1> <Esc>
 vnoremap < <gv
 vnoremap > >gv
 
-" Use ,d (or ,dd or ,dj or 20,dd) to delete a line without yanking
-nmap <silent> <leader>d "_d
-vmap <silent> <leader>d "_d
-
 " Replace until end of line with yanked text
 nmap <silent><Leader>p "_DP
 
