@@ -156,9 +156,6 @@ vnoremap <F1> <Esc>
 vnoremap < <gv
 vnoremap > >gv
 
-" Replace until end of line with yanked text
-nmap <silent><Leader>p "_DP
-
 " Align Maps (mapping overrides)
 map <Leader>Am <Plug>AM_w=
 
