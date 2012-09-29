@@ -46,11 +46,11 @@ nnoremap <silent><Leader>cf :let @*=expand('%')<CR>
 " Copy relative path and line number to the system pasteboard
 nnoremap <silent><Leader>cF :let @*=expand('%').':'.line('.')<CR>
 
-" Disable scrolling while in both insert and visual modes
-imap <ScrollWheelUp> <Nop>
-imap <ScrollWheelDown> <Nop>
-vmap <ScrollWheelUp> <Nop>
-vmap <ScrollWheelDown> <Nop>
+" Disable scrolling with the mouse
+map <ScrollWheelUp> <Nop>
+map <ScrollWheelDown> <Nop>
+map <ScrollWheelLeft> <Nop>
+map <ScrollWheelRight> <Nop>
 
 " Ack
 map <Leader>f :Ack!<Space>
