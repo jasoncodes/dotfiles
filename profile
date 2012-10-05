@@ -491,6 +491,13 @@ if [[ -x "`which rbenv`" ]]; then
   eval "$(rbenv init - --no-rehash)"
 fi
 
+# initialise autojump
+AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
+if [ -e "$AUTOJUMP_SCRIPT" ]
+then
+  source "$AUTOJUMP_SCRIPT"
+fi
+
 # load local shell configuration if present
 if [[ -f ~/.bashrc.local ]]
 then
