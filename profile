@@ -123,10 +123,12 @@ function gpr()
 
 function rake
 {
-  if [ -f Gemfile ]; then
+  if [ -S .zeus.sock ]; then
+    zeus rake "$@"
+  elif [ -f Gemfile ]; then
     bundle exec rake "$@"
   else
-    "$(which rake)" "$@"
+    "$(/usr/bin/which rake)" "$@"
   fi
 }
 
@@ -193,13 +195,13 @@ alias gpt='git push -u origin $(git_current_branch)'
 alias b='bundle'
 alias bo='bundle open'
 alias be='bundle exec'
-alias ber='bundle exec $(egrep -q "^ {4}rails \(2\." Gemfile.lock && echo spec --format=nested --colour || echo rspec --format=$(egrep -q fuubar Gemfile.lock && echo Fuubar || echo doc)) --drb'
-alias bec='CUCUMBER_FORMAT=fuubar bundle exec cucumber --drb'
-alias cuke='CUCUMBER_FORMAT=pretty bundle exec cucumber --drb'
+alias ber='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) $(egrep -q "^ {4}rails \(2\." Gemfile.lock && echo spec --format=nested --colour || echo rspec --format=$(egrep -q fuubar Gemfile.lock && echo Fuubar || echo doc)) $([ -S .zeus.sock ] || echo --drb)'
+alias bec='CUCUMBER_FORMAT=fuubar $([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber $([ -S .zeus.sock ] || echo --drb)'
+alias cuke='CUCUMBER_FORMAT=pretty $([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber $([ -S .zeus.sock ] || echo --drb)'
 alias besr='bundle exec spork rspec'
 alias besc='bundle exec spork cucumber'
-alias rc='bundle exec pry -r ./config/environment'
-alias rs='rails_command server'
+alias rc='$([ -S .zeus.sock ] && echo zeus console || echo pry -r ./config/environment)'
+alias rs='$([ -S .zeus.sock ] && echo zeus server || rails_command server)'
 alias cap='bundle exec cap'
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 
