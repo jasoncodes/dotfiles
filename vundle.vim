@@ -42,6 +42,7 @@ Bundle 'sjl/vitality.vim'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'twe4ked/vim-diff-toggle'
+Bundle 'AndrewRadev/linediff.vim'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
