@@ -6,7 +6,7 @@ set listchars=trail:.,tab:▸\ ,eol:¬        " Change the invisible characters
 set nolist                                 " Hide invisibles by default
 set showcmd                                " Show incomplete cmds down the bottom
 set showmode                               " Show current mode down the bottom
-set history=1000													 " Remember more history for commands and search patterns
+set history=1000                           " Remember more history for commands and search patterns
 set ttyfast                                " More smooth screen redrawing
 set noesckeys                              " Disable extended key support (cursor keys, function keys). Improves <Esc> time dramatically.
 set incsearch                              " Find the next match as we type the search
@@ -19,7 +19,7 @@ set noswapfile                             " Disable creation of *.swp files
 set title                                  " Show title in terminal vim
 set modelines=1                            " Check the first line of files for a modeline (tab vs spaces, etc)
 set autoread                               " Automatically reload externally modified files when clean
-set autowriteall													 " Automatically write modified files
+set autowriteall                           " Automatically write modified files
 set spelllang=en_au                        " Set default spelling language to English (Australia)
 
 " Indentation
@@ -32,7 +32,7 @@ set smarttab                               " Use shiftwidth and softtabstop to i
 set cindent                                " Recommended seting for automatic C-style indentation
 set autoindent                             " Automatic indentation in non-C files
 set foldmethod=indent                      " Fold based on source indentation
-set foldlevelstart=99											 " Expand all folds by default
+set foldlevelstart=99                      " Expand all folds by default
 
 " Wrap
 set nowrap                                 " I don't always wrap lines...
