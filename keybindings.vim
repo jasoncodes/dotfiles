@@ -19,17 +19,6 @@ map <Leader>Q :qall<CR>
 nmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>:S/\s*$//e<CR>
 vmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>gv:S/\s*$//e<CR>
 
-" camel case motions
-map <silent> <S-W> <Plug>CamelCaseMotion_w
-map <silent> <S-B> <Plug>CamelCaseMotion_b
-map <silent> <S-E> <Plug>CamelCaseMotion_e
-omap <silent> iW <Plug>CamelCaseMotion_iw
-xmap <silent> iW <Plug>CamelCaseMotion_iw
-omap <silent> iB <Plug>CamelCaseMotion_ib
-xmap <silent> iB <Plug>CamelCaseMotion_ib
-omap <silent> iE <Plug>CamelCaseMotion_ie
-xmap <silent> iE <Plug>CamelCaseMotion_ie
-
 " select all
 map <Leader>a ggVG
 
