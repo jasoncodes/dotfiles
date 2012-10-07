@@ -10,8 +10,8 @@ if [[ "$TERM_PROGRAM" =~ iTerm|Apple_Terminal ]] && [[ -x "`which mvim`" ]]; the
   export BUNDLER_EDITOR='mvim'
   export GEM_EDITOR='mvim'
 fi
-alias less='less -i'
-export PAGER='less -SFXi'
+alias less='less -iM'
+export PAGER='less -SFXiM'
 export MAKEFLAGS='-j 3'
 complete -d cd mkdir rmdir
 
