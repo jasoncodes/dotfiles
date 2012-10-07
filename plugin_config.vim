@@ -39,8 +39,5 @@ let g:indent_guides_enable_on_vim_startup = 1
 " NERDCommenter
 let g:NERDSpaceDelims = 1
 
-" EasyMotion
-let g:EasyMotion_leader_key = '<Leader>e'
-
 " Quickfixsigns
 let g:quickfixsigns_classes = ['vcsdiff']
