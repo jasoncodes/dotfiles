@@ -35,7 +35,7 @@ map <Leader>a ggVG
 
 " Buffer navigation
 map <Leader>, <C-^>
-map <Leader>w :CommandW<CR>
+map <Leader>q :CommandW<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
 
