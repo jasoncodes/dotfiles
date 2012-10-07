@@ -29,6 +29,11 @@ set convert-meta off
 
 "\C-k": kill-line
 
+# ignore iTerms focus notifications
+# https://github.com/sjl/vitality.vim/issues/2
+"\e[O": ''
+"\e[I": ''
+
 set show-all-if-ambiguous on
 
 $if Bash
