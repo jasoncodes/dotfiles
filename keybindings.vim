@@ -39,6 +39,18 @@ map <Leader>q :CommandW<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
 
+" replace bufkill's default mappings with something less conflicty
+nmap \bb <Plug>BufKillBack
+nmap \bf <Plug>BufKillForward
+nmap \bun <Plug>BufKillBun
+nmap \!bun <Plug>BufKillBangBun
+nmap \bd <Plug>BufKillBd
+nmap \!bd <Plug>BufKillBangBd
+nmap \bw <Plug>BufKillBw
+nmap \!bw <Plug>BufKillBangBw
+nmap \bundo <Plug>BufKillUndo
+nmap \ba <Plug>BufKillAlt
+
 " Copy relative path to the system pasteboard
 nnoremap <silent><Leader>cf :let @*=expand('%')<CR>
 
