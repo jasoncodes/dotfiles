@@ -394,8 +394,8 @@ hitch() {
 alias unhitch='hitch -u'
 
 # filters for XML and JSON
-alias xml='xmllint -format'
-alias json='python -mjson.tool'
+alias xml='xmllint -format - | pygmentize -l xml'
+alias json='python -mjson.tool | coderay -json'
 
 # be able to 'cd' into SMB URLs
 # requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
