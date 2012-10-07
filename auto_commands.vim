@@ -6,6 +6,7 @@ autocmd FocusLost * nested :silent! wall
 
 " Ruby files
 autocmd FileType ruby,rails,haml,hamlc,eruby,yaml,ru,cucumber set ai sw=2 sts=2 et
+autocmd BufRead,BufNewFile Podfile set ft=ruby
 autocmd BufRead,BufNewFile *.hamlc set ft=haml
 
 " Markdown files
