@@ -9,6 +9,8 @@ nmap <D-f> <Esc>
 nmap <D-F> <Esc>
 macmenu &File.New\ Tab key=<nop>
 nmap <D-t> <Esc>
+macmenu &File.Open\ Tab\.\.\. key=<nop>
+nmap <D-T> <Esc>
 macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
 
 " Cmd+W to close current buffer and close the window if no buffers are left
