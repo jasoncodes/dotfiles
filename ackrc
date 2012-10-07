@@ -18,4 +18,6 @@
 --noxcode
 --ignore-dir=log
 --ignore-dir=vendor/bundle
+--ignore-dir=coverage
+--ignore-dir=tmp
 --smart-case
