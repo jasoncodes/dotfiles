@@ -159,6 +159,12 @@ vnoremap <F1> <Esc>
 vnoremap < <gv
 vnoremap > >gv
 
+" Yank and put system pasteboard with <leader>y/p.
+noremap <leader>y "*y
+nnoremap <leader>yy "*yy
+noremap <leader>p "*p
+noremap <leader>P "*P
+
 " Rooter (mapping overrides)
 map <Leader>R <Plug>RooterChangeToRootDirectory
 
