@@ -2,11 +2,11 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
+" let g:vundle_default_git_proto = 'git'
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'mileszs/ack.vim'
-Bundle 'bufexplorer.zip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'bufkill.vim'
