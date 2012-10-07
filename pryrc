@@ -3,6 +3,7 @@
 Pry.config.pager = true
 Pry.config.color = true
 Pry.config.history.should_save = true
+Pry.config.should_load_local_rc = Dir.pwd != Dir.home
 
 # wrap ANSI codes so Readline knows where the prompt ends
 def colour(name, text)
