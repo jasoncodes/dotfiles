@@ -156,9 +156,6 @@ vnoremap <F1> <Esc>
 vnoremap < <gv
 vnoremap > >gv
 
-" Align Maps (mapping overrides)
-map <Leader>Am <Plug>AM_w=
-
 " Rooter (mapping overrides)
 map <Leader>R <Plug>RooterChangeToRootDirectory
 
