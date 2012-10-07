@@ -13,7 +13,7 @@ set incsearch                              " Find the next match as we type the 
 set hlsearch                               " Highlight searches by default
 set ruler                                  " Show ruler
 set number                                 " Show line numbers
-set mouse=a                                " Enable the mouse
+set mouse=                                 " Disable the mouse
 set linespace=2                            " Spacing between lines
 set noswapfile                             " Disable creation of *.swp files
 set title                                  " Show title in terminal vim
