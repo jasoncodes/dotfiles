@@ -141,6 +141,9 @@ vmap <Right> <Esc><Esc>gv
 
 nnoremap = v=
 
+" quick mapping to execute the macro in q
+map Q @q
+
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
