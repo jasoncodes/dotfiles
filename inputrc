@@ -37,10 +37,6 @@ set convert-meta off
 set show-all-if-ambiguous on
 
 $if Bash
-  # F10 toggles mc on and off
-  # Note Ctrl-o toggles panes on and off in mc
-  "\e[21~": "mc\C-M"
-
   #do history expansion when space entered
   Space: magic-space
 $endif
