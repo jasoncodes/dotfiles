@@ -10,7 +10,7 @@ map <Leader>N :NERDTree<CR>:wincmd p<CR>:NERDTreeFind<CR>
 
 " Trim & save
 map <Leader>sd :FixWhitespace<CR>:up<CR>
-map <Leader>sw :FixWhitespace<CR>:up<CR>:CommandW<CR>
+map <Leader>sq :FixWhitespace<CR>:up<CR>:CommandW<CR>
 map ZZ :up<CR>:CommandW<CR>
 map <silent><Leader>r :checktime<CR>:wall<CR>
 map <Leader>Q :qall<CR>
