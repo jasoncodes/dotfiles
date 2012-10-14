@@ -1,1 +1,2 @@
 fresh jasoncodes/fresh bin/fresh --bin
+fresh 'aliases/*'
