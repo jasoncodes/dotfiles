@@ -4,7 +4,7 @@ alias cuke='CUCUMBER_FORMAT=pretty $([ -S .zeus.sock ] && echo zeus || echo bund
 alias besr='bundle exec spork rspec'
 alias besc='bundle exec spork cucumber'
 alias rc='$([ -S .zeus.sock ] && echo zeus console || echo pry -r ./config/environment)'
-alias rs='$([ -S .zeus.sock ] && echo zeus server || rails_command server)'
+alias rs='$([ -S .zeus.sock ] && echo zeus server || echo rails_command server)'
 
 function rails_command
 {
