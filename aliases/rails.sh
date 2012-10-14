@@ -6,6 +6,8 @@ alias besc='bundle exec spork cucumber'
 alias zs='zeus start'
 alias rc='$([ -S .zeus.sock ] && echo zeus console || echo pry -r ./config/environment)'
 alias rs='$([ -S .zeus.sock ] && echo zeus server || echo rails_command server)'
+alias rg='$([ -S .zeus.sock ] && echo zeus generate || echo rails_command generate)'
+alias rgm='rg migration'
 
 function rails_command
 {
