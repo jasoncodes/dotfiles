@@ -30,4 +30,6 @@ function _bundle_open() {
   COMPREPLY=($(compgen -W '$(_bundle_spec_names)' -- $curw));
   return 0
 }
-complete -F _bundle_open bo
+if type complete > /dev/null 2>&1; then
+  complete -F _bundle_open bo
+fi
