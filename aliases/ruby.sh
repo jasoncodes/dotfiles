@@ -3,6 +3,17 @@ alias bo='bundle open'
 alias be='bundle exec'
 alias cap='bundle exec cap'
 
+function rake
+{
+  if [ -S .zeus.sock ]; then
+    zeus rake "$@"
+  elif [ -f Gemfile ]; then
+    bundle exec rake "$@"
+  else
+    "$(/usr/bin/which rake)" "$@"
+  fi
+}
+
 function _bundle_spec_names() {
 ruby <<-RUBY
   NAME_VERSION = '(?! )(.*?)(?: \(([^-]*)(?:-(.*))?\))?'

@@ -53,16 +53,6 @@ fi
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
 alias mate='echo Use mvim :\) >&2; false'
 alias nano='echo Use vim :\) >&2; false'
-function rake
-{
-  if [ -S .zeus.sock ]; then
-    zeus rake "$@"
-  elif [ -f Gemfile ]; then
-    bundle exec rake "$@"
-  else
-    "$(/usr/bin/which rake)" "$@"
-  fi
-}
 
 # handy aliases
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
