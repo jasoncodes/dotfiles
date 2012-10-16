@@ -1,4 +1,3 @@
-alias ber='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) $(egrep -q "^ {4}rails \(2\." Gemfile.lock && echo spec --format=nested --colour || echo rspec --format=$(egrep -q fuubar Gemfile.lock && echo Fuubar || echo doc))'
 alias bec='CUCUMBER_FORMAT=fuubar $([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber'
 alias cuke='CUCUMBER_FORMAT=pretty $([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber'
 alias zs='zeus start'
@@ -18,6 +17,29 @@ function rails_command
     "script/$cmd" "$@"
   fi
 }
+
+function ber {
+  if [ -S .zeus.sock ]; then
+    local LAUNCHER='zeus'
+  else
+    local LAUNCHER='bundle exec'
+  fi
+  if egrep -q "^ {4}rails \(2\." Gemfile.lock; then
+    local CMD='spec'
+    local DEFAULT_FORMAT=nested
+  else
+    local CMD='rspec'
+    local DEFAULT_FORMAT=doc
+    if egrep -q fuubar Gemfile.lock; then
+      local DEFAULT_FORMAT=Fuubar
+    fi
+  fi
+  if [ $# == 0 ]; then
+    set -- spec "$@"
+  fi
+  $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
+}
+alias berd='RSPEC_FORMAT=doc ber'
 
 function __database_yml {
   if [[ -f config/database.yml ]]; then
