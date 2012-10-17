@@ -6,6 +6,13 @@ alias rs='$([ -S .zeus.sock ] && echo zeus server || echo rails_command server)'
 alias rg='$([ -S .zeus.sock ] && echo zeus generate || echo rails_command generate)'
 alias rgm='rg migration'
 
+zeus() {
+  "$(which zeus)" "$@"
+  RETVAL=$?
+  stty sane
+  return $RETVAL
+}
+
 function rails_command
 {
   local cmd=$1
