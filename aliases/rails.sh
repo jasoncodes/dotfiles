@@ -7,7 +7,7 @@ alias rg='$([ -S .zeus.sock ] && echo zeus generate || echo rails_command genera
 alias rgm='rg migration'
 
 zeus() {
-  "$(which zeus)" "$@"
+  "$(/usr/bin/which zeus)" "$@"
   RETVAL=$?
   stty sane
   return $RETVAL
