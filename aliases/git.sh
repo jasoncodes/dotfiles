@@ -87,8 +87,13 @@ function gls()
 # checkout a GitHub pull request as a local branch
 function gpr()
 {
-  local NUM="${1?Specify pull request number}"
-  git fetch origin "pull/$NUM/head:pull/$NUM" && git checkout "pull/$NUM"
+  if ! git config --get-all remote.origin.fetch | grep -q origin/pr; then
+    git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*'
+  fi
+  git fetch
+  if [[ -n "$1" ]]; then
+    git checkout "pr/$1"
+  fi
 }
 
 function gup
