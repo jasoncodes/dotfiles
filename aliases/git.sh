@@ -1,4 +1,5 @@
-alias gl='git lg $(git show-ref | cut -d " " -f 2 | grep -v stash$)'
+alias glg='git log --graph --pretty=format:"%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset" --abbrev-commit --date=short'
+alias gl='glg $(git show-ref | cut -d " " -f 2 | grep -v stash$)'
 alias glw='glp --word-diff'
 alias gco='git co'
 alias gcp='git co -p'
