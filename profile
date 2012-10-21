@@ -122,9 +122,6 @@ fi
 
 # `vimlast` opens the last modified file in Vim.
 vimlast() {
-  if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
-    local EDITOR=mvim
-  fi
   FILE=$(
     /usr/bin/find ${1:-.} -type f \
       -not -regex '\./\..*' \
