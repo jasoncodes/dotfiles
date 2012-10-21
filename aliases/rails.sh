@@ -41,7 +41,7 @@ function ber {
       local DEFAULT_FORMAT=Fuubar
     fi
   fi
-  if [ $# == 0 ]; then
+  if [[ $# == 0 ]]; then
     set -- spec "$@"
   fi
   $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
