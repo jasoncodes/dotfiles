@@ -44,6 +44,7 @@ Pry.config.print = proc do |output, value|
   rescue LoadError => err
     org_print.call(output, value)
   end
+  Pry.history.save
 end
 
 org_logger_active_record = nil
