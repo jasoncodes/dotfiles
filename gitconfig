@@ -69,8 +69,5 @@ hotfix = hotfix/
 support = support/
 versiontag =
 
-[remote "origin"]
-fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
-
 [git-up "rebase"]
 arguments = --preserve-merges
