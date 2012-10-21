@@ -44,7 +44,10 @@ function ber {
   if [[ $# == 0 ]]; then
     set -- spec "$@"
   fi
-  $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
+  (
+    [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
+    exec $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
+  )
 }
 alias berd='RSPEC_FORMAT=doc ber'
 
