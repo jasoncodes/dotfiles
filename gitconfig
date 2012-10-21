@@ -14,15 +14,6 @@ commit = yellow reverse
 [core]
 excludesfile = ~/.gitignore
 
-[alias]
-st = status
-ci = commit
-co = checkout
-br = branch
-lg = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short
-standup = shortlog --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --since='2 days ago' --all
-rl = reflog --date=short
-
 [push]
 default = tracking
 
