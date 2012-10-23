@@ -88,9 +88,16 @@ function gls()
 # checkout a GitHub pull request as a local branch
 function gpr()
 {
-  if ! git config --get-all remote.origin.fetch | grep -q origin/pr; then
-    git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*'
-  fi
+  local TEMP_FILE=$(mktemp)
+  echo '+refs/pull/*/head:refs/remotes/origin/pr/*' > $TEMP_FILE
+  git config --get-all remote.origin.fetch | grep -v 'refs/remotes/origin/pr/\*$' >> $TEMP_FILE
+  git config --unset-all remote.origin.fetch
+  cat $TEMP_FILE | while read LINE
+  do
+    git config --add remote.origin.fetch "$LINE"
+  done
+  rm "$TEMP_FILE"
+
   git fetch
   if [[ -n "$1" ]]; then
     git checkout "pr/$1"
