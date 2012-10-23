@@ -30,6 +30,7 @@ map <Leader>, <C-^>
 map <Leader>q :CommandW<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
+map <Leader>m :CtrlPModified<CR>
 
 " replace bufkill's default mappings with something less conflicty
 nmap \bb <Plug>BufKillBack

@@ -8,6 +8,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
+Bundle 'jasoncodes/ctrlp-modified.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'bufkill.vim'
 Bundle 'nathanaelkane/vim-command-w'
