@@ -1,5 +1,8 @@
 cmd_timeout() {
-  [ $# -ge 2 ] || die "Need at least two args: timeout_sec and command_to_run"
+  if [ $# -lt 2 ]; then
+    echo "usage: cmd_timeout timeout_sec command [args...]"
+    return 1
+  fi
   sleep_time=$1
   shift
 
