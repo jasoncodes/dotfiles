@@ -41,3 +41,6 @@ let g:NERDSpaceDelims = 1
 
 " Quickfixsigns
 let g:quickfixsigns_classes = ['vcsdiff']
+
+" vitality.vim
+let g:vitality_fix_cursor = 0
