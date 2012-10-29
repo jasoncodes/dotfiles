@@ -8,9 +8,13 @@ export LC_CTYPE=en_US.UTF-8
 export PS1='\u@\h:\w\$ ' # basic prompt. get's overwritten later
 export FIGNORE="CVS:.DS_Store:.svn:__Alfresco.url"
 export EDITOR='vim'
+export BUNDLER_EDITOR='vim'
+export GEM_EDITOR='vim'
 if [[ "$TERM_PROGRAM" =~ iTerm|Apple_Terminal ]] && [[ -x "`which mvim`" ]]; then
-  export BUNDLER_EDITOR='mvim'
-  export GEM_EDITOR='mvim'
+  if [[ -z "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
+    export BUNDLER_EDITOR='mvim'
+    export GEM_EDITOR='mvim'
+  fi
 fi
 alias less='less -iM'
 export PAGER='less -SFXiM'
