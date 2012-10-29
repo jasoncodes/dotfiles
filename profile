@@ -17,14 +17,6 @@ export PAGER='less -SFXiM'
 export MAKEFLAGS='-j 3'
 complete -d cd mkdir rmdir
 
-# set CVS to use :ext: via SSH (preferring ssh-master if available)
-if [ -x "`which ssh-master`" ]
-then
-  export CVS_RSH=ssh-master
-else
-  export CVS_RSH=ssh
-fi
-
 # open man pages in Preview.app
 if [ -d "/Applications/Preview.app" ]
 then
