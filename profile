@@ -107,19 +107,6 @@ then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
 
-# `vimlast` opens the last modified file in Vim.
-vimlast() {
-  FILE=$(
-    /usr/bin/find ${1:-.} -type f \
-      -not -regex '\./\..*' \
-      -not -regex '\./tmp/.*' \
-      -not -regex '\./log/.*' \
-      -exec stat -c '%Y %n' {} +\; |
-    sort -n | tail -1 | cut -d ' ' -f 2-
-  )
-  ${EDITOR:-vim} $FILE
-}
-
 # http://github.com/therubymug/hitch
 hitch() {
   command hitch "$@"
