@@ -21,10 +21,6 @@ autocmd FileType make set noexpandtab
 " Enable spell check by default for git commits
 autocmd FileType gitcommit set spell
 
-" use shift-return to keep focus when opening a file
-" from within the quickfix list or NERDTree
-autocmd FileType nerdtree,qf map <buffer> <S-CR> go
-
 " Show the cursorline for the focused window
 set cursorline
 autocmd WinEnter * setlocal cursorline

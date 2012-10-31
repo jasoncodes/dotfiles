@@ -7,10 +7,6 @@ nnoremap Y y$
 " Use `'` to repeat last `;` in reverse (default is `,`)
 nnoremap ' ,
 
-" NERDTree
-map <Leader>n :NERDTreeToggle<CR>
-map <Leader>N :NERDTree<CR>:wincmd p<CR>:NERDTreeFind<CR>
-
 " Trim & save
 map <Leader>sd :FixWhitespace<CR>:up<CR>
 map <Leader>sq :FixWhitespace<CR>:up<CR>:CommandW<CR>
