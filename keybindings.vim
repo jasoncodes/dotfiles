@@ -179,6 +179,3 @@ nmap <silent><Bar> :Tabularize /\|/<CR>
 " This prevents the default <Leader>swp from conflicting with <Leader>sw
 map \swp <Plug>SaveWinPosn
 map \rwp <Plug>RestoreWinPosn
-
-" Fold everything not relevant to the current RSpec example
-nmap <silent> <Leader>rf mr:set foldmethod=syntax<CR>zMzv?\v^\s*(it\|example)<CR>zz:noh<CR>`r:delmarks r<CR>
