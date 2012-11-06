@@ -10,9 +10,12 @@ install-ruby() {
   brew update
   brew install rbenv ruby-build rbenv-vars readline openssl ctags
   if [ -n "${ZSH_VERSION:-}" ]; then
-    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+    RCFILE="$HOME/.zshrc"
   else
-    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.bash_profile
+    RCFILE="$HOME/.bash_profile"
+  fi
+  if ! grep -q 'rbenv init' $RCFILE; then
+    echo 'eval "$(rbenv init - --no-rehash)"' >> $RCFILE
   fi
   eval "$(rbenv init - --no-rehash)" # load rbenv in the current shell
   export CONFIGURE_OPTS="--disable-install-doc --with-readline-dir=$(brew --prefix readline) --with-openssl-dir=$(brew --prefix openssl)"
