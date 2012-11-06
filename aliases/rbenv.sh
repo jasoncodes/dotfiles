@@ -1,7 +1,7 @@
-install-ruby() {
+ruby-install() {
   local VERSION="$1"
   if [ -z "$VERSION" ]; then
-    echo "install-ruby: Specify the version of Ruby you want to install."
+    echo "ruby-install: Specify the version of Ruby you want to install."
     echo
     echo "Available rubies:"
     ruby-build --definitions
