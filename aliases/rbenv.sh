@@ -15,7 +15,8 @@ install-ruby() {
     echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.bash_profile
   fi
   eval "$(rbenv init - --no-rehash)" # load rbenv in the current shell
-  CONFIGURE_OPTS="--disable-install-doc --with-readline-dir=$(brew --prefix readline)" rbenv install $VERSION
+  export CONFIGURE_OPTS="--disable-install-doc --with-readline-dir=$(brew --prefix readline)"
+  rbenv install $VERSION
   export RBENV_VERSION="$VERSION"
   gem install --no-ri --no-rdoc bundler rbenv-rehash git-up hitch gem-browse gem-ctags cheat awesome_print pry
   gem ctags
