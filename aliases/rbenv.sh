@@ -8,7 +8,7 @@ ruby-install() {
     return 1
   fi
   brew update
-  brew install rbenv ruby-build rbenv-vars readline openssl ctags
+  brew upgrade rbenv ruby-build rbenv-vars readline openssl ctags
   if [ -n "${ZSH_VERSION:-}" ]; then
     RCFILE="$HOME/.zshrc"
   else
