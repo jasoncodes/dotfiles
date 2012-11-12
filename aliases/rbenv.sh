@@ -18,6 +18,13 @@ ruby-install() {
     echo 'eval "$(rbenv init - --no-rehash)"' >> $RCFILE
   fi
   eval "$(rbenv init - --no-rehash)" # load rbenv in the current shell
+  export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
+  if ! grep -q SSL_CERT_FILE $RCFILE; then
+    echo "export SSL_CERT_FILE=\"$SSL_CERT_FILE\"" >> $RCFILE
+  fi
+  if ! [[ -e "$SSL_CERT_FILE" ]]; then
+    curl -o "$SSL_CERT_FILE" http://curl.haxx.se/ca/cacert.pem
+  fi
   export CONFIGURE_OPTS="--disable-install-doc --with-readline-dir=$(brew --prefix readline) --with-openssl-dir=$(brew --prefix openssl)"
   rbenv install $VERSION
   export RBENV_VERSION="$VERSION"
