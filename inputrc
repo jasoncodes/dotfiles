@@ -27,6 +27,11 @@ set convert-meta off
 "\e[3~": delete-char
 "\e[2~": quoted-insert
 
+"\C-a": beginning-of-line
+"\C-b": backward-char
+"\C-d": delete-char
+"\C-e": end-of-line
+"\C-f": forward-char
 "\C-k": kill-line
 
 # ignore iTerms focus notifications
