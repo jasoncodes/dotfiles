@@ -43,8 +43,13 @@ org_print = Pry.config.print
 Pry.config.print = proc do |output, value|
   begin
     require 'awesome_print'
-    value = value.to_a if defined?(ActiveRecord) && defined?(ActiveRecord::Relation) && value.is_a?(ActiveRecord::Relation)
-    output.puts value.ai
+    case
+    when defined?(Capybara) && value.is_a?(Capybara::Node::Element)
+      org_print.call(output, value)
+    else
+      value = value.to_a if defined?(ActiveRecord) && defined?(ActiveRecord::Relation) && value.is_a?(ActiveRecord::Relation)
+      output.puts value.ai
+    end
   rescue LoadError => err
     org_print.call(output, value)
   end
