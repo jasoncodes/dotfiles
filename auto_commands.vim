@@ -21,9 +21,6 @@ autocmd FileType make set noexpandtab
 " Enable spell check by default for git commits
 autocmd FileType gitcommit set spell
 
-" Surround
-autocmd VimEnter * xunmap s
-
 " Show the cursorline for the focused window
 set cursorline
 autocmd WinEnter * setlocal cursorline
