@@ -233,6 +233,11 @@ if [[ -x "`which rbenv`" ]]; then
   eval "$(rbenv init - --no-rehash)"
 fi
 
+# initialize Heroku Toolbelt
+if [[ -d "/usr/local/heroku/bin" ]]; then
+  export PATH="/usr/local/heroku/bin:$PATH"
+fi
+
 # initialise autojump
 AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
 if [ -e "$AUTOJUMP_SCRIPT" ]
