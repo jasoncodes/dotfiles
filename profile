@@ -223,6 +223,11 @@ fi
 # finish off the prompt
 export PS1="$PS1"'\[\033[00m\]\$ '
 
+# use our own SSL root certificate if present
+if [[ -f "/usr/local/etc/openssl/certs/cert.pem" ]]; then
+  export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
+fi
+
 # initialise rbenv
 if [[ -x "`which rbenv`" ]]; then
   eval "$(rbenv init - --no-rehash)"
