@@ -191,18 +191,32 @@ fi
 if [ -f "$GIT_COMPLETION_PATH" ]
 then
   source "$GIT_COMPLETION_PATH"
-  export GIT_PS1_SHOWDIRTYSTATE=1
-  export GIT_PS1_SHOWSTASHSTATE=1
-  export GIT_PS1_SHOWUNTRACKEDFILES=1
-  export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
-  complete -o bashdefault -o default -o nospace -F _git_log gl glp gls glw
-  complete -o bashdefault -o default -o nospace -F _git_checkout gco gcp
-  complete -o bashdefault -o default -o nospace -F _git_status gst
-  complete -o bashdefault -o default -o nospace -F _git_diff gd gdw gds gdsw
-  complete -o bashdefault -o default -o nospace -F _git_reset gar garp
-  complete -o bashdefault -o default -o nospace -F _git_add gap
-  complete -o bashdefault -o default -o nospace -F _git_commit gc gca
-  complete -o bashdefault -o default -o nospace -F _git_push gp
+  GIT_PROMPT_PATH="$(dirname "$GIT_COMPLETION_PATH")/git-prompt.sh"
+  if [ -f "$GIT_PROMPT_PATH" ]; then
+    source "$GIT_PROMPT_PATH"
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWSTASHSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
+  fi
+
+  _git_complete() {
+    local CMD="$1"
+    shift
+    for ALIAS in "$@"; do
+      __git_complete "$ALIAS" "_git_$CMD"
+    done
+  }
+
+  _git_complete log gl glp gls glw
+  _git_complete checkout gco gcp
+  _git_complete status gs
+  _git_complete diff gd gdw gds gdsw
+  _git_complete reset gar garp
+  _git_complete gap _git_add
+  _git_complete commit gc gca
+  _git_complete push gp
+
   source ~/.dotfiles/git-flow-completion.bash
 fi
 
