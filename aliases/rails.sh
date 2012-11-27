@@ -1,5 +1,5 @@
-alias bec='CUCUMBER_FORMAT=fuubar $([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber'
-alias cuke='CUCUMBER_FORMAT=pretty $([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber'
+alias bec='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber -f fuubar'
+alias cuke='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber -f pretty'
 alias zs='zeus start'
 alias rc='$([ -S .zeus.sock ] && echo zeus console || echo bundle exec pry -r ./config/environment)'
 alias rs='$([ -S .zeus.sock ] && echo zeus server || echo rails_command server)'
