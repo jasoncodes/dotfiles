@@ -3,6 +3,7 @@ filetype plugin indent on                  " Enable automatic filetype detection
 set nocompatible                           " Don't need to keep compatibility with Vi
 set hidden                                 " Allow hiding buffers with unsaved changes
 set listchars=trail:.,tab:▸\ ,eol:¬        " Change the invisible characters
+set fillchars+=vert:\                      " Hide pipes on vertical splits
 set nolist                                 " Hide invisibles by default
 set showcmd                                " Show incomplete cmds down the bottom
 set showmode                               " Show current mode down the bottom
