@@ -91,3 +91,14 @@ Pry.hooks.add_hook :after_session, :rails do |output, target, pry|
   ActiveRecord::Base.logger = org_logger_active_record if org_logger_active_record
   Rails.logger = org_logger_rails if org_logger_rails
 end
+
+def pbcopy(data)
+  IO.popen 'pbcopy', 'w' do |io|
+    io << data
+  end
+  nil
+end
+
+def pbpaste
+  `pbpaste`
+end
