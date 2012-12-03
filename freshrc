@@ -1,3 +1,5 @@
+# vim: set ft=sh:
+
 fresh freshshell/fresh bin/fresh --bin
 
 fresh 'aliases/*'
