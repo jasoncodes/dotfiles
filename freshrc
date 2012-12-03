@@ -6,3 +6,5 @@ fresh 'aliases/*'
 fresh 'shell/*'
 
 fresh 'config/*' --file
+
+fresh bobthecow/git-flow-completion git-flow-completion.bash

@@ -216,8 +216,6 @@ then
   _git_complete gap _git_add
   _git_complete commit gc gca
   _git_complete push gp
-
-  source ~/.dotfiles/git-flow-completion.bash
 fi
 
 # finish off the prompt
