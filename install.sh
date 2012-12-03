@@ -1,22 +1,15 @@
 #!/bin/bash -e
 cd
 
-[ -d .dotfiles ] || git clone git://github.com/jasoncodes/dotfiles.git .dotfiles
-(
-  set -e
-  cd .dotfiles
-
-  TEMPFILE="`mktemp -t install.XXXXXX`"
-  trap '{ rm -f "$TEMPFILE"; }' EXIT
-
-  set +e
-  git fetch origin
-  git show origin/master:profile > "$TEMPFILE"
-  source "$TEMPFILE"
-  set -e
-
-  gup
-)
+if [ -d ~/.dotfiles ]; then
+  if type -t git-up > /dev/null; then
+    (cd ~/.dotfiles && git-up)
+  else
+    (cd ~/.dotfiles && git pull --rebase)
+  fi
+else
+  git clone git://github.com/jasoncodes/dotfiles.git ~/.dotfiles
+fi
 
 function create_link()
 {
