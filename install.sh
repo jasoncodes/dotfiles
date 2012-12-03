@@ -50,10 +50,6 @@ do
       create_link "$SRC" .bash_profile
       create_link "$SRC" .bashrc
       ;;
-    */global.gems)
-      mkdir -p .rvm/gemsets/
-      create_link "../../$SRC" .rvm/gemsets/global.gems
-      ;;
     *)
       create_link "$SRC" "$DST"
       ;;
