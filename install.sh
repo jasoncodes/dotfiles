@@ -35,19 +35,9 @@ function create_link()
 
 }
 
-find .dotfiles -maxdepth 1 -type f -not -name 'install.sh' -not -name 'README*' | while read SRC
-do
-  DST="`echo "$SRC" | sed -e 's#.*/#.#'`"
-  case "$SRC" in
-    */profile)
-      create_link "$SRC" .bash_profile
-      create_link "$SRC" .bashrc
-      ;;
-    *)
-      create_link "$SRC" "$DST"
-      ;;
-  esac
-done
+create_link .dotfiles/profile ~/.bash_profile
+create_link .dotfiles/profile ~/.bashrc
+create_link .dotfiles/freshrc ~/.freshrc
 
 if [ -e ~/.fresh/build/shell.sh ]; then
   source ~/.fresh/build/shell.sh
