@@ -1,4 +1,5 @@
 fresh freshshell/fresh bin/fresh --bin
+
 fresh 'aliases/*'
 fresh 'shell/*'
 
