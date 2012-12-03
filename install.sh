@@ -35,8 +35,8 @@ function create_link()
 
 }
 
-create_link .dotfiles/profile ~/.bash_profile
-create_link .dotfiles/profile ~/.bashrc
+create_link .fresh/build/shell.sh ~/.bash_profile
+create_link .fresh/build/shell.sh ~/.bashrc
 create_link .dotfiles/freshrc ~/.freshrc
 
 if [ -e ~/.fresh/build/shell.sh ]; then
