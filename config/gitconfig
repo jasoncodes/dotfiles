@@ -20,6 +20,10 @@ default = tracking
 [merge]
 log = true
 conflictstyle = diff3
+tool = vimdiff
+
+[mergetool]
+prompt = false
 
 [rebase]
 autosquash = true
