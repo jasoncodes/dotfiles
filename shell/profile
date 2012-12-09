@@ -116,13 +116,6 @@ alias unhitch='hitch -u'
 alias xml='xmllint -format - | pygmentize -l xml'
 alias json='python -mjson.tool | coderay -json'
 
-# be able to 'cd' into SMB URLs
-# requires <http://github.com/jasoncodes/scripts/blob/master/smburl_to_path>
-function cd_smburl()
-{
-  cd "`smburl_to_path "$1"`"
-}
-
 # begin awesome colour prompt..
 export PS1=""
 
