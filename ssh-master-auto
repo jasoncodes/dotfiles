@@ -1,3 +1,0 @@
-#!/bin/bash
-export AUTOSSH_POLL=30
-autossh -M 14022:7 -N -oControlMaster=yes "$@"
