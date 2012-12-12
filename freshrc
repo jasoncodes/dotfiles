@@ -7,4 +7,5 @@ fresh 'shell/*'
 
 fresh 'config/*' --file
 
+fresh freshshell/fresh contrib/completion/fresh-completion.bash
 fresh bobthecow/git-flow-completion git-flow-completion.bash
