@@ -27,7 +27,7 @@ map <Leader>q :CommandW<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
 map <Leader>m :CtrlPModified<CR>
-map <leader>d :CtrlPCurFile<CR>
+map <Leader>d :CtrlPCurFile<CR>
 
 " replace bufkill's default mappings with something less conflicty
 nmap \bb <Plug>BufKillBack
@@ -89,9 +89,9 @@ map <Leader>I :set list<CR>:FixWhitespace<CR>:ToggleTabs<CR>
 map <Space> <PageDown>
 
 " Highlight word at cursor without changing position
-nnoremap <leader>h *<C-O>
+nnoremap <Leader>h *<C-O>
 " Highlight word at cursor and then Ack it.
-nnoremap <leader>H *<C-O>:AckFromSearch!<CR>
+nnoremap <Leader>H *<C-O>:AckFromSearch!<CR>
 
 " Bookmarking
 map <C-Space> :ToggleBookmark<CR>
@@ -160,11 +160,11 @@ vnoremap <F1> <Esc>
 vnoremap < <gv
 vnoremap > >gv
 
-" Yank and put system pasteboard with <leader>y/p.
-noremap <leader>y "*y
-nnoremap <leader>yy "*yy
-noremap <leader>p "*p
-noremap <leader>P "*P
+" Yank and put system pasteboard with <Leader>y/p.
+noremap <Leader>y "*y
+nnoremap <Leader>yy "*yy
+noremap <Leader>p "*p
+noremap <Leader>P "*P
 
 " Rooter (mapping overrides)
 map <Leader>R <Plug>RooterChangeToRootDirectory
