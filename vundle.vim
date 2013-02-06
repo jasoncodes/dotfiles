@@ -42,6 +42,7 @@ Bundle 'twe4ked/vim-diff-toggle'
 Bundle 'AndrewRadev/linediff.vim'
 Bundle 'bogado/file-line'
 Bundle 'tpope/vim-eunuch'
+Bundle 'tpope/vim-unimpaired'
 
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'bclear'
