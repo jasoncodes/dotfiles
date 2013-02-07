@@ -1,4 +1,4 @@
 # ~/.dotfiles
 
 ## Installation
-    bash < <( curl -sL http://github.com/jasoncodes/dotfiles/raw/master/install.sh )
+    bash < <( curl -sL https://raw.github.com/jasoncodes/dotfiles/master/install.sh )
