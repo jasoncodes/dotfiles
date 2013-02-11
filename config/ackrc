@@ -21,4 +21,5 @@
 --ignore-dir=coverage
 --ignore-dir=tmp
 --ignore-dir=data
+--ignore-dir=Pods
 --smart-case
