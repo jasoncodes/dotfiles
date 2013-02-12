@@ -23,6 +23,7 @@ set autoread                               " Automatically reload externally mod
 set autowriteall                           " Automatically write modified files
 set spelllang=en_au                        " Set default spelling language to English (Australia)
 set shortmess+=I                           " Disable splash screen
+set noequalalways                          " Don't equalize when opening/closing windows
 
 " Indentation
 set shiftwidth=2                           " Number of spaces to use in each autoindent step
