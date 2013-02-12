@@ -45,7 +45,7 @@ nmap \ba <Plug>BufKillAlt
 nnoremap <silent><Leader>cf :let @*=expand('%')<CR>
 
 " Copy relative path and line number to the system pasteboard
-nnoremap <silent><Leader>cF :let @*=expand('%').':'.line('.')<CR>
+nnoremap <silent><Leader>cl :let @*=expand('%').':'.line('.')<CR>
 
 " Disable scrolling with the mouse
 map <ScrollWheelUp> <Nop>
