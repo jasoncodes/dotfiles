@@ -25,7 +25,7 @@ function rails_command
   fi
 }
 
-function ber {
+function rspec {
   if [ -S .zeus.sock ]; then
     local LAUNCHER='zeus'
   else
@@ -49,6 +49,7 @@ function ber {
     exec $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
   )
 }
+alias ber=rspec
 alias berd='RSPEC_FORMAT=doc ber'
 
 function __database_yml {
