@@ -22,6 +22,7 @@ set modelines=1                            " Check the first line of files for a
 set autoread                               " Automatically reload externally modified files when clean
 set autowriteall                           " Automatically write modified files
 set spelllang=en_au                        " Set default spelling language to English (Australia)
+set shortmess+=I                           " Disable splash screen
 
 " Indentation
 set shiftwidth=2                           " Number of spaces to use in each autoindent step
