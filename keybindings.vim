@@ -41,6 +41,9 @@ nmap \!bw <Plug>BufKillBangBw
 nmap \bundo <Plug>BufKillUndo
 nmap \ba <Plug>BufKillAlt
 
+" In command-line mode, C-a jumps to beginning (to match C-e).
+cnoremap <C-a> <Home>
+
 " Copy relative path to the system pasteboard
 nnoremap <silent><Leader>cf :let @*=expand('%')<CR>
 
