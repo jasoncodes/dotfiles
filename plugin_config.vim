@@ -40,6 +40,3 @@ let g:indent_guides_enable_on_vim_startup = 1
 
 " NERDCommenter
 let g:NERDSpaceDelims = 1
-
-" Quickfixsigns
-let g:quickfixsigns_classes = ['vcsdiff']
