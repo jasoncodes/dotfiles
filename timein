@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+if [[ -z "$1" ]]; then
+  echo "usage: $(basename "$0") [zone]" >&2
+  exit 1
+fi
+export TZ="$1"
+
+if echo "$TZ" | egrep -q '^[+-]([0-9]{2}){1,2}'; then
+  TZ="Etc/GMT$(echo "$TZ" | sed -e 's/+/-/' -e 's/-/+/' -e 's/00$//' -e 's/\([+-]\)0/\1/')"
+fi
+
+date +'%c %z'
