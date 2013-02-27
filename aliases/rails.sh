@@ -2,8 +2,9 @@ alias cucumber='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber -
 alias cuke='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber -f pretty'
 alias zs='zeus start'
 alias rc='$([ -S .zeus.sock ] && echo zeus console || echo bundle exec pry -r ./config/environment)'
-alias rs='$([ -S .zeus.sock ] && echo zeus server || echo rails_command server)'
-alias rg='$([ -S .zeus.sock ] && echo zeus generate || echo rails_command generate)'
+alias rails='$([ -S .zeus.sock ] && echo zeus || echo rails_command)'
+alias rs='rails server'
+alias rg='rails generate'
 alias rgm='rg migration'
 
 zeus() {
