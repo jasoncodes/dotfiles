@@ -1,11 +1,6 @@
 " Rails
 let g:rails_menu = 0
 
-" Syntastic
-let g:syntastic_enable_signs = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_disabled_filetypes = ['cucumber']
-
 " Ctrl-P
 let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_clear_cache_on_exit = 1
