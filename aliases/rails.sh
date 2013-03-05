@@ -54,7 +54,13 @@ alias ber=rspec
 alias berd='RSPEC_FORMAT=doc ber'
 
 function rspec-branch {
-  rspec $(gbd --name-only | sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' | grep '_spec\.rb$' | sort -u | xargs find 2> /dev/null)
+  rspec $(
+    gbd --name-only |
+    sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
+    grep '_spec\.rb$' |
+    sort -u |
+    xargs find 2> /dev/null
+  )
 }
 
 function __database_yml {
