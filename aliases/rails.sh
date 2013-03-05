@@ -8,7 +8,7 @@ alias rg='rails generate'
 alias rgm='rg migration'
 
 zeus() {
-  "$(/usr/bin/which zeus)" "$@"
+  command zeus "$@"
   RETVAL=$?
   stty sane
   return $RETVAL
@@ -82,10 +82,10 @@ function __database_yml {
 function psql
 {
   if [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
-    PGDATABASE="$(__database_yml database)" "$(/usr/bin/which psql)" "$@"
+    PGDATABASE="$(__database_yml database)" command psql "$@"
     return $?
   fi
-  "$(/usr/bin/which psql)" "$@"
+  command psql "$@"
 }
 export PSQL_EDITOR='vim +"set syntax=sql"'
 
@@ -95,5 +95,5 @@ function mysql
     mysql -uroot "$(__database_yml database)"
     return $?
   fi
-  "$(/usr/bin/which mysql)" "$@"
+  command mysql "$@"
 }

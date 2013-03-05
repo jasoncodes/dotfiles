@@ -10,7 +10,7 @@ function rake
   elif [ -f Gemfile ]; then
     bundle exec rake "$@"
   else
-    "$(/usr/bin/which rake)" "$@"
+    command rake "$@"
   fi
 }
 
