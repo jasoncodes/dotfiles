@@ -63,6 +63,16 @@ function rspec-branch {
   )
 }
 
+function rspec-work {
+  rspec $(
+    git status --porcelain -z --untracked-files=all | tr '\0' '\n' | cut -c 4- |
+    sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
+    grep '_spec\.rb$' |
+    sort -u |
+    xargs find 2> /dev/null
+  )
+}
+
 function __database_yml {
   if [[ -f config/database.yml ]]; then
     ruby -ryaml -rerb -e "puts YAML::load(ERB.new(IO.read('config/database.yml')).result)['${RAILS_ENV:-development}']['$1']"
