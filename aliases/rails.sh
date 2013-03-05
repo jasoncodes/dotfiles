@@ -50,6 +50,7 @@ function rspec {
     exec $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
   )
 }
+alias 'rspec-branch'='rspec $(gbd --name-only spec | grep _spec\.rb$ | xargs find 2> /dev/null)'
 alias ber=rspec
 alias berd='RSPEC_FORMAT=doc ber'
 
