@@ -21,8 +21,10 @@ function rails_command
 
   if [ -e script/rails ]; then
     script/rails "$cmd" "$@"
-  else
+  elif [ -e "script/$cmd" ]; then
     "script/$cmd" "$@"
+  else
+    command rails "$cmd" "$@"
   fi
 }
 
