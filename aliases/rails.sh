@@ -55,7 +55,7 @@ alias berd='RSPEC_FORMAT=doc ber'
 
 function rspec-branch {
   rspec $(
-    gbd --name-only |
+    git diff $(git merge-base origin/HEAD HEAD).. --name-only |
     sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
     grep '_spec\.rb$' |
     sort -u |
