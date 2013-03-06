@@ -169,6 +169,10 @@ nnoremap <Leader>yy "*yy
 noremap <Leader>p "*p
 noremap <Leader>P "*P
 
+" Jump between git diff hunks (quickfixsigns)
+nmap [d :silent call quickfixsigns#MoveSigns(-1, '', 1)<CR>
+nmap ]d :silent call quickfixsigns#MoveSigns(1, '', 1)<CR>
+
 " Rooter (mapping overrides)
 map <Leader>R <Plug>RooterChangeToRootDirectory
 
