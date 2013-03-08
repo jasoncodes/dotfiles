@@ -1,0 +1,2 @@
+#!/bin/bash -e
+sed 's/\x0D$//' | tr '\r' '\n'

@@ -1,0 +1,29 @@
+#!/bin/bash -e
+NEW_USERNAME="$1"
+if [ -z "$NEW_USERNAME" ]
+then
+  echo "Usage: $(basename "$0") [username]" >&2
+  exit 1
+fi
+if id "$NEW_USERNAME" 2> /dev/null
+then
+  echo "$(basename "$0"): User \"$NEW_USERNAME\" already exists." >&2
+  exit 1
+fi
+
+NEW_UID=$(( $(dscl . -list /Users UniqueID | awk '{print $2}' | sort -n | tail -1) + 1 ))
+
+if ! [ $NEW_UID -gt 500 ]
+then
+  echo "$(basename "$0"): Could not determine new UID." >&2
+  exit 1
+fi
+
+dscl . create "/Users/$NEW_USERNAME"
+dscl . create "/Users/$NEW_USERNAME" UniqueID $NEW_UID
+dscl . create "/Users/$NEW_USERNAME" PrimaryGroupID 20
+dscl . delete "/Users/$NEW_USERNAME" AuthenticationAuthority
+dscl . create "/Users/$NEW_USERNAME" Password '*'
+dscl . create "/Users/$NEW_USERNAME" UserShell /bin/bash
+dscl . create "/Users/$NEW_USERNAME" NFSHomeDirectory "/Users/$NEW_USERNAME"
+createhomedir -c -u "$NEW_USERNAME"

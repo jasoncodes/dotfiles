@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+
+from sys import *
+from os.path import *
+
+# A Q&D script to extract the announce URL name - @jasoncodes
+#
+# Thanks: BitTornado for btshowmetainfo for the algorithm
+# and http://wiki.theory.org/Decoding_bencoded_data_with_python for bdecode implementation
+
+import re
+try:
+    import psyco # Optional, 2.5x improvement in speed
+    psyco.full()
+except ImportError:
+    pass
+
+decimal_match = re.compile('\d')
+
+def bdecode(data):
+    chunks = list(data)
+    chunks.reverse()
+    root = _dechunk(chunks)
+    return root
+
+def _dechunk(chunks):
+    item = chunks.pop()
+
+    if (item == 'd'): 
+        item = chunks.pop()
+        hash = {}
+        while (item != 'e'):
+            chunks.append(item)
+            key = _dechunk(chunks)
+            hash[key] = _dechunk(chunks)
+            item = chunks.pop()
+        return hash
+    elif (item == 'l'):
+        item = chunks.pop()
+        list = []
+        while (item != 'e'):
+            chunks.append(item)
+            list.append(_dechunk(chunks))
+            item = chunks.pop()
+        return list
+    elif (item == 'i'):
+        item = chunks.pop()
+        num = ''
+        while (item != 'e'):
+            num  += item
+            item = chunks.pop()
+        return int(num)
+    elif (decimal_match.findall(item)):
+        num = ''
+        while decimal_match.findall(item):
+            num += item
+            item = chunks.pop()
+        line = ''
+        for i in range(1, int(num) + 1):
+            line += chunks.pop()
+        return line
+    raise "Invalid input!"
+
+if len(argv) < 3:
+    stderr.write('%s [announce|name] file1.torrent file2.torrent file3.torrent ...\n' % argv[0])
+    exit(1)
+
+for metainfo_name in argv[2:]:
+    metainfo_file = open(metainfo_name, 'rb')
+    metainfo = bdecode(metainfo_file.read())
+    if argv[1] in metainfo:
+        print metainfo[argv[1]]
+    elif argv[1] in metainfo['info']:
+        print metainfo['info'][argv[1]]
+    else:
+        stderr.write('%s: Invalid field name: %s\n' % (argv[0], argv[1]))
+        exit(1)

@@ -1,0 +1,12 @@
+#!/bin/bash
+export PATH="/usr/local/bin:$PATH"
+MOUNT_POINT="$1"
+FREE_MB_MIN="$(( $2 ))"
+
+FREE_MB="$(( `stat -f "$MOUNT_POINT" --printf '%a * %S / 1024 / 1024'` ))"
+
+if [ "$FREE_MB" -lt "$FREE_MB_MIN" ]
+then
+	echo "Free space on $HOSTNAME:$MOUNT_POINT is $FREE_MB MiB (< $FREE_MB_MIN MiB)" 2>&1
+	exit 1
+fi
