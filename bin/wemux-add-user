@@ -1,0 +1,32 @@
+#!/bin/bash -e
+
+SCRIPT_NAME="$(basename "$0")"
+if [[ $# -ne 1 ]] || [[ -z "$1" ]]; then
+  echo "usage: $SCRIPT_NAME [github user]" >&2
+  exit 1
+fi
+GITHUB_USER="$1"
+
+TMP_NEW_LINES="$(mktemp "${TMPDIR:-/tmp}/$SCRIPT_NAME.XXXXXX")"
+TMP_NEW_AUTH_KEYS="$(mktemp "${TMPDIR:-/tmp}/$SCRIPT_NAME.XXXXXX")"
+trap '{ rm -f "$TMP_NEW_LINES" "$TMP_NEW_AUTH_KEYS"; }' EXIT
+
+(curl -sf "https://github.com/${GITHUB_USER}.keys" && echo) > $TMP_NEW_LINES
+
+COUNT="$(grep ^ssh < "$TMP_NEW_LINES" | wc -l)"
+if [[ $COUNT -lt 1 ]]; then
+  echo "Could not find any SSH keys for $GITHUB_USER" >&2
+  exit 1
+fi
+
+if [[ -e ~wemux/.ssh/authorized_keys ]]; then
+  set +e
+  cat ~wemux/.ssh/authorized_keys | grep -v 'command="~/bin/wemux-shell '"$GITHUB_USER"'"' >> "$TMP_NEW_AUTH_KEYS"
+  [ "${PIPESTATUS[0]}" -eq 0 ] || exit 1
+  set -e
+fi
+cat "$TMP_NEW_LINES" | sed 's#^#command="~/bin/wemux-shell '"$GITHUB_USER"'",no-port-forwarding,no-X11-forwarding #' >> "$TMP_NEW_AUTH_KEYS"
+
+cat "$TMP_NEW_AUTH_KEYS" | sort | sudo -u wemux tee ~wemux/.ssh/authorized_keys > /dev/null
+
+echo "Added $COUNT keys for $GITHUB_USER."
