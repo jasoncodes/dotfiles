@@ -29,4 +29,4 @@ cat "$TMP_NEW_LINES" | sed 's#^#command="~/bin/wemux-shell '"$GITHUB_USER"'",no-
 
 cat "$TMP_NEW_AUTH_KEYS" | sort | sudo -u wemux tee ~wemux/.ssh/authorized_keys > /dev/null
 
-echo "Added $COUNT keys for $GITHUB_USER."
+echo Added $COUNT keys for "$GITHUB_USER".

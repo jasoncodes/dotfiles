@@ -24,4 +24,4 @@ set -e
 
 cat "$TMP_NEW_AUTH_KEYS" | sort | sudo -u wemux tee ~wemux/.ssh/authorized_keys > /dev/null
 
-echo "Removed $COUNT keys for $GITHUB_USER."
+echo Removed $COUNT keys for "$GITHUB_USER".
