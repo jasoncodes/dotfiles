@@ -9,7 +9,7 @@ if [[ "$TMUX" =~ /tmp/wemux ]]; then
     name=`stat -f%Su $tty 2>/dev/null` || name=`stat -c%U $tty 2>/dev/null`
     # Replace with the pair's name if applicable
     if [[ "$name" == wemux ]]; then
-      name="$(ps -o args= -t $tty | egrep -o ~wemux/bin/wemux-shell' [^ ]+$' | egrep -o '[^ ]+$')"
+      name="$(ps -o args= -t $tty | egrep -o ~wemux/bin/_wemux_shell' [^ ]+$' | egrep -o '[^ ]+$')"
     fi
     # If user is attached in read-only mode, set mode to [m]
     [[ $mode == "(ro)" ]] && mode="[m]" || mode=""

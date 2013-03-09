@@ -10,7 +10,7 @@ GITHUB_USER="$1"
 TMP_NEW_AUTH_KEYS="$(mktemp "${TMPDIR:-/tmp}/$SCRIPT_NAME.XXXXXX")"
 trap '{ rm -f "$TMP_NEW_AUTH_KEYS"; }' EXIT
 
-COUNT="$(cat ~wemux/.ssh/authorized_keys | grep 'command="~/bin/wemux-shell '"$GITHUB_USER"'"' | wc -l)"
+COUNT="$(cat ~wemux/.ssh/authorized_keys | grep 'command="~/bin/_wemux_shell '"$GITHUB_USER"'"' | wc -l)"
 
 if [[ "$COUNT" -lt 1 ]]; then
   echo "No wemux keys installed for $GITHUB_USER. Did you mean \`wemux-add-keys\`?" >&2
@@ -18,7 +18,7 @@ if [[ "$COUNT" -lt 1 ]]; then
 fi
 
 set +e
-cat ~wemux/.ssh/authorized_keys | grep -v 'command="~/bin/wemux-shell '"$GITHUB_USER"'"' >> "$TMP_NEW_AUTH_KEYS"
+cat ~wemux/.ssh/authorized_keys | grep -v 'command="~/bin/_wemux_shell '"$GITHUB_USER"'"' >> "$TMP_NEW_AUTH_KEYS"
 [ "${PIPESTATUS[0]}" -eq 0 ] || exit 1
 set -e
 

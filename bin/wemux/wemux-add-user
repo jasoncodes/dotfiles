@@ -21,11 +21,11 @@ fi
 
 if [[ -e ~wemux/.ssh/authorized_keys ]]; then
   set +e
-  cat ~wemux/.ssh/authorized_keys | grep -v 'command="~/bin/wemux-shell '"$GITHUB_USER"'"' >> "$TMP_NEW_AUTH_KEYS"
+  cat ~wemux/.ssh/authorized_keys | grep -v 'command="~/bin/_wemux_shell '"$GITHUB_USER"'"' >> "$TMP_NEW_AUTH_KEYS"
   [ "${PIPESTATUS[0]}" -eq 0 ] || exit 1
   set -e
 fi
-cat "$TMP_NEW_LINES" | sed 's#^#command="~/bin/wemux-shell '"$GITHUB_USER"'",no-port-forwarding,no-X11-forwarding #' >> "$TMP_NEW_AUTH_KEYS"
+cat "$TMP_NEW_LINES" | sed 's#^#command="~/bin/_wemux_shell '"$GITHUB_USER"'",no-port-forwarding,no-X11-forwarding #' >> "$TMP_NEW_AUTH_KEYS"
 
 cat "$TMP_NEW_AUTH_KEYS" | sort | sudo -u wemux tee ~wemux/.ssh/authorized_keys > /dev/null
 
