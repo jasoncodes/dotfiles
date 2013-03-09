@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+if [[ "$TMUX" =~ /tmp/wemux ]]; then
+  socket="$(echo "$TMUX" | cut -d, -f1)"
+  chmod o+rwx "$socket"
+
+  tmux refresh-client -S
+fi

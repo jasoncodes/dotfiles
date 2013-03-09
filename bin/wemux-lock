@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+if [[ "$TMUX" =~ /tmp/wemux ]]; then
+  while IFS= read tty; do
+    # get user associated with tty
+    name=`stat -f%Su $tty 2>/dev/null` || name=`stat -c%U $tty 2>/dev/null`
+    # if they're the wemux user account
+    if [[ "$name" == wemux ]]; then
+      # kick them off
+      tmux detach-client -t $tty
+    fi
+  done < <(wemux list-clients | cut -f1 -d:)
+
+  socket="$(echo "$TMUX" | cut -d, -f1)"
+  chmod o-rwx "$socket"
+
+  tmux refresh-client -S
+fi

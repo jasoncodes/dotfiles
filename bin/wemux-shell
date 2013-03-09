@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export PATH=/usr/local/bin:/usr/bin:/bin
+
+socket=/tmp/wemux-wemux
+if ! [[ -e $socket ]] || [[ -z "$(find $socket -perm -0700)" ]]; then
+  echo There are no pairing sessions active. >&2
+  exit 1
+fi
+if [[ -z "$(find $socket -perm -0007)" ]]; then
+  echo Pairing session is currently locked. >&2
+  exit 1
+fi
+
+wemux attach

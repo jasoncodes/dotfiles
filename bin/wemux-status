@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+# Based on wemux's status_users function
+# <https://github.com/zolrath/wemux/blob/bae227a/wemux#L157-169>
+if [[ "$TMUX" =~ /tmp/wemux ]]; then
+  while IFS= read line; do
+    read tty mode <<<$(echo $line)
+    # Get user associated with tty
+    name=`stat -f%Su $tty 2>/dev/null` || name=`stat -c%U $tty 2>/dev/null`
+    # Replace with the pair's name if applicable
+    if [[ "$name" == wemux ]]; then
+      name="$(ps -o args= -t $tty | egrep -o ~wemux/bin/wemux-shell' [^ ]+$' | egrep -o '[^ ]+$')"
+    fi
+    # If user is attached in read-only mode, set mode to [m]
+    [[ $mode == "(ro)" ]] && mode="[m]" || mode=""
+    # If user/mode is already is userlist, do not add them again.
+    if ! [[ "$users" =~ "$name$mode," ]]; then
+      users="$users$name$mode, "
+    fi
+  done < <(wemux list-clients | cut -f1,6 -d ' ' | sed s/://)
+  # Strip last two characters ', '
+  users="${users%??}"
+
+  socket="$(echo "$TMUX" | cut -d, -f1)"
+  if [[ -z "$(find /tmp/wemux-wemux -perm -004)" ]]; then
+    locked="LOCKED "
+  fi
+
+  echo "$locked$users"
+fi
