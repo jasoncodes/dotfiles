@@ -2,12 +2,12 @@
 
 fresh freshshell/fresh bin/fresh --bin
 
-fresh 'aliases/*'
-fresh 'shell/*'
+fresh aliases/\*
+fresh shell/\*
 
-fresh 'config/*' --file
+fresh config/\* --file
 
-fresh 'bin/*' --bin
+fresh bin/\* --bin
 
 fresh freshshell/fresh contrib/completion/fresh-completion.bash
 fresh bobthecow/git-flow-completion git-flow-completion.bash
