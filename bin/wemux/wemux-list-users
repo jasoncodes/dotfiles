@@ -1,0 +1,2 @@
+#!/bin/bash -e
+egrep -o '"~/bin/_wemux_shell [^" ]+' ~wemux/.ssh/authorized_keys | cut -d ' ' -f 2 | sort -u
