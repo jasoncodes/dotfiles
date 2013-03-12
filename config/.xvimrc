@@ -1,0 +1,5 @@
+nnoremap S cc
+nnoremap Y y$
+
+set ignorecase
+set smartcase
