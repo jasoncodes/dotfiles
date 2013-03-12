@@ -108,6 +108,10 @@ map L $
 " I never intentionally lookup keywords (with `man`)
 nmap K <Esc>
 
+" gi moves to last insert mode
+" gI moves to last modification
+nnoremap gI `.
+
 " Movement & wrapped long lines
 " This solves the problem that pressing down jumps your cursor 'over' the current line to the next line
 nnoremap j gj
