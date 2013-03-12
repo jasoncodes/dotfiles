@@ -8,12 +8,12 @@ fresh freshshell/fresh contrib/source-build.sh --file=~/.bashrc
 fresh shell/aliases/\*
 fresh shell/\*
 
+fresh freshshell/fresh contrib/completion/fresh-completion.bash
+fresh bobthecow/git-flow-completion git-flow-completion.bash
+
 fresh config/\* --file
 
 fresh bin/\* --bin
 fresh bin/wemux/\* --bin
-
-fresh freshshell/fresh contrib/completion/fresh-completion.bash
-fresh bobthecow/git-flow-completion git-flow-completion.bash
 
 fresh twe4ked/dotfiles bin/heroku-remote-add --bin
