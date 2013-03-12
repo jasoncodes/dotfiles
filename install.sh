@@ -37,11 +37,5 @@ function create_link()
 
 create_link .fresh/build/shell.sh ~/.bash_profile
 create_link .fresh/build/shell.sh ~/.bashrc
-create_link .dotfiles/freshrc ~/.freshrc
 
-if [ -e ~/.fresh/build/shell.sh ]; then
-  source ~/.fresh/build/shell.sh
-  fresh
-else
-  bash -c "`curl -sL get.freshshell.com`"
-fi
+bash -c "`curl -sL get.freshshell.com`"
