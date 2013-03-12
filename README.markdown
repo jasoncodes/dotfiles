@@ -1,7 +1,8 @@
 # ~/.dotfiles
 
 ## Installation
-    bash < <( curl -sL https://raw.github.com/jasoncodes/dotfiles/master/install.sh )
+    git clone git://github.com/jasoncodes/dotfiles.git ~/.dotfiles
+    bash -c "`curl -sL get.freshshell.com`"
 
 My dotfiles are managed by [fresh].
 
