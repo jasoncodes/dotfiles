@@ -2,6 +2,9 @@
 
 fresh freshshell/fresh bin/fresh --bin
 
+fresh freshshell/fresh contrib/source-build.sh --file=~/.bash_profile
+fresh freshshell/fresh contrib/source-build.sh --file=~/.bashrc
+
 fresh shell/aliases/\*
 fresh shell/\*
 

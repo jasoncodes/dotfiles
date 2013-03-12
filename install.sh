@@ -11,31 +11,4 @@ else
   git clone git://github.com/jasoncodes/dotfiles.git ~/.dotfiles
 fi
 
-function create_link()
-{
-
-  local SRC="$1"
-  local DST="$2"
-
-  if [ ! -e "$DST" ]
-  then
-    ln -sv "$SRC" "$DST"
-  else
-    if [ ! -L "$DST" ] || [ "`readlink "$DST"`" != "$SRC" ]
-    then
-      echo -n "dotfiles: $DST already exists" >&2
-      if [ -L "$DST" ]
-      then
-        echo " (pointing to `readlink "$DST"`)"
-      else
-        echo " (not a symlink)"
-      fi
-    fi
-  fi
-
-}
-
-create_link .fresh/build/shell.sh ~/.bash_profile
-create_link .fresh/build/shell.sh ~/.bashrc
-
 bash -c "`curl -sL get.freshshell.com`"
