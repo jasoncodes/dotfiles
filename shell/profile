@@ -228,10 +228,11 @@ if [[ -d "/usr/local/heroku/bin" ]]; then
 fi
 
 # initialise autojump
-AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
-if [ -e "$AUTOJUMP_SCRIPT" ]
-then
-  source "$AUTOJUMP_SCRIPT"
+if which brew > /dev/null; then
+  AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
+  if [ -e "$AUTOJUMP_SCRIPT" ]; then
+    source "$AUTOJUMP_SCRIPT"
+  fi
 fi
 
 # load local shell configuration if present
