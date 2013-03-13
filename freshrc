@@ -16,7 +16,6 @@ fresh config/\* --file
 fresh twe4ked/dotfiles vim/vundle_before.vim --file=~/.vimrc
 fresh vim/vundle.vim --file=~/.vimrc
 fresh twe4ked/dotfiles vim/vundle_after.vim --file=~/.vimrc
-fresh vim/colors --file=~/.vim/colors/
 fresh vim/global.vim --file=~/.vimrc
 fresh vim/functions.vim --file=~/.vimrc
 fresh vim/keybindings.vim --file=~/.vimrc
@@ -24,6 +23,7 @@ fresh vim/plugin_config.vim --file=~/.vimrc
 fresh vim/auto_commands.vim --file=~/.vimrc
 fresh vim/vimrc --file
 fresh vim/gvimrc --file
+fresh vim/colors --file=~/.vim/colors/
 
 fresh bin/\* --bin
 fresh bin/wemux/\* --bin
