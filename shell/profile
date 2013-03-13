@@ -204,7 +204,7 @@ then
   _git_complete status gs
   _git_complete diff gd gdw gds gdsw
   _git_complete reset gar garp
-  _git_complete gap _git_add
+  _git_complete add ga gap
   _git_complete commit gc gca
   _git_complete push gp
 fi
