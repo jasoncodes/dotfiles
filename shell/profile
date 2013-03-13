@@ -194,9 +194,13 @@ then
   _git_complete() {
     local CMD="$1"
     shift
-    for ALIAS in "$@"; do
-      __git_complete "$ALIAS" "_git_$CMD"
-    done
+    if type __git_complete &>/dev/null; then
+      for ALIAS in "$@"; do
+        __git_complete "$ALIAS" "_git_$CMD"
+      done
+    else
+      complete -o bashdefault -o default -o nospace -F "_git_$CMD" "$@"
+    fi
   }
 
   _git_complete log gl glp gls glw
