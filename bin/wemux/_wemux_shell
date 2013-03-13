@@ -13,3 +13,7 @@ if [[ -z "$(find $socket -perm -0007)" ]]; then
 fi
 
 wemux attach
+
+if [[ -z "$(find $socket -perm -0007)" ]]; then
+  echo Pairing session locked.
+fi
