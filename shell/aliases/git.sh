@@ -198,3 +198,34 @@ gaur() {
     fi
   done
 }
+
+gcf() {
+  if [[ $(git diff --staged --name-only | wc -l) -lt 1 ]]; then
+    echo Nothing staged to commit. >&2
+    return 1
+  fi
+
+  COMMITS="$(
+    git diff --staged --name-only -z |
+      xargs -0 git log --pretty=format:'%H %s' @{u}.. |
+      awk '{ if ($2 != "fixup!") { print $1} }'
+  )"
+
+  case $(echo "$COMMITS" | grep . | wc -l) in
+    0)
+      echo No fixup candidates found. >&2
+      return 1
+      ;;
+    1)
+      git commit --fixup "$COMMITS"
+      ;;
+    *)
+      echo Staged files:
+      git diff --staged --name-only | sed 's/^/  /'
+      echo
+      echo Multiple fixup candidates:
+      echo "$COMMITS" | xargs git show -s --oneline | sed 's/^/  /'
+      return 1
+      ;;
+  esac
+}
