@@ -25,6 +25,8 @@ alias grt='git_current_tracking > /dev/null && git rebase -i @{upstream}'
 alias grc='git rebase --continue'
 alias gp='git push'
 alias gpt='git push -u origin $(git_current_branch)'
+alias gws='git wip save WIP --untracked'
+alias gwd='git update-ref -d refs/wip/$(git_current_branch)'
 
 # helper for git aliases
 function git_current_branch()
