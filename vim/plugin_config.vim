@@ -1,6 +1,3 @@
-" Rails
-let g:rails_menu = 0
-
 " Ctrl-P
 let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_clear_cache_on_exit = 1
@@ -33,9 +30,6 @@ let g:detectindent_preferred_indent = 2
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_exclude_filetypes = ['help', 'diff']
-
-" NERDCommenter
-let g:NERDSpaceDelims = 1
 
 " Quickfixsigns
 let g:quickfixsigns_classes = ['vcsdiff']
