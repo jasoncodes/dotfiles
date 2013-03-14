@@ -93,7 +93,7 @@ function gls()
 # checkout a GitHub pull request as a local branch
 function gpr()
 {
-  local TEMP_FILE="$(mktemp)"
+  local TEMP_FILE="$(mktemp "${TMPDIR:-/tmp}/gpr.XXXXXX")"
   echo '+refs/pull/*/head:refs/remotes/origin/pr/*' > "$TEMP_FILE"
   git config --get-all remote.origin.fetch | grep -v 'refs/remotes/origin/pr/\*$' >> "$TEMP_FILE"
   git config --unset-all remote.origin.fetch
