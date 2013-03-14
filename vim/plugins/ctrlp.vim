@@ -1,5 +1,7 @@
-" Ctrl-P
-let g:ctrlp_map = '<Leader>t'
+Bundle 'kien/ctrlp.vim'
+Bundle 'jasoncodes/ctrlp-modified.vim'
+
+" let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_working_path_mode = 0 " Don't manage
 let g:ctrlp_dotfiles = 0 " Ignore all dot/hidden files
@@ -22,22 +24,8 @@ func! s:CtrlPDeleteBuffer()
   exec "norm \<F5>"
 endfunc
 
-" Detect Indent
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 2
-
-" Indent Guides
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help', 'diff']
-
-" Quickfixsigns
-let g:quickfixsigns_classes = ['vcsdiff']
-func! TweakQuickfixsigns()
-  sign define QFS_VCS_ADD text=⇒ texthl=DiffAdd
-  sign define QFS_VCS_DEL text=⇐ texthl=DiffDelete
-  sign define QFS_VCS_CHANGE text=⇔ texthl=DiffChange
-  hi DiffAdd ctermfg=NONE guifg=NONE
-  hi DiffDelete ctermfg=NONE guifg=NONE
-endfunc
-auto VimEnter * call TweakQuickfixsigns()
+map <Leader>t :CtrlP<CR>
+map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
+map <Leader>l :CtrlPBuffer<CR>
+map <Leader>m :CtrlPModified<CR>
+map <Leader>d :CtrlPCurFile<CR>

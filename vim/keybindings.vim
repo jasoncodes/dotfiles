@@ -21,10 +21,6 @@ map <Leader>a ggVG
 " Buffer navigation
 map <Leader>, <C-^>
 map <Leader>q :CommandW<CR>
-map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
-map <Leader>l :CtrlPBuffer<CR>
-map <Leader>m :CtrlPModified<CR>
-map <Leader>d :CtrlPCurFile<CR>
 
 " replace bufkill's default mappings with something less conflicty
 nmap \bb <Plug>BufKillBack
@@ -169,10 +165,6 @@ noremap <Leader>y "*y
 nnoremap <Leader>yy "*yy
 noremap <Leader>p "*p
 noremap <Leader>P "*P
-
-" Jump between git diff hunks (quickfixsigns)
-nmap [d :silent call quickfixsigns#MoveSigns(-1, '', 1)<CR>
-nmap ]d :silent call quickfixsigns#MoveSigns(1, '', 1)<CR>
 
 " Rooter (mapping overrides)
 map <Leader>R <Plug>RooterChangeToRootDirectory
