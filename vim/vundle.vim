@@ -9,7 +9,6 @@ Bundle 'gmarik/vundle'
 Bundle 'mileszs/ack.vim'
 Bundle 'bufkill.vim'
 Bundle 'nathanaelkane/vim-command-w'
-Bundle 'airblade/vim-rooter'
 
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails'

@@ -1,6 +1,3 @@
-" `:cd` to the project root
-au VimEnter * :Rooter
-
 " Use a bar cursor for insert mode under iTerm
 if exists('$TMUX')
   let &t_SI = "\<Esc>[3 q"
