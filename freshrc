@@ -13,6 +13,7 @@ fresh bobthecow/git-flow-completion git-flow-completion.bash
 
 fresh config/\* --file
 
+fresh vim/leader.vim --file=~/.vimrc --marker=\"
 fresh twe4ked/dotfiles vim/vundle_before.vim --file=~/.vimrc --marker=\"
 fresh vim/vundle.vim --file=~/.vimrc --marker=\"
 fresh twe4ked/dotfiles vim/vundle_after.vim --file=~/.vimrc --marker=\"
