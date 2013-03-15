@@ -22,6 +22,7 @@ fresh vim/global.vim --file=~/.vimrc --marker=\"
 fresh vim/config/\*.vim --file=~/.vimrc --marker=\"
 fresh vim/functions.vim --file=~/.vimrc --marker=\"
 fresh vim/mappings.vim --file=~/.vimrc --marker=\"
+fresh vim/mappings/\*.vim --file=~/.vimrc --marker=\"
 fresh vim/auto_commands.vim --file=~/.vimrc --marker=\"
 fresh vim/gvimrc --file
 fresh vim/colors --file=~/.vim/colors/

@@ -115,26 +115,6 @@ vmap <silent> ∆ <Plug>upAndDownVisualDown
 imap <silent> ˚ <Plug>upAndDownInsertUp
 imap <silent> ∆ <Plug>upAndDownInsertDown
 
-" Disable cursor keys
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-inoremap <M-Down> <Nop>
-inoremap <M-Left> <Nop>
-inoremap <M-Right> <Nop>
-noremap <Up> <Esc>
-noremap <Down> <Esc>
-noremap <Left> <Esc>
-noremap <Right> <Esc>
-noremap <S-Up> <Esc>
-noremap <S-Down> <Esc>
-vmap <Up> <Esc><Esc>gv
-vmap <Down> <Esc><Esc>gv
-vmap <Left> <Esc><Esc>gv
-vmap <Right> <Esc><Esc>gv
-
 " quick mapping to execute the macro in q
 map Q @q
 
@@ -143,16 +123,6 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
-" Reselect visual block after indent
-vnoremap < <gv
-vnoremap > >gv
-
-" Yank and put system pasteboard with <Leader>y/p.
-noremap <Leader>y "*y
-nnoremap <Leader>yy "*yy
-noremap <Leader>p "*p
-noremap <Leader>P "*P
 
 " TComment
 let g:tcommentMapLeaderOp1 = '<Leader>c'
