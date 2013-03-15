@@ -56,23 +56,6 @@ set matchtime=2                            " (for only .2 seconds).
 set ignorecase                             " Ignore case by default when searching
 set smartcase                              " Switch to case sensitive mode if needle contains uppercase characters
 
-" Backups
-if !isdirectory(expand("~/.vim/.backup/"))
-  silent !mkdir -p ~/.vim/.backup/
-endif
-set backupdir=$HOME/.vim/.backup
-set directory=$HOME/.vim/.backup
-set backupskip=/tmp/*,/private/tmp/*
-
-" Persistent Undo
-if !isdirectory(expand("~/.vim/.undo/"))
-  silent !mkdir -p ~/.vim/.undo/
-endif
-set undodir=$HOME/.vim/.undo
-set undofile
-set undolevels=1000
-set undoreload=10000
-
 " Custom status line
 set statusline=%F%m%r%h%w\ [TYPE=%Y]\ \ \ \ \ \ [POS=%2l,%2v][%p%%]\ \ \ \ \ \ [LEN=%L]
 set laststatus=2
