@@ -81,9 +81,6 @@ noremap <Leader>i :set list!<CR>
 " Convert between spaces and tabs
 map <Leader>I :set list<CR>:FixWhitespace<CR>:ToggleTabs<CR>
 
-" Page down with space
-map <Space> <PageDown>
-
 " Highlight word at cursor without changing position
 nnoremap <Leader>h *<C-O>
 " Highlight word at cursor and then Ack it.
@@ -109,8 +106,6 @@ nnoremap gI `.
 " This solves the problem that pressing down jumps your cursor 'over' the current line to the next line
 nnoremap j gj
 nnoremap k gk
-nnoremap <Down> gj
-nnoremap <Up> gk
 
 " Use option-J/K to bubble lines up and down
 nmap <silent> ˚ <Plug>upAndDownUp
@@ -140,8 +135,6 @@ vmap <Down> <Esc><Esc>gv
 vmap <Left> <Esc><Esc>gv
 vmap <Right> <Esc><Esc>gv
 
-nnoremap = v=
-
 " quick mapping to execute the macro in q
 map Q @q
 
@@ -150,11 +143,6 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
-" Remove annoying F1 help
-inoremap <F1> <Esc>
-nnoremap <F1> <Esc>
-vnoremap <F1> <Esc>
 
 " Reselect visual block after indent
 vnoremap < <gv
@@ -165,9 +153,6 @@ noremap <Leader>y "*y
 nnoremap <Leader>yy "*yy
 noremap <Leader>p "*p
 noremap <Leader>P "*P
-
-" Rooter (mapping overrides)
-map <Leader>R <Plug>RooterChangeToRootDirectory
 
 " TComment
 let g:tcommentMapLeaderOp1 = '<Leader>c'
