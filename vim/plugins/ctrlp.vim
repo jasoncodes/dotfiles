@@ -1,7 +1,6 @@
 Bundle 'kien/ctrlp.vim'
 Bundle 'jasoncodes/ctrlp-modified.vim'
 
-" let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_working_path_mode = 0 " Don't manage
 let g:ctrlp_dotfiles = 0 " Ignore all dot/hidden files
