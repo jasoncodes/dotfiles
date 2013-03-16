@@ -10,6 +10,9 @@ func! TweakQuickfixsigns()
 endfunc
 auto VimEnter * call TweakQuickfixsigns()
 
+" Refresh quickfixsigns when buffer reloads
+autocmd BufRead * call QuickfixsignsUpdate()
+
 " Jump between git diff hunks (quickfixsigns)
 nmap [d :silent call quickfixsigns#MoveSigns(-1, '', 1)<CR>
 nmap ]d :silent call quickfixsigns#MoveSigns(1, '', 1)<CR>
