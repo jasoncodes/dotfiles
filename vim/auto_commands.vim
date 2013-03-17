@@ -1,6 +1,3 @@
-" Detect indent mode automatically (tab vs spaces)
-autocmd BufReadPost * :DetectIndent
-
 " Save on FocusLost
 autocmd FocusLost * nested :silent! wall
 
