@@ -13,10 +13,5 @@ autocmd FileType make set noexpandtab
 " Enable spell check by default for git commits
 autocmd FileType gitcommit set spell
 
-" Show the cursorline for the focused window
-set cursorline
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
-
 " Generate .git/tags (ctags) automatically on save
 autocmd BufWritePost * call UpdateTags()
