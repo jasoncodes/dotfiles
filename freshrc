@@ -13,17 +13,19 @@ fresh bobthecow/git-flow-completion git-flow-completion.bash
 
 fresh config/\* --file
 
-fresh vim/leader.vim --file=~/.vimrc --marker=\"
-fresh twe4ked/dotfiles vim/vundle_before.vim --file=~/.vimrc --marker=\"
-fresh vim/vundle.vim --file=~/.vimrc --marker=\"
-fresh vim/plugins/\*.vim --file=~/.vimrc --marker=\"
-fresh twe4ked/dotfiles vim/vundle_after.vim --file=~/.vimrc --marker=\"
-fresh vim/global.vim --file=~/.vimrc --marker=\"
-fresh vim/config/\*.vim --file=~/.vimrc --marker=\"
-fresh vim/functions.vim --file=~/.vimrc --marker=\"
-fresh vim/mappings.vim --file=~/.vimrc --marker=\"
-fresh vim/mappings/\*.vim --file=~/.vimrc --marker=\"
-fresh vim/auto_commands.vim --file=~/.vimrc --marker=\"
+fresh-options --file=~/.vimrc --marker=\"
+  fresh vim/leader.vim
+  fresh twe4ked/dotfiles vim/vundle_before.vim
+  fresh vim/vundle.vim
+  fresh vim/plugins/\*.vim
+  fresh twe4ked/dotfiles vim/vundle_after.vim
+  fresh vim/global.vim
+  fresh vim/config/\*.vim
+  fresh vim/functions.vim
+  fresh vim/mappings.vim
+  fresh vim/mappings/\*.vim
+  fresh vim/auto_commands.vim
+fresh-options
 fresh vim/gvimrc --file
 fresh vim/colors --file=~/.vim/colors/
 
