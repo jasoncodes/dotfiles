@@ -1,7 +1,10 @@
 # ~/.dotfiles
 
 ## Installation
-    FRESH_LOCAL_SOURCE=jasoncodes/dotfiles bash -c "`curl -sL get.freshshell.com`"
+
+``` sh
+FRESH_LOCAL_SOURCE=jasoncodes/dotfiles bash -c "`curl -sL get.freshshell.com`"
+```
 
 My dotfiles are managed by [fresh].
 
