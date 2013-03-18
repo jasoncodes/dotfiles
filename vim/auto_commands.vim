@@ -12,6 +12,3 @@ autocmd FileType make set noexpandtab
 
 " Enable spell check by default for git commits
 autocmd FileType gitcommit set spell
-
-" Generate .git/tags (ctags) automatically on save
-autocmd BufWritePost * call UpdateTags()
