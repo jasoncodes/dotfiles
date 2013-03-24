@@ -15,7 +15,7 @@ if [ -d "/Applications/Preview.app" ]
 then
   pman () {
     man -t "$@" |
-    ( which ps2pdf > /dev/null && ps2pdf - - || cat) |
+    ( which ps2pdf &> /dev/null && ps2pdf - - || cat) |
     open -f -a /Applications/Preview.app
   }
 fi
@@ -85,10 +85,10 @@ then
 fi
 
 # lesspipe lets us do cool things like view gzipped files
-if [ -x "`which lesspipe`" ]
+if which lesspipe &> /dev/null
 then
   eval "$(lesspipe)"
-elif [ -x "`which lesspipe.sh`" ]
+elif which lesspipe.sh &> /dev/null
 then
   eval "$(lesspipe.sh)"
 fi
@@ -100,7 +100,7 @@ then
 fi
 
 # load Homebrew's shell completion
-if which brew > /dev/null && [ -f "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh" ]
+if which brew &> /dev/null && [ -f "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh" ]
 then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
@@ -167,7 +167,7 @@ function first_file_match()
 }
 
 # add git status if available
-if which git > /dev/null
+if which git &> /dev/null
 then
   GIT_COMPLETION_PATH="$(dirname $(realpath "$(which git)"))/../etc/bash_completion.d/git-completion.bash"
 fi
@@ -222,7 +222,7 @@ if [[ -f "/usr/local/etc/openssl/certs/cert.pem" ]]; then
 fi
 
 # initialise rbenv
-if [[ -x "`which rbenv`" ]]; then
+if which rbenv &> /dev/null; then
   eval "$(rbenv init - --no-rehash)"
 fi
 
@@ -232,7 +232,7 @@ if [[ -d "/usr/local/heroku/bin" ]]; then
 fi
 
 # initialise autojump
-if which brew > /dev/null; then
+if which brew &> /dev/null; then
   AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
   if [ -e "$AUTOJUMP_SCRIPT" ]; then
     source "$AUTOJUMP_SCRIPT"
