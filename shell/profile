@@ -147,7 +147,11 @@ export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
 
 function realpath()
 {
-  python -c 'import os,sys;print os.path.realpath(sys.argv[1])' "$@"
+  if readlink --version 2> /dev/null | grep -q GNU; then
+    readlink -f "$@"
+  else
+    python -c 'import os,sys;print os.path.realpath(sys.argv[1])' "$@"
+  fi
 }
 
 function first_file_match()
