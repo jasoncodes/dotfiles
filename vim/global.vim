@@ -56,10 +56,6 @@ set matchtime=2                            " (for only .2 seconds).
 set ignorecase                             " Ignore case by default when searching
 set smartcase                              " Switch to case sensitive mode if needle contains uppercase characters
 
-" Custom status line
-set statusline=%F%m%r%h%w\ [TYPE=%Y]\ \ \ \ \ \ [POS=%2l,%2v][%p%%]\ \ \ \ \ \ [LEN=%L]
-set laststatus=2
-
 " Use % to jump to matching begin/end of blocks as well as brackets/parens
 runtime macros/matchit.vim
 
