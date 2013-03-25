@@ -1,4 +1,3 @@
-Bundle 'mileszs/ack.vim'
 Bundle 'bufkill.vim'
 Bundle 'nathanaelkane/vim-command-w'
 Bundle 'bronson/vim-trailing-whitespace'
