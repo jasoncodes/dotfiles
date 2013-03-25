@@ -20,6 +20,6 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Highlight word at cursor without changing position
-nnoremap <Leader>h *<C-O>
+map <Leader>h *<C-O>
 " Highlight word at cursor and then Ack it.
-nnoremap <Leader>H *<C-O>:AckFromSearch!<CR>
+map <Leader>H *<C-O>:AckFromSearch!<CR>
