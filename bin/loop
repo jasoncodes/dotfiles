@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+if [[ $# -lt 1 ]]; then
+  echo "Runs a command in a loop repeatedly until it fails." >&2
+  echo >&2
+  echo "usage: loop [delay] command..." >&2
+  exit 1
+fi
+
+DELAY=0
+if echo "$1" | egrep -q '^\d+(\.\d+)?$'; then
+  DELAY="$1"
+  shift
+fi
+
+while "$@"; do
+  sleep "$DELAY"
+done
