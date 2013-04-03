@@ -225,16 +225,6 @@ if [[ -f "/usr/local/etc/openssl/certs/cert.pem" ]]; then
   export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
 fi
 
-# initialise rbenv
-if which rbenv &> /dev/null; then
-  eval "$(rbenv init - --no-rehash)"
-fi
-
-# initialize Heroku Toolbelt
-if [[ -d "/usr/local/heroku/bin" ]]; then
-  export PATH="/usr/local/heroku/bin:$PATH"
-fi
-
 # initialise autojump
 if which brew &> /dev/null; then
   AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
