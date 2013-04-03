@@ -105,13 +105,6 @@ then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
 
-# http://github.com/therubymug/hitch
-hitch() {
-  command hitch "$@"
-  if [[ -s "$HOME/.hitch_export_authors" ]] ; then source "$HOME/.hitch_export_authors" ; fi
-}
-alias unhitch='hitch -u'
-
 # filters for XML and JSON
 alias xml='xmllint -format - | pygmentize -l xml'
 alias json='python -mjson.tool | coderay -json'
