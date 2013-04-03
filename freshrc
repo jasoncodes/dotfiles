@@ -39,3 +39,4 @@ fresh twe4ked/dotfiles bin/heroku-remote-add --bin
 fresh pengwynn/dotfiles bin/git-pr --bin
 fresh bartman/git-wip git-wip --bin
 fresh pengwynn/dotfiles bin/gxpr --bin
+fresh twe4ked/catacomb bin/catacomb --bin
