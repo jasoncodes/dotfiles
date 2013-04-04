@@ -211,7 +211,7 @@ gcf() {
       awk '{ if ($2 != "fixup!") { print $1} }'
   )"
 
-  case $(echo "$COMMITS" | grep . | wc -l) in
+  case $(echo "$COMMITS" | grep . | wc -l | tr -d -c 0-9) in
     0)
       echo No fixup candidates found. >&2
       return 1
