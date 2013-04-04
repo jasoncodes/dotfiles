@@ -13,6 +13,7 @@ if echo "$1" | egrep -q '^\d+(\.\d+)?$'; then
   shift
 fi
 
-while "$@"; do
+while true; do
+  "$@"
   sleep "$DELAY"
 done
