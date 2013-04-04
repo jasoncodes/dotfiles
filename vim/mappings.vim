@@ -20,7 +20,7 @@ map <Leader>a ggVG
 
 " Buffer navigation
 map <Leader>, <C-^>
-map <Leader>q :CommandW<CR>
+map <Leader>q :Bclose<CR>
 
 " replace bufkill's default mappings with something less conflicty
 nmap \bb <Plug>BufKillBack
