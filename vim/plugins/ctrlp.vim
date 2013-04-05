@@ -27,4 +27,5 @@ map <Leader>t :CtrlP<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
 map <Leader>m :CtrlPModified<CR>
+map <Leader>M :CtrlPBranch<CR>
 map <Leader>d :CtrlPCurFile<CR>
