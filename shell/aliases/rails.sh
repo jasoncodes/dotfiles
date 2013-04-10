@@ -66,6 +66,10 @@ function rspec-branch {
 }
 
 function rspec-work {
+  if [[ -z "$(git status --porcelain --untracked-files=all)" ]]; then
+    echo rspec-work: no changes to test >&2
+    return 1
+  fi
   rspec $(
     git status --porcelain -z --untracked-files=all | tr '\0' '\n' | cut -c 4- |
     sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
