@@ -8,6 +8,8 @@ hi Normal guibg=#000000 ctermbg=0
 hi NonText guibg=#000000 ctermbg=0
 hi CursorLine ctermbg=233
 hi CursorLineNr ctermbg=233 ctermfg=246 guifg=#a4a4a4 guibg=#151515
+hi clear SignColumn
+hi link SignColumn LineNr
 
 hi Cursor  guibg=#afd700 guifg=black
 hi iCursor guibg=#0087af
