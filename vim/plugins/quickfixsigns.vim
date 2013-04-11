@@ -16,3 +16,7 @@ autocmd BufRead * call QuickfixsignsUpdate()
 " Jump between git diff hunks (quickfixsigns)
 nmap [d :silent call quickfixsigns#MoveSigns(-1, '', 1)<CR>
 nmap ]d :silent call quickfixsigns#MoveSigns(1, '', 1)<CR>
+
+" Always show the sign column
+sign define dummy
+autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
