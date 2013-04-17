@@ -5,7 +5,7 @@ let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_working_path_mode = 0 " Don't manage
 let g:ctrlp_dotfiles = 0 " Ignore all dot/hidden files
 let g:ctrlp_custom_ignore = {
- \ 'dir': '\.git$\|\.hg$\|\.svn$\|backups$\|logs$\|tmp$',
+ \ 'dir': '\.git$\|\.hg$\|\.svn$\|backups$\|logs$\|tmp$\|_site$',
  \ 'file': '',
  \ 'link': '',
  \ }
