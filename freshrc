@@ -6,6 +6,7 @@ fresh freshshell/fresh contrib/source-build.sh --file=~/.bash_profile
 fresh freshshell/fresh contrib/source-build.sh --file=~/.bashrc
 
 fresh shell/aliases/\*
+fresh shell/functions/\*
 fresh shell/config/hitch.sh
 fresh shell/config/rbenv.sh
 fresh shell/config/heroku.sh
