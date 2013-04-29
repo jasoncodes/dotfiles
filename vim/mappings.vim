@@ -11,10 +11,6 @@ map ZZ :up<CR>:CommandW<CR>
 map <silent><Leader>r :checktime<CR>:wall<CR>:redraw!<CR>
 map <Leader>Q :qall<CR>
 
-" normalize whitespace
-nmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>:S/\s*$//e<CR>
-vmap <silent><Leader>ss :S/\(\S\)\s\+/\1 /ge<CR>gv:S/\s*$//e<CR>
-
 " select all
 map <Leader>a ggVG
 
