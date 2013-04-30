@@ -18,4 +18,6 @@ hi cCursor guibg=white
 hi IndentGuidesOdd  guibg=#0c0c0c ctermbg=232
 hi IndentGuidesEven guibg=#181818 ctermbg=233
 
+hi MatchParen cterm=none ctermbg=238 ctermfg=none
+
 hi VertSplit ctermbg=235
