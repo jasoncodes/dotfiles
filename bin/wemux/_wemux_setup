@@ -1,0 +1,65 @@
+#!/bin/bash -e
+
+SCRIPT="`mktemp /tmp/$(basename "$0").XXXXXX`"
+trap '{ rm -rf "$SCRIPT"; }' EXIT
+
+cat > "$SCRIPT" <<EOF
+#!/bin/bash -e
+
+# create wemux user account
+if ! id wemux &> /dev/null; then
+  echo Creating wemux user account...
+  adduser wemux
+fi
+
+# enable SSH daemon
+if ! launchctl list com.openssh.sshd &> /dev/null; then
+  echo Enabling SSH daemon...
+  launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+fi
+
+# enable wemux user for SSH access
+if ! dseditgroup -o checkmember -m wemux -t user com.apple.access_ssh &> /dev/null; then
+  echo Adding wemux user to authorized SSH users list...
+  if ! dseditgroup com.apple.access_ssh &> /dev/null; then
+    dseditgroup -o create -q com.apple.access_ssh
+  fi
+  dseditgroup -o edit -a wemux -t user com.apple.access_ssh
+fi
+EOF
+
+chmod 700 "$SCRIPT"
+sudo -i "$SCRIPT"
+
+cat > "$SCRIPT" <<EOF
+#!/bin/bash -e
+
+# install fresh
+if ! [[ -x ~/bin/fresh ]]; then
+  echo Installing fresh...
+  bash -c "\`curl -sL get.freshshell.com\`"
+fi
+if ! [[ -e ~/.bash_profile ]]; then
+  echo 'source ~/.fresh/build/shell.sh' >> ~/.bash_profile
+fi
+
+# install wemux shell
+if ! [[ -x ~/bin/_wemux_shell ]]; then
+  echo Installing wemux shell...
+  if ! grep -q _wemux_shell ~/.freshrc; then
+    echo fresh jasoncodes/dotfiles bin/wemux/_wemux_shell --bin >> ~/.freshrc
+  fi
+  ~/bin/fresh
+fi
+
+# create SSH configuration directory
+mkdir -p ~/.ssh
+
+# complete
+if [[ -x ~wemux/bin/_wemux_shell ]]; then
+  echo All done.
+fi
+EOF
+
+chmod 605 "$SCRIPT"
+sudo -u wemux -i "$SCRIPT"
