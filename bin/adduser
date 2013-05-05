@@ -31,4 +31,5 @@ dscl . delete "/Users/$NEW_USERNAME" AuthenticationAuthority
 dscl . create "/Users/$NEW_USERNAME" Password '*'
 dscl . create "/Users/$NEW_USERNAME" UserShell /bin/bash
 dscl . create "/Users/$NEW_USERNAME" NFSHomeDirectory "/Users/$NEW_USERNAME"
+cd /tmp
 createhomedir -c -u "$NEW_USERNAME"
