@@ -110,7 +110,9 @@ CACHE_FILE_DST="$WORK_DIR/cache_response_dst.txt"
 for TYPE in $TYPES
 do
 	dig +noall +nottlid +answer -t "$TYPE" "$SRC" $SRC_NS_DIG | sed -r 's/^\S+\s+//' | egrep -v '^IN\s+CNAME\s+' | sort >> "$CACHE_FILE_SRC"
+	[[ ${PIPESTATUS[0]} == 0 ]]
 	dig +noall +nottlid +answer -t "$TYPE" "$DST" @"$SERVER" | sed -r 's/^\S+\s+//' | sort >> "$CACHE_FILE_DST"
+	[[ ${PIPESTATUS[0]} == 0 ]]
 done
 
 if ! cmp -s "$CACHE_FILE_SRC" "$CACHE_FILE_DST"
