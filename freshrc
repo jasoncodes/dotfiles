@@ -10,6 +10,7 @@ fresh shell/functions/\*
 fresh shell/config/hitch.sh
 fresh shell/config/rbenv.sh
 fresh shell/config/heroku.sh
+fresh shell/config/filters.sh
 fresh shell/\*
 
 fresh freshshell/fresh contrib/completion/fresh-completion.bash
