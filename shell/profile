@@ -109,10 +109,6 @@ then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
 
-# filters for XML and JSON
-alias xml='xmllint -format - | pygmentize -l xml'
-alias json='python -mjson.tool | coderay -json'
-
 # begin awesome colour prompt..
 export PS1=""
 
