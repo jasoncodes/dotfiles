@@ -1,3 +1,6 @@
 Bundle 'airblade/vim-rooter'
 
-au VimEnter * :Rooter
+autocmd VimEnter * :Rooter
+
+" default mapping override
+map \r <Plug>RooterChangeToRootDirectory
