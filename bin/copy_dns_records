@@ -164,9 +164,20 @@ then
 	do
 		echo "update delete $DST $TYPE" >> "$NSUPDATE_SCRIPT"
 	done
-	cat "$SRC_RECORDS" | cut -f 2- | while read LINE
+	cat "$SRC_RECORDS" | cut -f 2- | while read TTL IN VAL_TYPE VALUE
 	do
-		echo "update add $DST $LINE" >> "$NSUPDATE_SCRIPT"
+		if [[ "$IN" != "IN" ]]; then
+			echo "Expected IN" >&2
+			exit 1
+		fi
+		if [[ "$VAL_TYPE" == "CNAME" ]]; then
+			dig +noall +answer -t $TYPE $VALUE | while read _ TTL IN VAL_TYPE VALUE
+			do
+				echo "update add $DST $TTL $IN $VAL_TYPE $VALUE" >> "$NSUPDATE_SCRIPT"
+			done
+		else
+			echo "update add $DST $TTL $IN $VAL_TYPE $VALUE" >> "$NSUPDATE_SCRIPT"
+		fi
 	done
 	echo "send" >> "$NSUPDATE_SCRIPT"
 	
