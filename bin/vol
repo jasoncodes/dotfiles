@@ -1,0 +1,13 @@
+#!/bin/bash -e
+if [ "$#" == 0 ]
+then
+	osascript -e "output volume of (get volume settings)"
+else
+	if echo "$1" | egrep -q "^[0-9]+$"
+	then
+		osascript -e "set volume output volume $1"
+	else
+		echo "Usage: `basename "$0"` [volume-pcent]" >&2
+		exit 1
+	fi
+fi
