@@ -1,0 +1,6 @@
+#!/bin/bash -e
+if ! tmux -S /tmp/wemux-wemux has-session -t wemux &> /dev/null; then
+  tmux -S /tmp/wemux-wemux new-session -d -s wemux
+  chmod o-rwx /tmp/wemux-wemux
+fi
+exec command wemux "$@"
