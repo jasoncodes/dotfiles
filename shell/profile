@@ -204,11 +204,6 @@ fi
 # finish off the prompt
 export PS1="$PS1"'\[\033[00m\]\$ '
 
-# use our own SSL root certificate if present
-if [[ -f "/usr/local/etc/openssl/certs/cert.pem" ]]; then
-  export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
-fi
-
 # initialise autojump
 if which brew &> /dev/null; then
   AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
