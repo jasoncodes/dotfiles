@@ -2,7 +2,7 @@ Bundle 'tpope/vim-fugitive'
 
 function! UpdateTags()
   if exists('b:git_dir') && executable('ctags')
-    call system('(cd "'.b:git_dir.'/.." && [ "$(pwd)" != /usr/local ] && PATH="/usr/local/bin:$PATH" nice ctags --tag-relative -R -f .git/tags.new --exclude=.git --langmap="ruby:+.rake.builder.rjs" . && mv .git/tags.new .git/tags) &')
+    call system('(cd "'.b:git_dir.'/.." && [ "$(pwd)" != /usr/local ] && PATH="/usr/local/bin:$PATH" nice ctags --tag-relative -R -f .git/tags.new --exclude=.git --langmap="ruby:+.rake.builder.rjs" . && (cd .git && find .. -name "*.coffee" | if which coffeetags &> /dev/null; then xargs coffeetags -f -; else true; fi) >> .git/tags.new && mv .git/tags.new .git/tags) &')
   endif
 endfunction
 
