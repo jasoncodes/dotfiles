@@ -14,6 +14,8 @@ set convert-meta off
 # Note to get rid of a line just Ctrl-C
 "\e[B": history-search-forward
 "\e[A": history-search-backward
+"\C-p": history-search-backward
+"\C-n": history-search-forward
 
 # mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
 "\e[1;5C": forward-word
