@@ -52,8 +52,7 @@ function rspec {
     exec $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
   )
 }
-alias ber=rspec
-alias berd='RSPEC_FORMAT=doc ber'
+alias rspec-doc='RSPEC_FORMAT=doc rspec'
 
 function rspec-branch {
   rspec $(
