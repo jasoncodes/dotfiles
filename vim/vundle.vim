@@ -1,7 +1,6 @@
 Bundle 'bufkill.vim'
 Bundle 'nathanaelkane/vim-command-w'
 Bundle 'Soares/butane.vim'
-Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'upAndDown'
 Bundle 'dterei/VimBookmarking'
 Bundle 'godlygeek/tabular'

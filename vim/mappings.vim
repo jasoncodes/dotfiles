@@ -4,9 +4,6 @@ nnoremap Y y$
 " Use `'` to repeat last `;` in reverse (default is `,`)
 nnoremap ' ,
 
-" Trim & save
-map <Leader>sd :FixWhitespace<CR>:up<CR>
-map <Leader>sq :FixWhitespace<CR>:up<CR>:CommandW<CR>
 map ZZ :up<CR>:CommandW<CR>
 map <silent><Leader>r :checktime<CR>:wall<CR>:redraw!<CR>
 map <Leader>Q :qall<CR>
