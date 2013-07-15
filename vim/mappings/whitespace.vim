@@ -1,7 +1,7 @@
 Bundle 'bronson/vim-trailing-whitespace'
 
 " trim & save
-map <Leader>sd :FixWhitespace<CR>:up<CR>
+map <Leader>sw :FixWhitespace<CR>:up<CR>
 map <Leader>sq :FixWhitespace<CR>:up<CR>:CommandW<CR>
 
 " normalize whitespace
