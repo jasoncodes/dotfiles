@@ -51,12 +51,12 @@ function git_current_tracking()
   fi
 }
 
-git-log-graph() {
+function git-log-graph() {
   git log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
 }
 
 # git log
-glg() {
+function glg() {
   if [[ $# == 0 ]] && git rev-parse @{u} &> /dev/null; then
     git-log-graph @{u} HEAD
   else
