@@ -1,4 +1,4 @@
-alias gl='glg $(git show-ref | cut -d " " -f 2 | grep -v stash$)'
+alias gl='glg $(git show-ref | cut -d " " -f 2 | grep -v stash$) HEAD'
 alias glw='glp --word-diff'
 alias gsh='git show'
 alias gco='git checkout'
