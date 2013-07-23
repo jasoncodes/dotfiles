@@ -1,5 +1,6 @@
 " Yank and put system pasteboard with <Leader>y/p.
 noremap <Leader>y "*y
+noremap <Leader>Y "*y$
 nnoremap <Leader>yy "*yy
 noremap <Leader>p "*p
 noremap <Leader>P "*P
