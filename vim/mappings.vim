@@ -30,12 +30,6 @@ nmap \ba <Plug>BufKillAlt
 " In command-line mode, C-a jumps to beginning (to match C-e).
 cnoremap <C-a> <Home>
 
-" Copy relative path to the system pasteboard
-nnoremap <silent><Leader>cf :let @*=expand('%')<CR>
-
-" Copy relative path and line number to the system pasteboard
-nnoremap <silent><Leader>cl :let @*=expand('%').':'.line('.')<CR>
-
 " Disable scrolling with the mouse
 map <ScrollWheelUp> <Nop>
 map <ScrollWheelDown> <Nop>
