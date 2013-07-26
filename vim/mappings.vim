@@ -69,14 +69,6 @@ nnoremap gI `.
 nnoremap j gj
 nnoremap k gk
 
-" Use option-J/K to bubble lines up and down
-nmap <silent> ˚ <Plug>upAndDownUp
-nmap <silent> ∆ <Plug>upAndDownDown
-vmap <silent> ˚ <Plug>upAndDownVisualUp
-vmap <silent> ∆ <Plug>upAndDownVisualDown
-imap <silent> ˚ <Plug>upAndDownInsertUp
-imap <silent> ∆ <Plug>upAndDownInsertDown
-
 " quick mapping to execute the macro in q
 map Q @q
 
