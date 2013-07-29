@@ -61,7 +61,7 @@ function rspec-branch {
     grep '_spec\.rb$' |
     sort -u |
     xargs find 2> /dev/null
-  )
+  ) "$@"
 }
 
 function rspec-work {
@@ -75,7 +75,7 @@ function rspec-work {
     grep '_spec\.rb$' |
     sort -u |
     xargs find 2> /dev/null
-  )
+  ) "$@"
 }
 
 function __database_yml {
