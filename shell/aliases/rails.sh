@@ -63,6 +63,7 @@ function rspec-branch {
     xargs find 2> /dev/null
   ) "$@"
 }
+alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
 
 function rspec-work {
   if [[ -z "$(git status --porcelain --untracked-files=all)" ]]; then
@@ -77,6 +78,7 @@ function rspec-work {
     xargs find 2> /dev/null
   ) "$@"
 }
+alias rspec-work-doc='RSPEC_FORMAT=doc rspec-work'
 
 function __database_yml {
   if [[ -f config/database.yml ]]; then
