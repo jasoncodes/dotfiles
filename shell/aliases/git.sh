@@ -213,6 +213,11 @@ gaur() {
 }
 
 gcf() {
+  if [[ $# -gt 0 ]]; then
+    git commit --fixup "$@"
+    return
+  fi
+
   if [[ $(git diff --staged --name-only | wc -l) -lt 1 ]]; then
     echo Nothing staged to commit. >&2
     return 1
