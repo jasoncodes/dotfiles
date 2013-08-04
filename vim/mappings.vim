@@ -5,7 +5,7 @@ nnoremap Y y$
 nnoremap ' ,
 
 map ZZ :up<CR>:CommandW<CR>
-map <silent><Leader>r :checktime<CR>:wall<CR>:redraw!<CR>
+map <silent><Leader>r :checktime<CR>:silent! wall<CR>:redraw!<CR>:call QuickfixsignsUpdate()<CR>
 map <Leader>Q :qall<CR>
 
 " select all
