@@ -20,7 +20,11 @@ func! CtrlPEnter()
   nnoremap <buffer> <silent> <C-@> :call <sid>CtrlPDeleteBuffer()<cr>
 endfunc
 func! s:CtrlPDeleteBuffer()
-  exec "bd" fnamemodify(getline('.')[2:], ':p')
+  let line = getline('.')
+  let bufid = line =~ '\[\d\+\*No Name\]$' ?
+    \ str2nr(matchstr(line, '\d\+')) :
+    \ fnamemodify(line[2:], ':p')
+  exec "bd" bufid
   exec "norm \<F5>"
 endfunc
 
