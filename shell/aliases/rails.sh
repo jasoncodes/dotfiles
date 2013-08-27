@@ -54,13 +54,17 @@ function rspec {
 }
 alias rspec-doc='RSPEC_FORMAT=doc rspec'
 
+function _resolve_spec_files() {
+  sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
+  grep '_spec\.rb$' |
+  sort -u |
+  xargs find 2> /dev/null
+}
+
 function rspec-branch {
   rspec $(
     git diff $(git merge-base origin/HEAD HEAD).. --name-only |
-    sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
-    grep '_spec\.rb$' |
-    sort -u |
-    xargs find 2> /dev/null
+    _resolve_spec_files
   ) "$@"
 }
 alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
@@ -72,10 +76,7 @@ function rspec-work {
   fi
   rspec $(
     git status --porcelain -z --untracked-files=all | tr '\0' '\n' | cut -c 4- |
-    sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
-    grep '_spec\.rb$' |
-    sort -u |
-    xargs find 2> /dev/null
+    _resolve_spec_files
   ) "$@"
 }
 alias rspec-work-doc='RSPEC_FORMAT=doc rspec-work'
