@@ -55,7 +55,7 @@ function rspec {
 alias rspec-doc='RSPEC_FORMAT=doc rspec'
 
 function _resolve_spec_files() {
-  sed 's#^app/\(.*\)\.rb$#spec/\1_spec.rb#' |
+  sed -e 's#^app/##' -e 's#^\(.*\)\.rb$#spec/\1_spec.rb#' -e 's#^spec/\(spec/.*\)_spec\(_spec\.rb\)$#\1\2#' |
   grep '_spec\.rb$' |
   sort -u |
   xargs find 2> /dev/null
