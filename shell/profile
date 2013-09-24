@@ -24,9 +24,6 @@ then
   }
 fi
 
-# our own bin dir at the highest priority, followed by /usr/local/bin
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:"$PATH"
-
 # add a poor facsimile for Linux's `free` if we're on Mac OS
 if ! type free > /dev/null 2>&1 && [[ "$(uname -s)" == 'Darwin' ]]
 then
