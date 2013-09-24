@@ -13,6 +13,8 @@ fresh shell/config/rbenv.sh
 fresh shell/config/heroku.sh
 fresh shell/config/filters.sh
 fresh shell/config/ctrlc.sh
+fresh shell/config/git.sh
+fresh shell/config/prompt.sh
 fresh shell/\*
 
 fresh freshshell/fresh contrib/completion/fresh-completion.bash

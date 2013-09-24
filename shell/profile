@@ -1,13 +1,8 @@
-# requires:
-#
-#   fresh jasoncodes/dotfiles shell/functions/realpath.sh
-
 # locale stuff
 export LANG=en_AU.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
 # general shell settings
-export PS1='\u@\h:\w\$ ' # basic prompt. get's overwritten later
 export FIGNORE="CVS:.DS_Store:.svn:__Alfresco.url"
 alias less='less -iM'
 export PAGER='less -SFXiMR'
@@ -105,101 +100,6 @@ if which brew &> /dev/null && [ -f "$(brew --prefix)/Library/Contributions/brew_
 then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
-
-# begin awesome colour prompt..
-export PS1=""
-
-# add rvm version@gemset
-if [[ -n "$rvm_path" ]]
-then
-  function __my_rvm_ps1()
-  {
-    [[ -z "$rvm_ruby_string" ]] && return
-    if [[ -z "$rvm_gemset_name" && "$rvm_sticky_flag" -ne 1 ]]
-    then
-      [[ "$rvm_ruby_string" = "system" ]] && echo "system " && return
-      grep -q -F "default=$rvm_ruby_string" "$rvm_path/config/alias" && return
-    fi
-    local full=$(
-      "$rvm_path/bin/rvm-prompt" i v p g s |
-      sed \
-        -e 's/jruby-jruby-/jruby-/' -e 's/ruby-//' \
-        -e 's/-head/H/' \
-        -e 's/-2[0-9][0-9][0-9]\.[0-9][0-9]//' \
-        -e 's/-@/@/' -e 's/-$//')
-    [ -n "$full" ] && echo "$full "
-  }
-  export PS1="$PS1"'\[\033[01;30m\]$(__my_rvm_ps1)'
-fi
-
-# add user@host:path
-export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
-
-function first_file_match()
-{
-  local OP="$1"
-  shift
-  while [ $# -gt 0 ]
-  do
-    if [ $OP "$1" ]
-    then
-      echo "$1"
-      return 0
-    fi
-    shift
-  done
-  return 1
-}
-
-# add git status if available
-if which git &> /dev/null
-then
-  GIT_COMPLETION_PATH="$(dirname $(realpath "$(which git)"))/../etc/bash_completion.d/git-completion.bash"
-fi
-if [ ! -f "$GIT_COMPLETION_PATH" ]
-then
-  GIT_COMPLETION_PATH=$(first_file_match -f \
-    "/usr/local/git/contrib/completion/git-completion.bash" \
-    "/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
-    "/etc/bash_completion.d/git" \
-  )
-fi
-if [ -f "$GIT_COMPLETION_PATH" ]
-then
-  source "$GIT_COMPLETION_PATH"
-  GIT_PROMPT_PATH="$(dirname "$GIT_COMPLETION_PATH")/git-prompt.sh"
-  if [ -f "$GIT_PROMPT_PATH" ]; then
-    source "$GIT_PROMPT_PATH"
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWSTASHSTATE=1
-    export GIT_PS1_SHOWUNTRACKEDFILES=1
-    export PS1="$PS1"'\[\033[01;30m\]$(__git_ps1 " (%s)")'
-  fi
-
-  _git_complete() {
-    local CMD="$1"
-    shift
-    if type __git_complete &>/dev/null; then
-      for ALIAS in "$@"; do
-        __git_complete "$ALIAS" "_git_$CMD"
-      done
-    else
-      complete -o bashdefault -o default -o nospace -F "_git_$CMD" "$@"
-    fi
-  }
-
-  _git_complete log gl glp gls glw
-  _git_complete checkout gco gcp
-  _git_complete status gs
-  _git_complete diff gd gdw gds gdsw
-  _git_complete reset gar garp
-  _git_complete add ga gap
-  _git_complete commit gc gca
-  _git_complete push gp
-fi
-
-# finish off the prompt
-export PS1="$PS1"'\[\033[00m\]\$ '
 
 # initialise autojump
 if which brew &> /dev/null; then
