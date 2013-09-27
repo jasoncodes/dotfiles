@@ -34,6 +34,7 @@ fresh-options --file=~/.vimrc --marker=\"
   fresh vim/mappings.vim
   fresh vim/mappings/\*.vim
   fresh vim/auto_commands.vim
+  fresh hackling/dotfiles vim/plugins/surround.vim
 fresh-options
 fresh vim/gvimrc --file
 fresh vim/colors --file=~/.vim/colors/
