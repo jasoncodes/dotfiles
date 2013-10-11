@@ -1,0 +1,39 @@
+#!/bin/bash -e
+
+if [[ $# != 1 ]]; then
+  echo "Usage: $(basename "$0") <github-username>" >&2
+  exit 1
+fi
+
+# clone/update dotfiles repo
+
+GITHUB_USER="$1"
+REPO_DIR=~/.fresh/source/$GITHUB_USER/dotfiles
+REPO_URL=http://github.com/$GITHUB_USER/dotfiles
+
+if [[ -d "$REPO_DIR" ]]; then
+  cd "$REPO_DIR"
+  git pull --rebase >&2
+else
+  mkdir -p "$(dirname "$REPO_DIR")"
+  cd "$(dirname "$REPO_DIR")"
+  git clone "$REPO_URL" dotfiles >&2
+fi
+
+# run fresh on target user's repo
+
+SCRATCH_DIR="$(mktemp -d -t "$(basename "$0")".XXXXXX)"
+trap '{ rm -rf "$SCRATCH_DIR"; }' EXIT
+
+mkdir -p "$SCRATCH_DIR/home" "$SCRATCH_DIR/fresh"
+ln -s ~/.fresh/source "$SCRATCH_DIR/fresh/source"
+
+export HOME="$SCRATCH_DIR/home"
+export FRESH_RCFILE="$REPO_DIR/freshrc"
+export FRESH_PATH="$SCRATCH_DIR/fresh"
+export FRESH_LOCAL="$REPO_DIR"
+fresh >&2
+
+# extract mappings from vimrc file
+
+egrep -e '^ *[a-z]*map!? ' -e '^ *let mapleader' "$SCRATCH_DIR/home/.vimrc"
