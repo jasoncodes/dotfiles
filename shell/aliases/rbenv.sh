@@ -15,7 +15,7 @@ ruby-install() {
   else
     RCFILE="$HOME/.bash_profile"
   fi
-  if ! grep -q 'rbenv init' $RCFILE; then
+  if ! echo "$PATH" | grep -q .rbenv/shims; then
     echo 'eval "$(rbenv init - --no-rehash)"' >> $RCFILE
   fi
   eval "$(rbenv init - --no-rehash)" # load rbenv in the current shell
