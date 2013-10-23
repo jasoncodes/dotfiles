@@ -1,6 +1,10 @@
 " Yank from the cursor to the end of the line, to be consistent with C and D
 nnoremap Y y$
 
+" select last put
+" src: http://vim.wikia.com/wiki/Selecting_your_pasted_text
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " Use `'` to repeat last `;` in reverse (default is `,`)
 nnoremap ' ,
 
