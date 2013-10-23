@@ -1,6 +1,6 @@
 # coding:utf-8 vim:ft=ruby
 
-Pry.config.pager = true
+Pry.config.pager = false
 Pry.config.color = true
 Pry.config.history.should_save = true
 Pry.config.should_load_local_rc = Dir.pwd != Dir.home
