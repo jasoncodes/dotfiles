@@ -1,5 +1,11 @@
 #!/bin/bash -e
 
+# check we are on a supported platform
+if [[ "$(uname -s)" != "Darwin" ]]; then
+  echo This setup script only works on Mac OS X. >&2
+  exit 1
+fi
+
 SCRIPT="`mktemp /tmp/$(basename "$0").XXXXXX`"
 trap '{ rm -rf "$SCRIPT"; }' EXIT
 
