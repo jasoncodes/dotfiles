@@ -4,7 +4,6 @@ nnoremap Y y$
 " Use `'` to repeat last `;` in reverse (default is `,`)
 nnoremap ' ,
 
-map ZZ :up<CR>:CommandW<CR>
 map <silent><Leader>r :checktime<CR>:silent! wall<CR>:redraw!<CR>:call QuickfixsignsUpdate()<CR>
 map <Leader>Q :qall<CR>
 
