@@ -31,10 +31,7 @@ alias gwd='git update-ref -d refs/wip/$(git_current_branch)'
 # helper for git aliases
 function git_current_branch()
 {
-  local BRANCH="$(git symbolic-ref -q HEAD)"
-  local BRANCH="${BRANCH##refs/heads/}"
-  local BRANCH="${BRANCH:-HEAD}"
-  echo "$BRANCH"
+  git symbolic-ref --short -q HEAD
 }
 
 function git_current_tracking()
