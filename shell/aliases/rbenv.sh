@@ -10,18 +10,26 @@ ruby-install() {
   brew update
   brew install rbenv ruby-build rbenv-vars readline openssl ctags
   brew upgrade rbenv ruby-build rbenv-vars readline openssl ctags
-  if [ -n "${ZSH_VERSION:-}" ]; then
-    RCFILE="$HOME/.zshrc"
-  else
-    RCFILE="$HOME/.bash_profile"
-  fi
   if ! echo "$PATH" | grep -q .rbenv/shims; then
-    echo 'eval "$(rbenv init - --no-rehash)"' >> $RCFILE
+    echo You need to add the following to your shell config: >&2
+    echo >&2
+    echo '    eval "$(rbenv init - --no-rehash)"' >&2
+    echo >&2
+    echo 'If you use fresh <http://freshshell.com>, you could also just run the following:' >&2
+    echo >&2
+    echo '    fresh jasoncodes/dotfiles shell/config/rbenv.sh' >&2
+    return 1
   fi
-  eval "$(rbenv init - --no-rehash)" # load rbenv in the current shell
-  export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
-  if ! grep -q SSL_CERT_FILE $RCFILE; then
-    echo "export SSL_CERT_FILE=\"$SSL_CERT_FILE\"" >> $RCFILE
+  if [[ -z "$SSL_CERT_FILE" ]]; then
+    export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
+    echo You need to add the following to your shell config: >&2
+    echo >&2
+    echo "    export SSL_CERT_FILE=\"$SSL_CERT_FILE\"" >&2
+    echo >&2
+    echo 'If you use fresh <http://freshshell.com>, you could also just run the following:' >&2
+    echo >&2
+    echo '    fresh jasoncodes/dotfiles shell/config/rbenv.sh' >&2
+    return 1
   fi
   if ! [[ -e "$SSL_CERT_FILE" ]]; then
     curl -o "$SSL_CERT_FILE" http://curl.haxx.se/ca/cacert.pem
