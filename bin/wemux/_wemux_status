@@ -12,10 +12,7 @@ if [[ "$TMUX" =~ /tmp/wemux ]]; then
       name="$(ps -o args= -t $tty | egrep -o ~wemux/bin/_wemux_shell' [^ ]+$' | egrep -o '[^ ]+$')"
     fi
     if [[ "$name" == "$USER" ]]; then
-      name="$(git config github.user)"
-      if [[ -z "$name" ]]; then
-        name="$USER"
-      fi
+      name="$(git config github.user || echo $USER)"
     fi
     # If user is attached in read-only mode, set mode to [m]
     [[ $mode == "(ro)" ]] && mode="[m]" || mode=""
