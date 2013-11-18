@@ -8,6 +8,7 @@ fresh freshshell/fresh contrib/source-build.sh --file=~/.bashrc
 fresh shell/aliases/\*
 fresh shell/functions/\*
 fresh shell/config/path.sh
+fresh shell/config/pager.sh
 fresh shell/config/hitch.sh
 fresh shell/config/rbenv.sh
 fresh shell/config/heroku.sh
