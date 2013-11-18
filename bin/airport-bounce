@@ -1,5 +1,13 @@
 #!/bin/bash -e
-networksetup -setairportpower en1 off
-sleep 1
-dscacheutil -flushcache
-networksetup -setairportpower en1 on
+for DEVICE in `networksetup -listallhardwareports | awk '/^Device:/{print $2}'`; do
+  if networksetup -getairportpower $DEVICE &> /dev/null; then
+    networksetup -setairportpower $DEVICE off
+    sleep 1
+    dscacheutil -flushcache
+    networksetup -setairportpower $DEVICE on
+    exit 0
+  fi
+done
+
+echo Could not find Wi-Fi device. >&2
+exit 1
