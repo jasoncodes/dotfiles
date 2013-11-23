@@ -1,0 +1,22 @@
+#!/bin/bash -e
+DATA_DIR="$(mktemp -d -t "$(basename "$0")".XXXXXX)"
+trap '{ rm -rf "$DATA_DIR"; }' EXIT
+
+touch "$DATA_DIR/First Run"
+mkdir "$DATA_DIR/Default"
+cat > "$DATA_DIR/Default/Preferences" <<JSON
+{
+  "browser": {
+    "check_default_browser": false,
+    "window_placement": {
+      "left": 22,
+      "top": 44,
+      "right": 1302,
+      "bottom": 1004,
+      "maximized": false
+   }
+  }
+}
+JSON
+
+open -a Google\ Chrome --new --wait-apps --args --user-data-dir="$DATA_DIR" --incognito "$@"
