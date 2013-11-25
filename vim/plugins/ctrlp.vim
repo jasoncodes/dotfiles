@@ -11,7 +11,7 @@ let g:ctrlp_custom_ignore = {
  \ 'link': '',
  \ }
 let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_max_height = 10
+let g:ctrlp_match_window = 'bottom,order:ttb,min:10,max:10'
 
 " Kill buffers in Ctrl-P with Ctrl-@
 " https://github.com/kien/ctrlp.vim/issues/280
