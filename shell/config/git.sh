@@ -50,12 +50,13 @@ then
     fi
   }
 
-  _git_complete log gl glp gls glw
+  _git_complete log gl glg glp gls glw gbl gblp
   _git_complete checkout gco gcp
   _git_complete status gs
-  _git_complete diff gd gdw gds gdsw
+  _git_complete diff gd gdw gbdw gds gdsw gbd
   _git_complete reset gar garp
   _git_complete add ga gap
   _git_complete commit gc gca
   _git_complete push gp
+  _git_complete show gsh
 fi
