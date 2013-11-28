@@ -58,5 +58,5 @@ then
   _git_complete add ga gap
   _git_complete commit gc gca
   _git_complete push gp
-  _git_complete show gsh
+  _git_complete show gsw
 fi
