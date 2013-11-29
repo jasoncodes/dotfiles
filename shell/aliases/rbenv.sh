@@ -39,6 +39,7 @@ ruby-install() {
   export RBENV_VERSION="$VERSION"
   gem install --no-ri --no-rdoc bundler rbenv-rehash git-up hitch gem-browse gem-ctags cheat awesome_print pry
   gem ctags
+  rbenv rehash
   echo "To make $VERSION your default Ruby, run the following:"
   echo
   echo "    rbenv global $VERSION"
