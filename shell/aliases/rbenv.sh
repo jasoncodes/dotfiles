@@ -21,7 +21,7 @@ ruby-install() {
     return 1
   fi
   if [[ -z "$SSL_CERT_FILE" ]]; then
-    export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
+    export SSL_CERT_FILE="/usr/local/etc/openssl/cert.pem"
     echo You need to add the following to your shell config: >&2
     echo >&2
     echo "    export SSL_CERT_FILE=\"$SSL_CERT_FILE\"" >&2
