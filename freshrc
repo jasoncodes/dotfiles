@@ -40,6 +40,12 @@ fresh-options
 fresh vim/gvimrc --file
 fresh vim/colors --file=~/.vim/colors/
 
+init_vim() {
+  if which vim &> /dev/null && ! [ -d $HOME/.vim/bundle/vundle ]; then
+    vim || [ -d $HOME/.vim/bundle/vundle ]
+  fi
+}
+
 fresh bin/\* --bin
 fresh bin/wemux/\* --bin
 
@@ -48,3 +54,7 @@ fresh pengwynn/dotfiles bin/git-pr --bin
 fresh bartman/git-wip git-wip --bin
 fresh pengwynn/dotfiles bin/gxpr --bin
 fresh twe4ked/catacomb bin/catacomb --bin
+
+fresh_after_build() {
+  init_vim
+}
