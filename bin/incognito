@@ -19,4 +19,8 @@ cat > "$DATA_DIR/Default/Preferences" <<JSON
 }
 JSON
 
-open -a Google\ Chrome --new --wait-apps --args --user-data-dir="$DATA_DIR" --incognito "$@"
+if killall -0 Google\ Chrome &> /dev/null; then
+  open -a Google\ Chrome --new --wait-apps --args --user-data-dir="$DATA_DIR" --incognito "$@"
+else
+  open -a Google\ Chrome --new --wait-apps --args --incognito "$@"
+fi
