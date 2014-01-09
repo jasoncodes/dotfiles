@@ -1,4 +1,4 @@
-Bundle 'vim-ruby/vim-ruby'
+Bundle 'jasoncodes/vim-ruby'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-rake'
