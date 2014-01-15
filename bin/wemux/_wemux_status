@@ -30,4 +30,6 @@ if [[ "$TMUX" =~ /tmp/wemux ]]; then
   fi
 
   echo "$locked$users"
+else
+  echo
 fi
