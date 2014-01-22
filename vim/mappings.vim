@@ -8,7 +8,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " Use `'` to repeat last `;` in reverse (default is `,`)
 nnoremap ' ,
 
-map <silent><Leader>r :checktime<CR>:silent! wall<CR>:redraw!<CR>:call QuickfixsignsUpdate()<CR>
+map <silent><Leader>r :checktime<CR>:silent! wall<CR>:up<CR>:redraw!<CR>:call QuickfixsignsUpdate()<CR>
 map <Leader>Q :qall<CR>
 
 " select all
