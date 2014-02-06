@@ -8,8 +8,8 @@ ruby-install() {
     return 1
   fi
   brew update
-  brew install rbenv ruby-build rbenv-vars readline openssl ctags
-  brew upgrade rbenv ruby-build rbenv-vars readline openssl ctags
+  brew install rbenv ruby-build rbenv-vars readline openssl libyaml ctags
+  brew upgrade rbenv ruby-build rbenv-vars readline openssl libyaml ctags
   if ! echo "$PATH" | grep -q .rbenv/shims; then
     echo You need to add the following to your shell config: >&2
     echo >&2
