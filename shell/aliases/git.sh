@@ -11,9 +11,9 @@ alias gdw='gd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gbdw='gbd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gds='gd --cached'
 alias gdsw='gdw --cached'
-alias gbd='gd $(git merge-base origin/HEAD HEAD)..'
-alias gbl='glg $(git merge-base origin/HEAD HEAD)..'
-alias gblp='glp $(git merge-base origin/HEAD HEAD)..'
+alias gbd='_git_assert_origin_head && gd $(git merge-base origin/HEAD HEAD)..'
+alias gbl='_git_assert_origin_head && glg $(git merge-base origin/HEAD HEAD)..'
+alias gblp='_git_assert_origin_head && glp $(git merge-base origin/HEAD HEAD)..'
 alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
 alias ga='git add'
@@ -44,6 +44,21 @@ function git_current_tracking()
     echo "$REMOTE/$(echo "$MERGE" | sed 's#^refs/heads/##')"
   else
     echo "\"$BRANCH\" is not a tracking branch." >&2
+    return 1
+  fi
+}
+
+function _git_assert_origin_head() {
+  if ! git rev-parse origin/HEAD &> /dev/null; then
+    if git rev-parse origin/develop &> /dev/null; then
+      local TARGET=develop
+    else
+      local TARGET=master
+    fi
+
+    echo fatal: origin/HEAD is not set. >&2
+    echo >&2
+    echo Maybe run \`git remote set-head origin $TARGET\`? >&2
     return 1
   fi
 }
