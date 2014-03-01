@@ -21,7 +21,6 @@ alias gap='git add -p'
 alias gld="git fsck --lost-found | grep '^dangling commit' | cut -d ' ' -f 3- | xargs git show -s --format='%ct %H' | sort -nr | cut -d ' ' -f 2 | xargs git show --stat"
 alias gc='git commit -v'
 alias gca='gc --amend'
-alias grt='git_current_tracking > /dev/null && git rebase -i @{upstream}'
 alias grc='git rebase --continue'
 alias gp='git push'
 alias gpt='git push -u origin $(git_current_branch)'
@@ -258,4 +257,15 @@ gcf() {
       return 1
       ;;
   esac
+}
+
+grt() {
+  if git rev-parse @{u} &> /dev/null; then
+    local TARGET="@{u}"
+  else
+    _git_assert_origin_head
+    local TARGET="origin/HEAD"
+  fi
+
+  git rebase -i $(git merge-base HEAD $TARGET)
 }
