@@ -10,3 +10,5 @@ fi
 if [[ -z "$SSL_CERT_FILE" ]] && [[ -f "/usr/local/etc/openssl/certs/cert.pem" ]]; then
   export SSL_CERT_FILE="/usr/local/etc/openssl/certs/cert.pem"
 fi
+
+export BUNDLE_JOBS=4
