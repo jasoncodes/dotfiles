@@ -6,7 +6,7 @@ alias gcp='git checkout -p'
 alias gs='git status --untracked-files=all'
 alias gst='git stash --include-untracked --keep-index'
 alias gstp='git stash pop'
-alias gd='git diff'
+alias gd='git diff -M40'
 alias gdw='gd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gbdw='gbd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gds='gd --cached'
@@ -63,7 +63,7 @@ function _git_assert_origin_head() {
 }
 
 function git-log-graph() {
-  git log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
+  git log --graph -M40 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
 }
 
 # git log
@@ -93,13 +93,13 @@ function glp()
     local default_range=''
   fi
 
-  git $pager log --patch $reverse "$@" $default_range
+  git $pager log --patch -M40 $reverse "$@" $default_range
 }
 
 # git log file
 function glf()
 {
-  git log --format=%H --follow -- "$@" | xargs --no-run-if-empty git show --stat
+  git log -M40 --format=%H --follow -- "$@" | xargs --no-run-if-empty git show --stat
 }
 
 # git log search
