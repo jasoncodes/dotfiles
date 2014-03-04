@@ -269,3 +269,8 @@ grt() {
 
   git rebase -i $(git merge-base HEAD $TARGET)
 }
+
+grb() {
+  _git_assert_origin_head
+  git rebase -i $(git merge-base HEAD origin/HEAD)
+}
