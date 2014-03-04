@@ -12,7 +12,7 @@ alias gbdw='gbd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gds='gd --cached'
 alias gdsw='gdw --cached'
 alias gbd='_git_assert_origin_head && gd $(git merge-base origin/HEAD HEAD)..'
-alias gbl='_git_assert_origin_head && glg $(git merge-base origin/HEAD HEAD)..'
+alias gbl='_git_assert_origin_head && git-log --graph $(git merge-base origin/HEAD HEAD)..'
 alias gblp='_git_assert_origin_head && glp $(git merge-base origin/HEAD HEAD)..'
 alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
@@ -62,16 +62,16 @@ function _git_assert_origin_head() {
   fi
 }
 
-function git-log-graph() {
-  git log --graph -M40 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
+function git-log() {
+  git log -M40 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
 }
 
 # git log
 function glg() {
   if [[ $# == 0 ]] && git rev-parse @{u} &> /dev/null; then
-    git-log-graph @{u} HEAD
+    git-log --graph @{u} HEAD
   else
-    git-log-graph "$@"
+    git-log --graph "$@"
   fi
 }
 
