@@ -62,6 +62,15 @@ function _git_assert_origin_head() {
   fi
 }
 
+_git_rebase_target() {
+  if git rev-parse @{u} &> /dev/null; then
+    echo "@{u}"
+  else
+    _git_assert_origin_head
+    echo "origin/HEAD"
+  fi
+}
+
 function git-log() {
   git log -M40 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
 }
@@ -260,14 +269,7 @@ gcf() {
 }
 
 grt() {
-  if git rev-parse @{u} &> /dev/null; then
-    local TARGET="@{u}"
-  else
-    _git_assert_origin_head
-    local TARGET="origin/HEAD"
-  fi
-
-  git rebase -i $(git merge-base HEAD $TARGET)
+  git rebase -i $(git merge-base HEAD $(_git_rebase_target))
 }
 
 grb() {
