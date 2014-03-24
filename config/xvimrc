@@ -3,3 +3,4 @@ nnoremap Y y$
 
 set ignorecase
 set smartcase
+set norelativenumber
