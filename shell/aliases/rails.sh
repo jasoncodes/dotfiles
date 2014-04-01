@@ -62,6 +62,10 @@ function _resolve_spec_files() {
 }
 
 function rspec-branch {
+  if [[ -z "$(git diff $(git merge-base origin/HEAD HEAD).. --name-only)" ]]; then
+    echo rspec-branch: no changes to test >&2
+    return 1
+  fi
   rspec $(
     git diff $(git merge-base origin/HEAD HEAD).. --name-only |
     _resolve_spec_files
