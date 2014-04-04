@@ -123,6 +123,7 @@ function gls()
   glp --pickaxe-all -S"$phrase" "$@" $default_range
 }
 
+# git pull request
 # checkout a GitHub pull request as a local branch
 function gpr()
 {
@@ -142,6 +143,7 @@ function gpr()
   fi
 }
 
+# git update
 function gup
 {
   # subshell for `set -e` and `trap`
@@ -215,10 +217,12 @@ function gup
   )
 }
 
+# git add untracked
 gau() {
   git ls-files --other --exclude-standard -z "$@" | xargs -0 git add -Nv
 }
 
+# git add untracked reset
 gaur() {
   git ls-files --exclude-standard --modified -z | xargs -0 git ls-files --stage | while read MODE OBJECT STAGE NAME; do
     if [[ "$OBJECT" == e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 ]]; then
@@ -232,6 +236,7 @@ gaur() {
   done
 }
 
+# git commit fixup
 gcf() {
   if [[ $# -gt 0 ]]; then
     git commit --fixup "$@"
@@ -268,10 +273,12 @@ gcf() {
   esac
 }
 
+# git rebase tracking
 grt() {
   git rebase -i $(git merge-base HEAD $(_git_rebase_target))
 }
 
+# git rebase branch
 grb() {
   _git_assert_origin_head
   git rebase -i $(git merge-base HEAD origin/HEAD)
