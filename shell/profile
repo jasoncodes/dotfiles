@@ -101,7 +101,7 @@ fi
 
 # initialise autojump
 if which brew &> /dev/null; then
-  AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump"
+  AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump.bash"
   if [ -e "$AUTOJUMP_SCRIPT" ]; then
     source "$AUTOJUMP_SCRIPT"
   fi
