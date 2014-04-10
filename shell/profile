@@ -43,9 +43,8 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
-export PROMPT_COMMAND='history -a'
 shopt -s histappend
-PROMPT_COMMAND='history -a; echo "$$ $USER $(history 1)" >> ~/.bash_eternal_history'
+export PROMPT_COMMAND='history -a; echo "$$ $USER $(history 1)" >> ~/.bash_eternal_history'"${PROMPT_COMMAND:+;}${PROMPT_COMMAND}"
 
 # notify of bg job completion immediately
 set -o notify
@@ -62,7 +61,7 @@ shopt -s checkwinsize
 # display "user@hostname: dir" in the window title
 if [[ "$TERM" =~ ^xterm ]]
 then
-  export PROMPT_COMMAND="$PROMPT_COMMAND; "'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+  export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'"${PROMPT_COMMAND:+;}${PROMPT_COMMAND}"
 fi
 
 # enable rvm if available
