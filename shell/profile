@@ -100,6 +100,9 @@ then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
 
+# make sure ~/bin is the most preferred in PATH
+export PATH="$HOME/bin:$PATH"
+
 # load local shell configuration if present
 if [[ -f ~/.bashrc.local ]]
 then
