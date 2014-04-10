@@ -100,14 +100,6 @@ then
   source "$(brew --prefix)/Library/Contributions/brew_bash_completion.sh"
 fi
 
-# initialise autojump
-if which brew &> /dev/null; then
-  AUTOJUMP_SCRIPT="$(brew --prefix)/etc/autojump.bash"
-  if [ -e "$AUTOJUMP_SCRIPT" ]; then
-    source "$AUTOJUMP_SCRIPT"
-  fi
-fi
-
 # load local shell configuration if present
 if [[ -f ~/.bashrc.local ]]
 then

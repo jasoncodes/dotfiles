@@ -9,6 +9,7 @@ fresh shell/aliases/\*
 fresh shell/functions/\*
 fresh shell/config/path.sh
 fresh shell/config/pager.sh
+fresh shell/config/z.sh
 fresh shell/config/hitch.sh
 fresh shell/config/chruby.sh
 fresh shell/config/direnv.sh
@@ -19,6 +20,8 @@ fresh shell/config/git.sh
 fresh shell/config/prompt.sh
 fresh shell/config/tmux.sh
 fresh shell/\*
+
+fresh rupa/z z.sh
 
 fresh freshshell/fresh contrib/completion/fresh-completion.bash
 fresh bobthecow/git-flow-completion git-flow-completion.bash
