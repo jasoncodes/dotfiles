@@ -22,6 +22,9 @@ log = true
 conflictstyle = diff3
 tool = vimdiff
 
+[difftool "vimdiff"]
+cmd = vimdiff $LOCAL $REMOTE
+
 [mergetool]
 prompt = false
 
