@@ -7,4 +7,4 @@ function gem_path {
   ruby -e "gem '$1', '$2'; puts Gem.loaded_specs['$1'].full_gem_path"
 }
 
-chdiff "$(gem_path $GEM_NAME $VER_OLD)" "$(gem_path $GEM_NAME $VER_NEW)"
+vimdiff "$(gem_path $GEM_NAME $VER_OLD)" "$(gem_path $GEM_NAME $VER_NEW)"
