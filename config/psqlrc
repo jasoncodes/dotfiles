@@ -2,6 +2,7 @@
 \timing
 \pset null '∅'
 \x auto
+\set VERBOSITY verbose
 \set HISTCONTROL ignoredups
 \set COMP_KEYWORD_CASE upper
 \set PROMPT1 '%[%033]0;psql %/%007%]%/%R%# '
