@@ -10,8 +10,4 @@ Bundle 'bkad/CamelCaseMotion'
 Bundle 'twe4ked/vim-diff-toggle'
 Bundle 'AndrewRadev/linediff.vim'
 Bundle 'bogado/file-line'
-
 Bundle 'nanotech/jellybeans.vim'
-Bundle 'bclear'
-Bundle 'rdark'
-Bundle 'nelstrom/vim-mac-classic-theme'
