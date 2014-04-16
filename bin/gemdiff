@@ -1,7 +1,16 @@
 #!/bin/bash -e
 GEM_NAME=${1:?Specify name of gem to compare}
-VER_OLD=${2:?Specify old version number}
-VER_NEW=${3:?Specify old version number}
+
+if [ $# == 1 ]; then
+  read VER_OLD VER_NEW < <(ruby -e "puts Gem::Specification.select { |s| s.name == '$1' }.sort.last(2).map { |s| s.version.to_s }.join ' '")
+  if [ -z "$VER_OLD" ] || [ -z "$VER_NEW" ]; then
+    echo "Unable to find two versions of $GEM_NAME" >&2
+    exit 1
+  fi
+else
+  VER_OLD=${2:?Specify old version number}
+  VER_NEW=${3:?Specify old version number}
+fi
 
 function gem_path {
   ruby -e "gem '$1', '$2'; puts Gem.loaded_specs['$1'].full_gem_path"
