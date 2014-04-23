@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+
+chruby_auto
+if [ -z "$RUBY_AUTO_VERSION" ]; then
+  chruby ruby
+fi
+
+exec "$(basename "$0")" "$@"
