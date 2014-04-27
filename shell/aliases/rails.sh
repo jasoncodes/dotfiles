@@ -1,5 +1,3 @@
-alias cucumber='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber -f fuubar'
-alias cuke='$([ -S .zeus.sock ] && echo zeus || echo bundle exec) cucumber -f pretty'
 alias zs='zeus start'
 alias rc='$([ -S .zeus.sock ] && echo zeus console || echo bundle exec pry -r ./config/environment)'
 alias rails='$([ -S .zeus.sock ] && echo zeus || echo rails_command)'
