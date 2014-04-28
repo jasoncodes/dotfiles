@@ -23,14 +23,6 @@ then
   alias free="top -s 0 -l 1 -pid 0 -stats pid | grep '^PhysMem: ' | cut -d : -f 2- | tr ',' '\n'"
 fi
 
-# I love colour
-if ls --version 2> /dev/null | grep -q 'GNU coreutils'
-then
-  export GREP_OPTIONS='--color=auto'
-  alias ls="ls --color=auto --classify --block-size=\'1"
-else
-  alias ls='ls -GFh'
-fi
 alias dir='echo Use /bin/ls :\) >&2; false' # I used this to ween myself away from the 'dir' alias
 alias mate='echo Use mvim :\) >&2; false'
 alias nano='echo Use vim :\) >&2; false'
