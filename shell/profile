@@ -33,9 +33,6 @@ alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
 # notify of bg job completion immediately
 set -o notify
 
-# use Vi mode instead of Emacs mode
-set -o vi
-
 # no mail notifications
 shopt -u mailwarn
 unset MAILCHECK
