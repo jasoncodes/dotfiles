@@ -19,6 +19,7 @@ fresh shell/config/ctrlc.sh
 fresh shell/config/git.sh
 fresh shell/config/prompt.sh
 fresh shell/config/ls.sh
+fresh shell/config/history.sh
 fresh shell/config/tmux.sh
 fresh shell/\*
 
