@@ -39,15 +39,6 @@ map <ScrollWheelDown> <Nop>
 map <ScrollWheelLeft> <Nop>
 map <ScrollWheelRight> <Nop>
 
-" Toggle word wrap
-map <Leader>W :set wrap!<CR>
-
-" Toggle spell checking
-map <Leader>S :set spell!<CR>
-
-" Toggle invisibles
-noremap <Leader>i :set list!<CR>
-
 " Convert between spaces and tabs
 map <Leader>I :set list<CR>:FixWhitespace<CR>:ToggleTabs<CR>
 
