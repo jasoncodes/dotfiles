@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+export SHELL=/bin/bash
 source /usr/local/share/chruby/chruby.sh
 
 for chruby_dir in ${RUBIES[@]}; do
