@@ -1,5 +1,5 @@
 install vim --override-system-vi
-tap phinze/cask
+tap caskroom/cask
 install brew-cask
 cask install heroku-toolbelt
 install ack ctags
