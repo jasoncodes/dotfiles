@@ -3,7 +3,7 @@ if which direnv &> /dev/null; then
     eval "$(
       (
         (
-          direnv export bash 3>&1 1>&2 2>&3 3>&- |
+          direnv export "$SHELL" 3>&1 1>&2 2>&3 3>&- |
             egrep -v -e '^direnv: (loading|export|unloading)'
         ) 3>&1 1>&2 2>&3 3>&-
       )
