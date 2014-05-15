@@ -6,7 +6,9 @@ let g:lightline = {}
 let g:lightline.component = {}
 let g:lightline.component_visible_condition = {}
 
-Bundle 'tpope/vim-fugitive'
+if !has_key(g:bundle_names, 'vim-fugitive')
+  Bundle 'tpope/vim-fugitive'
+end
 let g:lightline.component.fugitive = '%{exists("*fugitive#head")?fugitive#head():""}'
 let g:lightline.component_visible_condition.fugitive = '(exists("*fugitive#head") && ""!=fugitive#head())'
 let g:lightline.component.modified = '%#ModifiedColor#%{LightlineModified()}'
