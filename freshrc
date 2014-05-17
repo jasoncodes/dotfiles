@@ -7,21 +7,7 @@ fresh freshshell/fresh contrib/source-build.sh --file=~/.bashrc
 
 fresh shell/aliases/\*
 fresh shell/functions/\*
-fresh shell/config/path.sh
-fresh shell/config/pager.sh
-fresh shell/config/z.sh
-fresh shell/config/hitch.sh
-fresh shell/config/chruby.sh
-fresh shell/config/direnv.sh
-fresh shell/config/heroku.sh
-fresh shell/config/filters.sh
-fresh shell/config/ctrlc.sh
-fresh shell/config/git.sh
-fresh shell/config/prompt.sh
-fresh shell/config/ls.sh
-fresh shell/config/history.sh
-fresh shell/config/input.sh
-fresh shell/config/tmux.sh
+fresh shell/config/\*
 fresh shell/\*
 
 fresh rupa/z z.sh
