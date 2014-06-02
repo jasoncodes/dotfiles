@@ -1,4 +1,6 @@
 if which direnv &> /dev/null; then
+  eval "$(direnv hook $SHELL)"
+
   _direnv_hook() {
     eval "$(
       (
@@ -9,8 +11,4 @@ if which direnv &> /dev/null; then
       )
     )"
   };
-
-  if ! [[ "$PROMPT_COMMAND" =~ _direnv_hook ]]; then
-    PROMPT_COMMAND="_direnv_hook;$PROMPT_COMMAND";
-  fi
 fi
