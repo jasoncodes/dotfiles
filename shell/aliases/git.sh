@@ -285,3 +285,10 @@ grb() {
   _git_assert_origin_head
   git rebase -i $(git merge-base HEAD origin/HEAD)
 }
+
+# git difftool show <ref> [path...]
+gdts() {
+  REF="${1:-HEAD}"
+  shift
+  git difftool "${REF}^..${REF}" "$@"
+}
