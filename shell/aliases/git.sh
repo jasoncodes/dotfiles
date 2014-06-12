@@ -282,8 +282,9 @@ grt() {
 
 # git rebase branch
 grb() {
-  _git_assert_origin_head
-  git rebase -i $(git merge-base HEAD origin/HEAD)
+  if _git_assert_origin_head; then
+    git rebase -i $(git merge-base HEAD origin/HEAD)
+  fi
 }
 
 # git difftool show <ref> [path...]
