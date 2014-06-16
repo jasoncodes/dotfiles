@@ -252,7 +252,7 @@ gcf() {
 
   COMMITS="$(
     git diff --staged --name-only -z |
-      xargs -0 git log --pretty=format:'%H %s' $(_git_rebase_target).. |
+      xargs -0 git log --pretty=format:'%H %s' $(git merge-base origin/HEAD HEAD).. |
       awk '{ if ($2 != "fixup!") { print $1} }'
   )"
 
