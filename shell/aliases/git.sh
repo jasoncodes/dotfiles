@@ -287,6 +287,12 @@ grb() {
   fi
 }
 
+# git cleanup
+gcu() {
+  git branch --merged origin/develop | grep -v '^\*' | grep feature/ | xargs git branch -d
+  git branch --remotes --merged origin/develop | grep feature/ | sed 's#^ *origin/##'
+}
+
 # git difftool show <ref> [path...]
 gdts() {
   REF="${1:-HEAD}"
