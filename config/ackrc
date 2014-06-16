@@ -1,6 +1,5 @@
 --sort-files
 --color
---context=1
 --follow
 --nogroup
 --type-add=ruby=.haml,.hamlc,.feature,.ru
