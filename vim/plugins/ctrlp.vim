@@ -28,6 +28,12 @@ func! s:CtrlPDeleteBuffer()
   exec "norm \<F5>"
 endfunc
 
+augroup ctrlp-tjump
+  autocmd VimEnter * runtime autoload/ctrlp/tjump.vim
+  autocmd VimEnter * let g:ctrlp_tjump_only_silent = 1
+  autocmd VimEnter * augroup! ctrlp-tjump
+augroup end
+
 map <Leader>t :CtrlP<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
