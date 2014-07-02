@@ -60,26 +60,24 @@ function _resolve_spec_files() {
 }
 
 function rspec-branch {
-  if [[ -z "$(git diff $(git merge-base origin/HEAD HEAD).. --name-only)" ]]; then
+  FILES="$(git diff $(git merge-base origin/HEAD HEAD).. --name-only | _resolve_spec_files)"
+  if [ -z "$FILES" ]; then
     echo rspec-branch: no changes to test >&2
     return 1
   fi
-  rspec $(
-    git diff $(git merge-base origin/HEAD HEAD).. --name-only |
-    _resolve_spec_files
-  ) "$@"
+  IFS=$'\n'
+  rspec $FILES "$@"
 }
 alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
 
 function rspec-work {
-  if [[ -z "$(git status --porcelain --untracked-files=all)" ]]; then
+  FILES="$(git status --porcelain -z --untracked-files=all | tr '\0' '\n' | cut -c 4- | _resolve_spec_files)"
+  if [ -z "$FILES" ]; then
     echo rspec-work: no changes to test >&2
     return 1
   fi
-  rspec $(
-    git status --porcelain -z --untracked-files=all | tr '\0' '\n' | cut -c 4- |
-    _resolve_spec_files
-  ) "$@"
+  IFS=$'\n'
+  rspec $FILES "$@"
 }
 alias rspec-work-doc='RSPEC_FORMAT=doc rspec-work'
 
