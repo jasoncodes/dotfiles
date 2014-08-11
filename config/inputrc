@@ -45,6 +45,7 @@ set convert-meta off
 Control-l: clear-screen
 
 set show-all-if-ambiguous on
+set mark-symlinked-directories on
 
 $if Bash
   #do history expansion when space entered
