@@ -13,6 +13,7 @@ alias gds='gd --cached'
 alias gdsw='gdw --cached'
 alias gbd='_git_assert_origin_head && gd $(git merge-base origin/HEAD HEAD)..'
 alias gbdd='_git_assert_origin_head && git diffall $(git merge-base origin/HEAD HEAD) HEAD'
+alias gbdt='_git_assert_origin_head && git difftool $(git merge-base origin/HEAD HEAD)..'
 alias gbl='_git_assert_origin_head && git-log --reverse $(git merge-base origin/HEAD HEAD)..'
 alias gblp='_git_assert_origin_head && glp $(git merge-base origin/HEAD HEAD)..'
 alias gblg='gblp --no-patch'
@@ -28,6 +29,7 @@ alias gp='git push'
 alias gpt='git push -u origin $(git_current_branch)'
 alias gws='git wip save WIP --untracked'
 alias gwd='git update-ref -d refs/wip/$(git_current_branch)'
+alias gdt='git difftool'
 
 # helper for git aliases
 function git_current_branch()
