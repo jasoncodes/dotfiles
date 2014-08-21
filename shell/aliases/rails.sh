@@ -65,7 +65,6 @@ function rspec-branch {
     echo rspec-branch: no changes to test >&2
     return 1
   fi
-  IFS=$'\n'
   rspec $FILES "$@"
 }
 alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
@@ -76,7 +75,6 @@ function rspec-work {
     echo rspec-work: no changes to test >&2
     return 1
   fi
-  IFS=$'\n'
   rspec $FILES "$@"
 }
 alias rspec-work-doc='RSPEC_FORMAT=doc rspec-work'
