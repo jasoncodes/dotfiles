@@ -21,4 +21,5 @@
 --ignore-dir=tmp
 --ignore-dir=data
 --ignore-dir=Pods
+--ignore-dir=public/assets/source_maps
 --smart-case
