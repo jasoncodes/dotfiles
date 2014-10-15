@@ -20,9 +20,13 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Highlight word at cursor without changing position
-map <Leader>h *<C-O>
+map <silent> <Leader>h :
+  \:let view=winsaveview()<CR>
+  \*
+  \:call winrestview(view)<CR>
+
 " Highlight word at cursor and then Ack it.
-map <Leader>H *<C-O>:AckFromSearch!<CR>
+map <Leader>H <Leader>h:AckFromSearch!<CR>
 
 " Search text object
 " http://vim.wikia.com/wiki/Copy_or_change_search_hit
