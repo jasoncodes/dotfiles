@@ -24,6 +24,10 @@ map <silent> <Leader>h :
   \:let view=winsaveview()<CR>
   \*
   \:call winrestview(view)<CR>
+vmap <silent> <Leader>h :
+  \:<C-U>let view=winsaveview()<CR>
+  \gv*
+  \:<C-U>call winrestview(view)<CR>
 
 " Highlight word at cursor and then Ack it.
 map <Leader>H <Leader>h:AckFromSearch!<CR>
