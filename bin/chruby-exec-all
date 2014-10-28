@@ -4,5 +4,6 @@ export SHELL=/bin/bash
 source /usr/local/share/chruby/chruby.sh
 
 for chruby_dir in ${RUBIES[@]}; do
-  chruby-exec "$(basename "$chruby_dir")" -- "$@"
+  chruby "$(basename "$chruby_dir")"
+  "$@"
 done
