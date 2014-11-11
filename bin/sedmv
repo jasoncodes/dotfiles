@@ -1,9 +1,4 @@
 #!/bin/bash -e
-# sedmv
-# 2008-05-11 13:26:54 +1000
-# hostmaster@spawncamp.net
-#
-# 2008-05-11 Initial release
 
 SHOW_USAGE=0
 SED_FLAGS=""
