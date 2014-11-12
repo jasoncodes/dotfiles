@@ -106,7 +106,7 @@ function glp()
     local default_range=''
   fi
 
-  git $pager log --patch -M40 $reverse "$@" $default_range
+  git $pager log --patch-with-stat -M40 $reverse "$@" $default_range
 }
 
 # git log file
