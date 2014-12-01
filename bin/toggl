@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'httparty'
+require 'certified'
+
+auth = {username: File.read(File.expand_path('~/.toggl')).chomp, password: 'api_token'}
+
+me = HTTParty.get 'https://www.toggl.com/api/v8/me?with_related_data=true', basic_auth: auth
+
+footer_text = "Total:"
+max_name_len = footer_text.size
+
+entries = me['data']['time_entries'].map do |entry|
+  time_start = Time.parse(entry['start'])
+  time_stop = entry['stop'] ? Time.parse(entry['stop']) : Time.now
+  date = time_start.to_date
+  name = entry['description']
+  max_name_len = [max_name_len, name.size].max
+
+  {
+    date: date,
+    name: name,
+    duration: time_stop - time_start
+  }
+end
+
+days = {}
+entries.each do |entry|
+  day = days[entry[:date]] ||= Hash.new(0.0)
+  day[entry[:name]] += entry[:duration]
+end
+
+def format_duration(duration)
+  hours = (duration / 3600.0).round 2
+  "#{hours.floor.to_s.rjust 2}:#{(hours*60%60).round(0).to_s.rjust(2,'0')} (#{'%0.02f' % hours} hours)"
+end
+
+days.each do |date, tasks|
+  puts date.strftime '%Y-%m-%d %A'
+  tasks.each do |name, duration|
+    puts "  #{name.ljust max_name_len} #{format_duration duration}"
+  end
+  puts "  #{footer_text.rjust max_name_len} #{format_duration tasks.values.inject(:+)}"
+  puts
+end
