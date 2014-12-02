@@ -41,18 +41,18 @@ end
 
 # use awesome print for output if available
 org_print = Pry.config.print
-Pry.config.print = proc do |output, value|
+Pry.config.print = proc do |output, value, _pry_|
   begin
     require 'awesome_print'
     case
     when defined?(Capybara) && value.is_a?(Capybara::Node::Element)
-      org_print.call(output, value)
+      org_print.call(output, value, _pry_)
     else
       value = value.to_a if defined?(ActiveRecord) && defined?(ActiveRecord::Relation) && value.is_a?(ActiveRecord::Relation)
       output.puts value.ai
     end
   rescue LoadError => err
-    org_print.call(output, value)
+    org_print.call(output, value, _pry_)
   end
   Pry.history.save if Pry.history.respond_to? :save
 end
