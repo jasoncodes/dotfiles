@@ -65,6 +65,9 @@ function rspec-branch {
     echo rspec-branch: no changes to test >&2
     return 1
   fi
+  if [ -d spec/ratchets ]; then
+    FILES="$FILES spec/ratchets"
+  fi
   rspec $FILES "$@"
 }
 alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
