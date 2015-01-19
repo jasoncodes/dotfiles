@@ -2,7 +2,7 @@
 --color
 --follow
 --nogroup
---type-add=ruby=.haml,.hamlc,.feature,.ru
+--type-add=ruby=.haml,.hamlc,.feature,.ru,.erb
 --type-add=css=.sass,.scss
 --type-set=markdown=.markdown,.mdown,.md
 --type-add=objc=.pch
