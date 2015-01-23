@@ -68,7 +68,10 @@ function rspec-branch {
   if [ -d spec/ratchets ]; then
     FILES="$FILES spec/ratchets"
   fi
-  rspec $FILES "$@"
+  (
+    [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
+    rspec $FILES "$@"
+  )
 }
 alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
 
@@ -78,7 +81,10 @@ function rspec-work {
     echo rspec-work: no changes to test >&2
     return 1
   fi
-  rspec $FILES "$@"
+  (
+    [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
+    rspec $FILES "$@"
+  )
 }
 alias rspec-work-doc='RSPEC_FORMAT=doc rspec-work'
 
