@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euo pipefail
+
+SCRIPT_NAME="$(basename "$0")"
+
+if [ $# -lt 2 ]; then
+  echo "Usage: $SCRIPT_NAME <primary-mx> <domains...>" >&2
+  echo >&2
+  echo "Example: $SCRIPT_NAME mx1.example.com \$(find -L /etc/mail/virtual/ -maxdepth 1 -type f -exec basename \{\} \;)"
+  exit 1
+fi
+
+PRIMARY_MX="$1"
+shift
+
+TMP_LOOKUP="$(mktemp "${TMPDIR:-/tmp}/$SCRIPT_NAME.XXXXXX")"
+trap '{ rm -f "$TMP_LOOKUP"; }' EXIT
+
+RET=0
+
+for DOMAIN in "$@"; do
+  if ! dig -t MX +short "$DOMAIN" | sort -n | head -1 | grep -q -F "$PRIMARY_MX."; then
+    echo "$DOMAIN"
+    RET=1
+  fi
+done
+
+exit $RET
