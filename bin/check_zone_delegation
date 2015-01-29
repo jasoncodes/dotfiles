@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ $# != 1 ]; then
+  echo "Usage: `basename $0` <primary-nameserver>" >&2
+  exit 1
+fi
+PRIMARY_NS="$1"
+
+rndc dumpdb -zones
+
+RET=0
+
+while read NAME; do
+  if ! dig -t NS +short "$NAME" | grep -q -F "$PRIMARY_NS."; then
+    echo $NAME
+    RET=1
+  fi
+done < <(egrep "\s+IN\s+NS\s+$PRIMARY_NS\.?$" /var/cache/bind/named_dump.db | awk '{print $1}' | sort -u)
+
+exit $RET
