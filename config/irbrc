@@ -141,23 +141,6 @@ extend_console 'readline' do
 end
 
 
-extend_console 'wirble' do
-
-  # blue is hard to see on black, so replace all blues with purple
-  Wirble::Colorize::Color::COLORS.merge!({
-    :blue => '0;35'
-  })
-
-  Wirble.init(:skip_prompt => true, :skip_history => true, :init_colors => true)
-
-end
-
-
-extend_console 'bond' do
-  Bond.start
-end
-
-
 # awesome_print is awesome
 on_irb_init do
   extend_console 'ap' do
