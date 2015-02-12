@@ -302,3 +302,29 @@ gdts() {
   shift
   git difftool "${REF}^..${REF}" "$@"
 }
+
+_gbr() {
+  local CMD="$1"
+  local LOCAL_HEAD="${2:-HEAD}"
+  local REMOTE_HEAD="${3:-"@{u}"}"
+  (
+    set -e
+    _git_assert_origin_head
+    LOCAL_RANGE="$(git merge-base origin/HEAD $LOCAL_HEAD)..$LOCAL_HEAD"
+    UPSTREAM_RANGE="$(git merge-base origin/HEAD $REMOTE_HEAD)..$REMOTE_HEAD"
+    vimdiff <($CMD "$LOCAL_RANGE") <($CMD "$UPSTREAM_RANGE")
+  )
+}
+
+_gbr_log() {
+  git log --pretty='format:%h %s' --reverse "$@"
+}
+
+_gbr_diff() {
+  git diff "$@"
+}
+
+# git branch rebased log
+alias gbrl='_gbr _gbr_log'
+# git branch rebased diff
+alias gbrd='_gbr _gbr_diff'
