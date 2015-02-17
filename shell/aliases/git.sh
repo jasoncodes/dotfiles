@@ -305,14 +305,18 @@ gdts() {
 
 _gbr() {
   local CMD="$1"
-  local LOCAL_HEAD="${2:-HEAD}"
-  local REMOTE_HEAD="${3:-"@{u}"}"
+  shift
+  local LOCAL_HEAD="${1:-HEAD}"
+  shift
+  local REMOTE_HEAD="${1:-"@{u}"}"
+  shift
+
   (
     set -e
     _git_assert_origin_head
     LOCAL_RANGE="$(git merge-base origin/HEAD $LOCAL_HEAD)..$LOCAL_HEAD"
     UPSTREAM_RANGE="$(git merge-base origin/HEAD $REMOTE_HEAD)..$REMOTE_HEAD"
-    vimdiff <($CMD "$LOCAL_RANGE") <($CMD "$UPSTREAM_RANGE")
+    vimdiff <($CMD "$LOCAL_RANGE" "$@") <($CMD "$UPSTREAM_RANGE" "$@")
   )
 }
 
