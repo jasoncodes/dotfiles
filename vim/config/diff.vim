@@ -14,4 +14,4 @@ function! s:DiffMappings()
   end
 endfunction
 
-autocmd BufRead * call <sid>DiffMappings()
+autocmd WinEnter * call <sid>DiffMappings()
