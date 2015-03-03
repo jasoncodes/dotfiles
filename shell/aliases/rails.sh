@@ -40,17 +40,12 @@ function rspec {
   if [[ $# == 0 ]]; then
     set -- spec "$@"
   fi
-  if [ -z "$RSPEC_FORMAT" ]; then
-    local FORMAT=''
-  else
-    local FORMAT="--format=$RSPEC_FORMAT"
-  fi
   (
     [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
-    exec $LAUNCHER $CMD --color $FORMAT "$@"
+    exec $LAUNCHER $CMD --color "$@"
   )
 }
-alias rspec-doc='RSPEC_FORMAT=doc rspec'
+alias rspec-doc='rspec --format=doc'
 
 function _resolve_spec_files() {
   sed -e 's#^app/##' -e 's#^\([^.]*\)\..*$#spec/\1_spec.rb#' -e 's#^spec/\(spec/.*\)_spec\(_spec\.rb\)$#\1\2#' |
