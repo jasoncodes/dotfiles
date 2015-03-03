@@ -34,20 +34,20 @@ function rspec {
   fi
   if egrep -q "^ {4}rails \(2\." Gemfile.lock; then
     local CMD='spec'
-    local DEFAULT_FORMAT=nested
   else
     local CMD='rspec'
-    local DEFAULT_FORMAT=doc
-    if egrep -q fuubar Gemfile.lock; then
-      local DEFAULT_FORMAT=Fuubar
-    fi
   fi
   if [[ $# == 0 ]]; then
     set -- spec "$@"
   fi
+  if [ -z "$RSPEC_FORMAT" ]; then
+    local FORMAT=''
+  else
+    local FORMAT="--format=$RSPEC_FORMAT"
+  fi
   (
     [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
-    exec $LAUNCHER $CMD --color --format="${RSPEC_FORMAT:-$DEFAULT_FORMAT}" "$@"
+    exec $LAUNCHER $CMD --color $FORMAT "$@"
   )
 }
 alias rspec-doc='RSPEC_FORMAT=doc rspec'
