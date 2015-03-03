@@ -14,4 +14,5 @@ let g:markdown_fenced_languages =
   \   'xml',
   \   'apache',
   \   'diff',
+  \   'sql',
   \ ]
