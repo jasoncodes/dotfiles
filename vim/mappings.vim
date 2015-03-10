@@ -72,9 +72,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" TComment
-let g:tcommentMapLeaderOp1 = '<Leader>c'
-
 " Align selected Cucumber table with <Bar>
 nmap <silent><Bar> :Tabularize /\|/<CR>
 
