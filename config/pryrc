@@ -48,7 +48,7 @@ Pry.config.print = proc do |output, value, _pry_|
     when defined?(Capybara) && value.is_a?(Capybara::Node::Element)
       org_print.call(output, value, _pry_)
     else
-      value = value.to_a if defined?(ActiveRecord) && defined?(ActiveRecord::Relation) && value.is_a?(ActiveRecord::Relation)
+      value = value.to_a if %w[ActiveRecord::Relation ActiveRecord::Result].include?(value.class.name)
       output.puts value.ai
     end
   rescue LoadError => err
