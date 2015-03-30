@@ -1,4 +1,4 @@
-if !has_key(g:bundle_names, 'vim-repeat')
+if match(map(copy(g:vundle#bundles), "v:val['name']"), 'vim-repeat') < 0
   Bundle 'tpope/vim-repeat'
 end
 Bundle 'tpope/vim-unimpaired'

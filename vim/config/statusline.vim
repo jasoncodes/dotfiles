@@ -6,7 +6,7 @@ let g:lightline = {}
 let g:lightline.component = {}
 let g:lightline.component_visible_condition = {}
 
-if !has_key(g:bundle_names, 'vim-fugitive')
+if match(map(copy(g:vundle#bundles), "v:val['name']"), 'vim-fugitive') < 0
   Bundle 'tpope/vim-fugitive'
 end
 let g:lightline.component.fugitive = '%{exists("*fugitive#head")?fugitive#head():""}'
