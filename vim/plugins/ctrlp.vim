@@ -1,4 +1,4 @@
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'jasoncodes/ctrlp-modified.vim'
 Bundle 'ivalkeen/vim-ctrlp-tjump'
 
