@@ -9,7 +9,6 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap ' ,
 
 map <silent><Leader>r :checktime<CR>:silent! wall<CR>:up<CR>:redraw!<CR>:call gitgutter#all()<CR>
-map <Leader>Q :qall<CR>
 
 " select all
 map <Leader>a ggVG
@@ -17,6 +16,7 @@ map <Leader>a ggVG
 " Buffer navigation
 map <Leader>, <C-^>
 map <silent><Leader>q :Bclose<CR>
+map <silent><Leader>Q :1,9001bd<CR>
 
 " replace bufkill's default mappings with something less conflicty
 nmap \bb <Plug>BufKillBack
