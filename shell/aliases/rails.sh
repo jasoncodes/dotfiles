@@ -83,6 +83,20 @@ function rspec-work {
 }
 alias rspec-work-doc='rspec-work -f doc'
 
+function rubocop-branch {
+  FILES="$(git diff $(git merge-base origin/HEAD HEAD).. --name-only)"
+  FILES="$((echo "$FILES"; echo "$FILES" | _resolve_spec_files) | sort -u)"
+  RB_FILES="$(echo "$FILES" | grep '\.rb$')"
+  if [ -z "$RB_FILES" ]; then
+    echo rubocop-branch: no changes to test >&2
+    return 1
+  fi
+  (
+    [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
+    bundle exec rubocop $RB_FILES "$@"
+  )
+}
+
 function __database_yml {
   if [[ -f config/database.yml ]]; then
     ruby -ryaml -rerb -e "puts YAML::load(ERB.new(IO.read('config/database.yml')).result)['${RAILS_ENV:-development}']['$1']"
