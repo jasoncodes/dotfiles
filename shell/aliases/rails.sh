@@ -68,7 +68,7 @@ function rspec-branch {
     rspec $FILES "$@"
   )
 }
-alias rspec-branch-doc='RSPEC_FORMAT=doc rspec-branch'
+alias rspec-branch-doc='rspec-branch -f doc'
 
 function rspec-work {
   FILES="$(git status --porcelain -z --untracked-files=all | tr '\0' '\n' | cut -c 4- | _resolve_spec_files)"
@@ -81,7 +81,7 @@ function rspec-work {
     rspec $FILES "$@"
   )
 }
-alias rspec-work-doc='RSPEC_FORMAT=doc rspec-work'
+alias rspec-work-doc='rspec-work -f doc'
 
 function __database_yml {
   if [[ -f config/database.yml ]]; then
