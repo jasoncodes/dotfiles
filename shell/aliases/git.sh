@@ -280,13 +280,13 @@ gcf() {
 
 # git rebase tracking
 grt() {
-  git rebase -i $(git merge-base HEAD $(_git_rebase_target)) "$@"
+  git rebase --interactive --keep-empty $(git merge-base HEAD $(_git_rebase_target)) "$@"
 }
 
 # git rebase branch
 grb() {
   if _git_assert_origin_head; then
-    git rebase -i $(git merge-base HEAD origin/HEAD) "$@"
+    git rebase --interactive --keep-empty $(git merge-base HEAD origin/HEAD) "$@"
   fi
 }
 
