@@ -229,7 +229,7 @@ gau() {
 
 # git add untracked reset
 gaur() {
-  git ls-files --exclude-standard --modified -z | xargs -0 git ls-files --stage | while read MODE OBJECT STAGE NAME; do
+  git ls-files --exclude-standard --modified -z "$@" | xargs -0 git ls-files --stage | while read MODE OBJECT STAGE NAME; do
     if [[ "$OBJECT" == e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 ]]; then
       echo "reset '$NAME'"
       if git rev-parse --quiet --verify HEAD > /dev/null; then
