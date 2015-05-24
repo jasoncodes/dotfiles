@@ -5,12 +5,14 @@ require 'certified'
 
 auth = {username: File.read(File.expand_path('~/.toggl')).chomp, password: 'api_token'}
 
-me = HTTParty.get 'https://www.toggl.com/api/v8/me?with_related_data=true', basic_auth: auth
+start_date = Date.today - 14
+
+time_entries = HTTParty.get 'https://www.toggl.com/api/v8/time_entries', basic_auth: auth, query: {start_date: start_date.to_time.iso8601}
 
 footer_text = "Total:"
 max_name_len = footer_text.size
 
-entries = me['data']['time_entries'].map do |entry|
+entries = time_entries.map do |entry|
   time_start = Time.parse(entry['start']).getlocal
   time_stop = entry['stop'] ? Time.parse(entry['stop']).getlocal : Time.now
   date = time_start.to_date
