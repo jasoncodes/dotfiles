@@ -31,9 +31,3 @@ vmap <silent> <Leader>h :
 
 " Highlight word at cursor and then Ack it.
 map <Leader>H <Leader>h:AckFromSearch!<CR>
-
-" Search text object
-" http://vim.wikia.com/wiki/Copy_or_change_search_hit
-vnoremap <silent> S //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
-    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
-omap S :normal vS<CR>
