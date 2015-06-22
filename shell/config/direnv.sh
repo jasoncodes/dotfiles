@@ -5,6 +5,7 @@ if which direnv &> /dev/null; then
     eval "$(
       (
         (
+          [ -n "${ZSH_VERSION:-}" ] && setopt nomultios
           direnv export "$SHELL" 2>&1 >&3 |
             egrep -v -e '^direnv: (loading|export|unloading)'
         ) >&2 3>&1
