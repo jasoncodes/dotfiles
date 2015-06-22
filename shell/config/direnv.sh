@@ -2,14 +2,6 @@ if which direnv &> /dev/null; then
   eval "$(direnv hook $SHELL)"
 
   _direnv_hook() {
-    eval "$(
-      (
-        (
-          [ -n "${ZSH_VERSION:-}" ] && setopt nomultios
-          direnv export "$SHELL" 2>&1 >&3 |
-            egrep -v -e '^direnv: (loading|export|unloading)'
-        ) >&2 3>&1
-      )
-    )"
+    eval "$(direnv export zsh 2> >( egrep -v -e '^direnv: (loading|export|unloading)' ))"
   };
 fi
