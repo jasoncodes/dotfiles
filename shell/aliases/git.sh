@@ -270,9 +270,37 @@ gcf() {
     *)
       echo Staged files:
       git diff --staged --name-only | sed 's/^/  /'
+
       echo
       echo Multiple fixup candidates:
       echo "$COMMITS" | xargs git show -s --oneline | sed 's/^/  /'
+
+      echo
+      echo Old hunks:
+      git diff --staged --no-prefix | grep -e ^--- -e ^@@ | while read MARKER VALUE _; do
+        case "$MARKER" in
+          ---)
+            FILENAME="$VALUE"
+            ;;
+          @@)
+            RANGE="$(echo "$VALUE" | sed s/-//)"
+            if ! echo "$RANGE" | grep -q ,; then
+              RANGE="$RANGE,1"
+            fi
+            RANGE="$(echo "$RANGE" | sed s/,/,+/)"
+
+            if [ "$FILENAME" != /dev/null ]; then
+              ((COUNT+=1))
+              if [ $COUNT -gt 1 ]; then
+                echo
+              fi
+              echo "  $FILENAME":"$RANGE"
+              git --no-pager blame -s -L "$RANGE" HEAD "$FILENAME" 2>&1 | sed 's/^/  /'
+            fi
+            ;;
+        esac
+      done
+
       return 1
       ;;
   esac
