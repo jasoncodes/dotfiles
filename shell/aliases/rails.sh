@@ -85,7 +85,7 @@ alias rspec-work-doc='rspec-work -f doc'
 
 function rubocop-branch {
   FILES="$(git diff $(git merge-base origin/HEAD HEAD).. --name-only)"
-  FILES="$((echo "$FILES"; echo "$FILES" | _resolve_spec_files) | sort -u)"
+  FILES="$((echo "$FILES" | xargs find 2> /dev/null; echo "$FILES" | _resolve_spec_files) | sort -u)"
   RB_FILES="$(echo "$FILES" | grep '\.rb$')"
   if [ -z "$RB_FILES" ]; then
     echo rubocop-branch: no changes to test >&2
