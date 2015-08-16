@@ -28,21 +28,16 @@ function rails_command
 
 function rspec {
   if [ -S .zeus.sock ]; then
-    local LAUNCHER='zeus'
+    local CMD='zeus rspec'
   else
-    local LAUNCHER='bundle exec'
-  fi
-  if egrep -q "^ {4}rails \(2\." Gemfile.lock; then
-    local CMD='spec'
-  else
-    local CMD='rspec'
+    local CMD='bundle exec rspec'
   fi
   if [[ $# == 0 ]]; then
     set -- spec "$@"
   fi
   (
     [ -n "${ZSH_VERSION:-}" ] && setopt shwordsplit
-    exec $LAUNCHER $CMD --color "$@"
+    exec $CMD --color "$@"
   )
 }
 alias rspec-doc='rspec --format=doc'
