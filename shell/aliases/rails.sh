@@ -29,6 +29,8 @@ function rails_command
 function rspec {
   if [ -S .zeus.sock ]; then
     local CMD='zeus rspec'
+  elif [ -x bin/rspec ]; then
+    local CMD='bin/rspec'
   else
     local CMD='bundle exec rspec'
   fi
