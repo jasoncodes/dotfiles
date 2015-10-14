@@ -72,9 +72,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" Align selected Cucumber table with <Bar>
-nmap <silent><Bar> :Tabularize /\|/<CR>
-
 " Save and restore window and cursor position
 " This prevents the default <Leader>swp from conflicting with <Leader>sw
 map \swp <Plug>SaveWinPosn
