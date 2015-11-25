@@ -14,6 +14,7 @@ json() {
       python -mjson.tool
     fi
   ) |
+  sed 'h;s/[^ ].*//;s/    /  /g;G;s/\n *//' |
   if [ -t 1 ] && which coderay &> /dev/null; then
     coderay -json
   else
