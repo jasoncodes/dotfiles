@@ -15,6 +15,7 @@ json() {
     fi
   ) |
   sed 'h;s/[^ ].*//;s/    /  /g;G;s/\n *//' |
+  perl -0pe 's/\[\n\n +\]/[]/g' |
   if [ -t 1 ] && which coderay &> /dev/null; then
     coderay -json
   else
