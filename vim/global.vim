@@ -22,6 +22,7 @@ set autowriteall                           " Automatically write modified files
 set spelllang=en_au                        " Set default spelling language to English (Australia)
 set shortmess+=I                           " Disable splash screen
 set noequalalways                          " Don't equalize when opening/closing windows
+set nojs                                   " Don't use two spaces when joining sentences
 
 " Indentation
 set shiftwidth=2                           " Number of spaces to use in each autoindent step
