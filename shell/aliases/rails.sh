@@ -108,7 +108,6 @@ function psql
   fi
   command psql "$@"
 }
-export PSQL_EDITOR='vim +"set syntax=sql"'
 
 function mysql
 {
