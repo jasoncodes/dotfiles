@@ -320,8 +320,11 @@ grb() {
 
 # git cleanup
 gcu() {
-  git branch --merged origin/develop | grep -v '^\*' | grep feature/ | xargs git branch -d
-  git branch --remotes --merged origin/develop | grep feature/ | sed 's#^ *origin/##'
+  if _git_assert_origin_head; then
+    HEAD_NAME="$(git rev-parse --abbrev-ref origin/HEAD | sed 's/^origin\///')"
+    git branch --merged origin/HEAD | grep -v '^\*' | awk '{print $1}' | grep -Fxv "$HEAD_NAME" | xargs git branch -d
+    git branch --remotes --merged origin/HEAD | grep -v origin/HEAD | grep '^ *origin/' | sed 's#^ *origin/##' | grep -Fxv "$HEAD_NAME"
+  fi
 }
 
 # git difftool show <ref> [path...]
