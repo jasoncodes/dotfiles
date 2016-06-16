@@ -13,6 +13,10 @@ commit = yellow reverse
 
 [core]
 excludesfile = ~/.gitignore
+pager = (which diff-highlight &> /dev/null && diff-highlight || cat) | ${PAGER:-less}
+
+[interactive]
+diffFilter=(which diff-highlight &> /dev/null && diff-highlight || cat)
 
 [push]
 default = tracking
