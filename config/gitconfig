@@ -37,6 +37,7 @@ prompt = false
 
 [rebase]
 autosquash = true
+autostash = true
 
 [git-up "bundler"]
 check = true
