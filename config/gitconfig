@@ -42,6 +42,9 @@ prompt = false
 autosquash = true
 autostash = true
 
+[tag]
+sort = version:refname
+
 [git-up "bundler"]
 check = true
 
