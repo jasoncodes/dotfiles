@@ -26,6 +26,9 @@ log = true
 conflictstyle = diff3
 tool = vimdiff
 
+[rerere]
+enabled = 1
+
 [diff]
 compactionHeuristic = true
 
@@ -44,9 +47,6 @@ check = true
 
 [git-up "rebase"]
 auto = false
-
-[rerere]
-enabled = 1
 
 [gitflow "branch"]
 master = master
