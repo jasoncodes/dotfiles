@@ -32,6 +32,15 @@ entries.each do |entry|
   day[entry[:name]] += entry[:duration]
 end
 
+days.values.each do |tasks|
+  if overhead = tasks.delete('overhead')
+    total = tasks.values.inject(:+)
+    tasks.keys.each do |name|
+      tasks[name] *= (total + overhead) / total
+    end
+  end
+end
+
 def format_duration(duration)
   hours = (duration / 3600.0).round 2
   "#{hours.floor.to_s.rjust 2}:#{(hours*60%60).round(0).to_s.rjust(2,'0')} (#{'%0.02f' % hours} hours)"
