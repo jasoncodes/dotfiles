@@ -33,7 +33,7 @@ entries.each do |entry|
 end
 
 days.values.each do |tasks|
-  if overhead = tasks.delete('overhead')
+  if tasks.size > 1 && overhead = tasks.delete('overhead')
     total = tasks.values.inject(:+)
     tasks.keys.each do |name|
       tasks[name] *= (total + overhead) / total
