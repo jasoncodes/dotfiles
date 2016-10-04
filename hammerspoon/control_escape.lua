@@ -32,3 +32,11 @@ end
 
 control_tap = hs.eventtap.new({12}, control_handler)
 control_tap:start()
+
+other_handler = function(evt)
+  ctrl_table["send_escape"] = false
+  return false
+end
+
+other_tap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, other_handler)
+other_tap:start()
