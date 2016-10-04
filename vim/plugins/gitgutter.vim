@@ -11,3 +11,16 @@ let g:gitgutter_sign_modified_removed = '⇎'
 
 nmap ]d <Plug>GitGutterNextHunk
 nmap [d <Plug>GitGutterPrevHunk
+
+function! ToggleGitGutterMode()
+  if g:gitgutter_diff_args == ''
+    let g:gitgutter_diff_args='$(git merge-base origin/HEAD HEAD)'
+  else
+    let g:gitgutter_diff_args=''
+  endif
+
+  GitGutterSignsDisable
+  GitGutterSignsEnable
+endfunction
+
+nmap <silent> cog :call ToggleGitGutterMode()<CR>
