@@ -1,6 +1,7 @@
 alias zs='zeus start'
-alias rc='$([ -S .zeus.sock ] && echo zeus console || echo bundle exec pry -r ./config/environment)'
-alias rails='$([ -S .zeus.sock ] && echo zeus || echo rails_command)'
+alias ss='spring server'
+alias rails=rails_command
+alias rc='rails console'
 alias rs='rails server'
 alias rg='rails generate'
 alias rgm='rg migration'
@@ -17,7 +18,11 @@ function rails_command
   local cmd=$1
   shift
 
-  if [ -e script/rails ]; then
+  if [ -S .zeus.sock ]; then
+    zeus "$cmd" "$@"
+  elif [ -e bin/rails ]; then
+    bin/rails "$cmd" "$@"
+  elif [ -e script/rails ]; then
     script/rails "$cmd" "$@"
   elif [ -e "script/$cmd" ]; then
     "script/$cmd" "$@"

@@ -7,6 +7,8 @@ function rake
 {
   if [ -S .zeus.sock ]; then
     zeus rake "$@"
+  elif [ -e bin/rake ]; then
+    bin/rake "$@"
   elif [ -f Gemfile ]; then
     bundle exec rake "$@"
   else
