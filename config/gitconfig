@@ -1,5 +1,5 @@
 # Set your name and email with the following:
-#   git config -f ~/.gitconfig.local user.name John Appleseed
+#   git config -f ~/.gitconfig.local user.name "John Appleseed"
 #   git config -f ~/.gitconfig.local user.email me@example.com
 
 [include]
