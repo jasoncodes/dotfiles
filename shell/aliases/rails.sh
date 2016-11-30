@@ -3,8 +3,7 @@ alias ss='spring server'
 alias rails=rails_command
 alias rc='rails console'
 alias rs='rails server'
-alias rg='rails generate'
-alias rgm='rg migration'
+alias rgm='rails generate migration'
 
 zeus() {
   command zeus "$@"
