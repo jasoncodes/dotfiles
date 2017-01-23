@@ -2,10 +2,10 @@ runtime colors/jellybeans.vim
 
 let colors_name = "jellybeans_jason"
 
-hi Normal ctermbg=0
-hi NonText ctermbg=0
-hi Normal guibg=#000000 ctermbg=0
-hi NonText guibg=#000000 ctermbg=0
+hi Normal ctermbg=16
+hi NonText ctermbg=16
+hi Normal guibg=#000000 ctermbg=16
+hi NonText guibg=#000000 ctermbg=16
 hi CursorLine ctermbg=233
 hi CursorLineNr ctermbg=233 ctermfg=246 guifg=#a4a4a4 guibg=#151515
 hi clear SignColumn
