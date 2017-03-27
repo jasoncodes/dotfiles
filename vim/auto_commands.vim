@@ -12,3 +12,5 @@ autocmd FileType make set noexpandtab
 
 " Enable spell check by default for git commits
 autocmd FileType gitcommit set spell
+
+autocmd BufRead,BufNewFile .envrc set filetype=sh
