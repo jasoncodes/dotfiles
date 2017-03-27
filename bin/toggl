@@ -4,10 +4,16 @@ require 'optparse'
 require 'httparty'
 
 options = {
+  format: :default,
 }
 
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename $0} [options]"
+
+  opts.on '--format=[default]', %i[default] do |format|
+    raise OptionParser::MissingArgument unless format
+    options[:format] = format
+  end
 end
 
 begin
@@ -64,11 +70,16 @@ def format_duration(duration)
   "#{hours.floor.to_s.rjust 2}:#{(hours*60%60).round(0).to_s.rjust(2,'0')} (#{'%0.02f' % hours} hours)"
 end
 
-days.each do |date, tasks|
-  puts date.strftime '%Y-%m-%d %A'
-  tasks.each do |name, duration|
-    puts "  #{name.ljust max_name_len} #{format_duration duration}"
+case options.fetch(:format)
+when :default
+  days.each do |date, tasks|
+    puts date.strftime '%Y-%m-%d %A'
+    tasks.each do |name, duration|
+      puts "  #{name.ljust max_name_len} #{format_duration duration}"
+    end
+    puts "  #{footer_text.rjust max_name_len} #{format_duration tasks.values.inject(:+)}"
+    puts
   end
-  puts "  #{footer_text.rjust max_name_len} #{format_duration tasks.values.inject(:+)}"
-  puts
+else
+  raise 'unknown format'
 end
