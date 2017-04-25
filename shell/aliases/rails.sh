@@ -1,5 +1,5 @@
 alias zs='zeus start'
-alias ss='spring server'
+alias ss='bin/spring server'
 alias rails=rails_command
 alias rc='rails console'
 alias rs='rails server'
