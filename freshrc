@@ -19,10 +19,10 @@ fresh config/\* --file
 
 fresh-options --file=~/.vimrc --marker=\"
   fresh vim/leader.vim
-  fresh twe4ked/dotfiles vim/vundle_before.vim
+  fresh twe4ked/dotfiles vim/vundle_before.vim --ref=5d7d2b0
   fresh vim/vundle.vim
   fresh vim/plugins/\*.vim
-  fresh twe4ked/dotfiles vim/vundle_after.vim
+  fresh twe4ked/dotfiles vim/vundle_after.vim --ref=5d7d2b0
   fresh vim/global.vim
   fresh vim/config/\*.vim
   fresh vim/functions.vim
