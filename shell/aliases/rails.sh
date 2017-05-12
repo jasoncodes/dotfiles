@@ -56,6 +56,9 @@ function _resolve_spec_files() {
 }
 
 function rspec-branch {
+  if command -v _git_assert_origin_head &> /dev/null; then
+    _git_assert_origin_head || return 1
+  fi
   FILES="$(git diff $(git merge-base origin/HEAD HEAD).. --name-only | _resolve_spec_files)"
   if [ -z "$FILES" ]; then
     echo rspec-branch: no changes to test >&2
