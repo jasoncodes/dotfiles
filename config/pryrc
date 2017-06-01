@@ -47,6 +47,12 @@ Pry.config.print = proc do |output, value, _pry_|
     case
     when defined?(Capybara) && value.is_a?(Capybara::Node::Element)
       org_print.call(output, value, _pry_)
+    when defined?(ActiveSupport::SafeBuffer) && value.is_a?(ActiveSupport::SafeBuffer)
+      output.print value.to_str.ai
+      if value.html_safe?
+        output.print ' (HTML safe)'
+      end
+      output.puts
     else
       value = value.to_a if %w[ActiveRecord::Relation ActiveRecord::Result].include?(value.class.name)
       output.puts value.ai
