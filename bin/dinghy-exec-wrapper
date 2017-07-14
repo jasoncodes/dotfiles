@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ -z "${DOCKER_HOST:-}" ] && which docker-machine &> /dev/null; then
+  if [ "$(docker-machine status dinghy)" == "Stopped" ]; then
+    PATH="/usr/local/bin:$PATH" dinghy start
+  fi
+  eval $(docker-machine env dinghy 2> /dev/null)
+fi
+exec /usr/local/bin/"$(basename "$0")" "$@"

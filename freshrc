@@ -42,6 +42,8 @@ init_vim() {
 
 fresh bin/\* --bin
 fresh bin/wemux/\* --bin
+fresh bin/dinghy-exec-wrapper --bin=~/bin/docker
+fresh bin/dinghy-exec-wrapper --bin=~/bin/docker-compose
 
 fresh hammerspoon/\*.lua --file=~/.hammerspoon/init.lua
 
