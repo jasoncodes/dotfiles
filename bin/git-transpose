@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+
+EDITOR="printf '1m2\nwq\n' | ed > /dev/null" git rebase -i HEAD^^
