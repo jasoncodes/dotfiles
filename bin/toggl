@@ -93,10 +93,10 @@ when :'bulk-create'
 
   days.each do |date, tasks|
     tasks.each do |name, duration|
-      work_reference = if name.split.first =~ /\A[A-Z]*\d+\z/
-        name.split.first
-      else
-        name
+      work_reference, note = name.split('|', 2).map(&:to_s).map(&:strip)
+
+      if work_reference.split.first =~ /\A[A-Z]*\d+\z/
+        work_reference = work_reference.split.first
       end
 
       row = {
@@ -106,6 +106,7 @@ when :'bulk-create'
         'Usage Code' => 'Normal',
         'UoM' => 'hours',
         'Quantity' => format_hours(duration),
+        'Note' => note,
       }
       puts row.values_at(*COLUMNS).join("\t")
     end
