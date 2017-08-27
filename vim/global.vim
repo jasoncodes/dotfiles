@@ -41,6 +41,7 @@ set nowrap                                 " I don't always wrap lines...
 set linebreak                              " ...but when I do, I wrap whole words.
 set wildmenu                               " Make tab completion act more like bash
 set wildmode=list:longest                  " Tab complete to longest common string, like bash
+set nofileignorecase                       " case sensitive filename completion
 set switchbuf=useopen                      " Don't re-open already opened buffers
 
 " Moving around / editing
