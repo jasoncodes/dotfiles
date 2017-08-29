@@ -53,6 +53,10 @@ Pry.config.print = proc do |output, value, _pry_|
         output.print ' (HTML safe)'
       end
       output.puts
+    when defined?(Heroics) && value.is_a?(Heroics::Client)
+      output.puts value.instance_variable_get('@resources').keys.ai(multiline: false)
+    when defined?(Heroics) && value.is_a?(Heroics::Resource)
+      output.puts value.instance_variable_get('@links').keys.ai(multiline: false)
     else
       value = value.to_a if %w[ActiveRecord::Relation ActiveRecord::Result].include?(value.class.name)
       output.puts value.ai
