@@ -26,7 +26,8 @@ function rails_command
   elif [ -e "script/$cmd" ]; then
     "script/$cmd" "$@"
   else
-    command rails "$cmd" "$@"
+    echo "Not a Rails app?" >&2
+    return 1
   fi
 }
 
