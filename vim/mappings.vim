@@ -30,9 +30,6 @@ nmap \!bw <Plug>BufKillBangBw
 nmap \bundo <Plug>BufKillUndo
 nmap \ba <Plug>BufKillAlt
 
-" In command-line mode, C-a jumps to beginning (to match C-e).
-cnoremap <C-a> <Home>
-
 " Disable scrolling with the mouse
 map <ScrollWheelUp> <Nop>
 map <ScrollWheelDown> <Nop>
