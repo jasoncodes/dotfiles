@@ -253,9 +253,13 @@ grt() {
 
 # git rebase branch
 grb() {
-  if _git_assert_origin_head; then
-    git rebase --interactive --keep-empty $(git merge-base HEAD origin/HEAD) "$@"
+  if git_current_branch | grep -q ^hotfix/; then
+    local TARGET_BRANCH=origin/master
+  else
+    _git_assert_origin_head
+    local TARGET_BRANCH=origin/HEAD
   fi
+  git rebase --interactive --keep-empty $(git merge-base HEAD $TARGET_BRANCH) "$@"
 }
 
 # git cleanup
