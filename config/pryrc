@@ -71,17 +71,20 @@ org_logger_active_record = nil
 org_logger_rails = nil
 
 Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
+  require 'logger'
+  new_logger = Logger.new(STDOUT)
+
   # show ActiveRecord SQL queries in the console
   if defined? ActiveRecord
     org_logger_active_record = ActiveRecord::Base.logger
-    ActiveRecord::Base.logger = Logger.new STDOUT
+    ActiveRecord::Base.logger = new_logger
   end
 
   if defined?(Rails) && Rails.env
     # output all other log info such as deprecation warnings to the console
     if Rails.respond_to? :logger=
       org_logger_rails = Rails.logger
-      Rails.logger = Logger.new STDOUT
+      Rails.logger = new_logger
     end
 
     # load Rails console commands
