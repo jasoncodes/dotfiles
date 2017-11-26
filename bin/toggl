@@ -86,7 +86,7 @@ when :default
     puts
   end
 when :'bulk-create'
-  COLUMNS = %w[Date Person Work\ Reference Usage\ Code Docket UoM Rate\ Code Quantity Note]
+  COLUMNS = %w[Date Person Work\ Reference Usage\ Code Docket Purchase\ Order UoM Rate\ Code Quantity Note]
 
   person_name = `osascript -e 'tell application "System Events" to get full name of current user'`.chomp
   raise unless $?.success?
