@@ -217,7 +217,7 @@ gcf() {
 
       echo
       echo Old hunks:
-      git diff --staged --no-prefix | grep -e ^--- -e ^@@ | while read MARKER VALUE _; do
+      git diff --staged --no-prefix | grep -e ^--- -e ^@@ | sed -e 's/ /	/' -e 's/^\(@@[^ ]*\) /\1	/' | while IFS='	' read MARKER VALUE _; do
         case "$MARKER" in
           ---)
             FILENAME="$VALUE"
