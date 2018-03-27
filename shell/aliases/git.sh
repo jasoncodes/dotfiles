@@ -196,7 +196,7 @@ gcf() {
   COMMITS="$(
     git diff --staged --name-only -z |
       xargs -0 git log --pretty=format:'%H %s' $(git merge-base origin/HEAD HEAD).. -- |
-      awk '{ if ($2 != "fixup!") { print $1} }'
+      awk '{ if ($2 != "fixup!" && $2 != "squash!") { print $1} }'
   )"
 
   case $(echo "$COMMITS" | grep . | wc -l | tr -d -c 0-9) in
