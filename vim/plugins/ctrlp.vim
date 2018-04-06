@@ -53,4 +53,5 @@ map <Leader>l :CtrlPBuffer<CR>
 map <Leader>m :CtrlPModified<CR>
 map <Leader>M :CtrlPBranchModified<CR>
 map <Leader>d :CtrlPCurFile<CR>
+map <Leader>] :CtrlPTag<CR>
 map <silent> <C-]> :CtrlPtjump<CR>
