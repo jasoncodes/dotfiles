@@ -18,11 +18,19 @@ function! ResizeGrepper()
 endfunction
 autocmd User Grepper call ResizeGrepper()
 
-augroup grepper-patch
-  " Enable file tab completion on the :Grepper command
-  autocmd VimEnter * command! -nargs=* -complete=file Grepper call grepper#parse_flags(<q-args>)
-  autocmd VimEnter * silent augroup! grepper-patch
-augroup end
+function! EnableGrepperFileCompletion()
+  redir => scriptnames
+  silent! scriptnames
+  redir END
+
+  for script in split(l:scriptnames, "\n")
+    if l:script =~ '/plugin/grepper.vim$'
+      let l:script_num = str2nr(split(l:script, ":")[0])
+      execute printf("command! -nargs=* -complete=file Grepper call <SNR>%d_parse_flags(<q-args>)", l:script_num)
+    endif
+  endfor
+endfunction
+autocmd VimEnter * call EnableGrepperFileCompletion()
 
 " Find the next match as we type the search
 set incsearch
