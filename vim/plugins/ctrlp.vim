@@ -12,6 +12,7 @@ let g:ctrlp_custom_ignore = {
  \ }
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_match_window = 'bottom,order:ttb,min:10,max:10'
+let g:ctrlp_switch_buffer = ''
 
 " Kill buffers in Ctrl-P with Ctrl-@
 " https://github.com/kien/ctrlp.vim/issues/280
