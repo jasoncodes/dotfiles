@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'time'
+require 'tempfile'
+
+lines = `tail -100000 ~/.bash_eternal_history`.lines
+exit $?.exitstatus unless $?.success?
+
+file = Tempfile.new(File.basename($0))
+
+last_line = nil
+lines.each do |line|
+  next if line =~ / \d+\* \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}  /
+
+  unless line =~ / \d+  (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})  (.*)\n\z/
+    STDERR.puts "Error parsing #{line.inspect}"
+    next
+  end
+
+  time = Time.parse($1)
+  line = $2
+
+  next if line.empty?
+
+  if line != last_line
+    file.write "##{time.to_i}\n#{line}\n"
+    last_line = line
+  end
+end
+
+file.close
+FileUtils.mv file.path, File.expand_path('~/.bash_history')
