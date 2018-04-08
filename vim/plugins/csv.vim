@@ -1,7 +1,5 @@
 Bundle 'chrisbra/csv.vim'
 
-autocmd BufRead,BufNewFile .csv set filetype=csv
-
 let g:csv_highlight_column = 'y'
 let g:csv_hiGroup = 'Underlined'
 
