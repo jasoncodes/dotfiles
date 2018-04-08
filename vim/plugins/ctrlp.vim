@@ -1,6 +1,7 @@
 Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'jasoncodes/ctrlp-modified.vim'
 Bundle 'ivalkeen/vim-ctrlp-tjump'
+Bundle 'FelikZ/ctrlp-py-matcher'
 
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_working_path_mode = 0 " Don't manage
@@ -13,6 +14,8 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_match_window = 'bottom,order:ttb,min:10,max:10'
 let g:ctrlp_switch_buffer = ''
+
+let g:ctrlp_match_func = {'match' : 'pymatcher#PyMatch' }
 
 " Kill buffers in Ctrl-P with Ctrl-@
 " https://github.com/kien/ctrlp.vim/issues/280
