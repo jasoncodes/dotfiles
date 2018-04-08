@@ -1,5 +1,5 @@
-syntax on                                  " Turn on syntax highlighting
 filetype plugin indent on                  " Enable automatic filetype detection, filetype-specific plugins/indentation
+syntax on                                  " Turn on syntax highlighting
 set nocompatible                           " Don't need to keep compatibility with Vi
 set hidden                                 " Allow hiding buffers with unsaved changes
 set listchars=trail:.,tab:▸\ ,eol:¬        " Change the invisible characters
