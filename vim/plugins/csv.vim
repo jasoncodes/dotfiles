@@ -6,4 +6,10 @@ let g:csv_hiGroup = 'Underlined'
 autocmd Filetype csv setlocal nocursorline
 autocmd Filetype csv let b:csv_arrange_align = 'l*'
 
-autocmd Filetype csv autocmd CursorMoved <buffer> CSVWhatColumn!
+function! CSVAutoWhatColumn()
+  if &filetype == 'csv'
+    CSVWhatColumn!
+  endif
+endfunction
+
+autocmd Filetype csv autocmd CursorMoved <buffer> call CSVAutoWhatColumn()
