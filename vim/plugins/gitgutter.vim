@@ -24,3 +24,5 @@ function! ToggleGitGutterMode()
 endfunction
 
 nmap <silent> cog :call ToggleGitGutterMode()<CR>
+
+autocmd BufWritePost * GitGutter
