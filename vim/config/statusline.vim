@@ -1,23 +1,20 @@
 Bundle 'itchyny/lightline.vim'
+Bundle 'itchyny/vim-gitbranch'
 
 set laststatus=2
 
 let g:lightline = {}
 let g:lightline.component = {}
-let g:lightline.component_visible_condition = {}
+let g:lightline.component_function = {}
 
-if match(map(copy(g:vundle#bundles), "v:val['name']"), 'vim-fugitive') < 0
-  Bundle 'tpope/vim-fugitive'
-end
-let g:lightline.component.fugitive = '%{exists("*fugitive#head")?fugitive#head():""}'
-let g:lightline.component_visible_condition.fugitive = '(exists("*fugitive#head") && ""!=fugitive#head())'
 let g:lightline.component.modified = '%#ModifiedColor#%{LightlineModified()}'
+let g:lightline.component_function.gitbranch = 'gitbranch#name'
 
 let g:lightline.active =
   \ {
   \   'left': [
   \     [ 'mode', 'paste' ],
-  \     [ 'fugitive', 'readonly', 'relativepath', 'modified' ]
+  \     [ 'gitbranch', 'readonly', 'relativepath', 'modified' ]
   \   ],
   \   'right': [
   \     [ 'lineinfo' ],
