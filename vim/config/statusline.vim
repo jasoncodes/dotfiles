@@ -34,12 +34,6 @@ let g:lightline.inactive =
   \   ]
   \ }
 
-function! LightlineRefresh()
-  call lightline#init()
-  call lightline#colorscheme()
-  call lightline#update()
-endfunction
-
 function! LightlineModified()
   let map = { 'V': 'n', "\<C-v>": 'n', 's': 'n', 'v': 'n', "\<C-s>": 'n', 'c': 'n', 'R': 'n'}
   let mode = get(map, mode()[0], mode()[0])
