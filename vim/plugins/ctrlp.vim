@@ -51,6 +51,19 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" ripgrep
+if executable('rg')
+ " Use rg over grep
+ set grepprg=rg\ --vimgrep\ --no-heading
+ set grepformat=%f:%l:%c:%m,%f:%l:%m
+
+ " Use rg in CtrlP for listing files. Lightning fast and respects .gitignore
+ let g:ctrlp_user_command = 'rg --files %s'
+
+ " rg is fast enough that CtrlP doesn't need to cache
+ let g:ctrlp_use_caching = 0
+end
+
 map <Leader>t :CtrlP<CR>
 map <Leader>T :CtrlPClearAllCaches<CR>:CtrlP<CR>
 map <Leader>l :CtrlPBuffer<CR>
