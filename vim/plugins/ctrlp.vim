@@ -2,6 +2,7 @@ Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'jasoncodes/ctrlp-modified.vim'
 Bundle 'ivalkeen/vim-ctrlp-tjump'
 Bundle 'FelikZ/ctrlp-py-matcher'
+Bundle 'd11wtq/ctrlp_bdelete.vim'
 
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_working_path_mode = 0 " Don't manage
@@ -17,20 +18,7 @@ let g:ctrlp_switch_buffer = ''
 
 let g:ctrlp_match_func = {'match' : 'pymatcher#PyMatch' }
 
-" Kill buffers in Ctrl-P with Ctrl-@
-" https://github.com/kien/ctrlp.vim/issues/280
-let g:ctrlp_buffer_func = { 'enter': 'CtrlPEnter' }
-func! CtrlPEnter()
-  nnoremap <buffer> <silent> <C-@> :call <sid>CtrlPDeleteBuffer()<cr>
-endfunc
-func! s:CtrlPDeleteBuffer()
-  let line = getline('.')
-  let bufid = line =~ '\[\d\+\*No Name\]$' ?
-    \ str2nr(matchstr(line, '\d\+')) :
-    \ fnamemodify(line[2:], ':p')
-  exec "bd" bufid
-  exec "norm \<F5>"
-endfunc
+let g:ctrlp_buffer_func = { 'enter': 'ctrlp_bdelete#mappings' }
 
 augroup ctrlp-tjump
   autocmd VimEnter * runtime autoload/ctrlp/tjump.vim
