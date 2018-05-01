@@ -64,7 +64,7 @@ function _git_assert_origin_head() {
 
     echo fatal: origin/HEAD is not set. >&2
     echo >&2
-    echo Maybe run \`git remote set-head origin $TARGET\`? >&2
+    echo "Maybe run \`git remote set-head origin $TARGET\`?" >&2
     return 1
   fi
 }
