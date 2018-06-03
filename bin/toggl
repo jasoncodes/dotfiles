@@ -3,8 +3,12 @@
 require 'optparse'
 require 'httparty'
 
+ON_CALL_DESC = '5050 on call'
+ON_CALL_RATE = 'On Call'
+
 options = {
   format: :default,
+  on_call: nil,
 }
 
 option_parser = OptionParser.new do |opts|
@@ -13,6 +17,11 @@ option_parser = OptionParser.new do |opts|
   opts.on '--format=[default|bulk-create]', %i[default bulk-create] do |format|
     raise OptionParser::MissingArgument unless format
     options[:format] = format
+  end
+
+  opts.on '--on-call=[this-week|last-week]', %i[this-week last-week] do |on_call|
+    raise OptionParser::MissingArgument unless on_call
+    options[:on_call] = on_call
   end
 end
 
@@ -28,6 +37,58 @@ if ARGV.size > 0
 end
 
 auth = {username: File.read(File.expand_path('~/.toggl')).chomp, password: 'api_token'}
+
+if options.fetch(:on_call)
+  date = case options.fetch(:on_call)
+  when :'this-week'
+    Date.today
+  when :'last-week'
+    Date.today - 7
+  else
+    raise
+  end
+
+  week_start = date - (date - 1).wday
+
+  on_call_entries = [
+    {start: (week_start + 4).to_time + 17*3600, duration: 2*3600},
+    {start: (week_start + 5).to_time + 9*3600, duration: 8*3600},
+    {start: (week_start + 6).to_time + 9*3600, duration: 8*3600},
+  ]
+
+  time_entries = HTTParty.get(
+    'https://www.toggl.com/api/v8/time_entries',
+    basic_auth: auth,
+    query: {
+      start_date: on_call_entries.map { |on_call_entry| on_call_entry.fetch(:start) }.min.iso8601,
+      end_date: on_call_entries.map { |on_call_entry| on_call_entry.fetch(:start) }.max.iso8601,
+    },
+  )
+
+  on_call_entries.each do |on_call_entry|
+    existing_entry = time_entries.detect do |entry|
+      entry.fetch('description') == ON_CALL_DESC && (Time.parse(entry.fetch('start')) - on_call_entry.fetch(:start)).abs < 60
+    end
+    next if existing_entry
+
+    create_response = HTTParty.post(
+      'https://www.toggl.com/api/v8/time_entries',
+      basic_auth: auth,
+      headers: {
+        'Content-Type' => 'application/json',
+      },
+      body: {
+        time_entry: {
+          description: ON_CALL_DESC,
+          start: on_call_entry.fetch(:start).iso8601,
+          duration: on_call_entry.fetch(:duration),
+          created_with: 'jasoncodes/dotfiles',
+        },
+      }.to_json,
+    )
+    fail create_response.to_s unless create_response.success?
+  end
+end
 
 start_date = Date.today - 14
 
@@ -57,12 +118,14 @@ entries.each do |entry|
 end
 
 days.values.each do |tasks|
+  on_call = tasks.delete(ON_CALL_DESC)
   if tasks.size > 1 && overhead = tasks.delete('overhead')
     total = tasks.values.inject(:+)
     tasks.keys.each do |name|
       tasks[name] *= (total + overhead) / total
     end
   end
+  tasks[ON_CALL_DESC] = on_call if on_call
 end
 
 def format_hours(duration)
@@ -126,6 +189,7 @@ when :'bulk-create'
         'Usage Code' => 'Normal',
         'UoM' => 'hours',
         'Quantity' => format_hours(duration),
+        'Rate Code' => work_reference == ON_CALL_DESC.split.first ? ON_CALL_RATE : nil,
         'Note' => note,
       }
       puts row.values_at(*COLUMNS).join("\t")
