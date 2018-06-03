@@ -91,8 +91,9 @@ if options.fetch(:on_call)
 end
 
 start_date = Date.today - 14
+end_date = Date.today + 7
 
-time_entries = HTTParty.get 'https://www.toggl.com/api/v8/time_entries', basic_auth: auth, query: {start_date: start_date.to_time.iso8601}
+time_entries = HTTParty.get 'https://www.toggl.com/api/v8/time_entries', basic_auth: auth, query: {start_date: start_date.to_time.iso8601, end_date: end_date.to_time.iso8601}
 
 footer_text = "Total:"
 max_name_len = footer_text.size
