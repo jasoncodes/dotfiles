@@ -288,10 +288,19 @@ _gbr() {
 
   (
     set -e
+
+    SCRATCH_DIR="$(mktemp -d -t gbr.XXXXXX)"
+    trap '{ rm -rf "$SCRATCH_DIR"; }' EXIT
+
     _git_assert_origin_head
     LOCAL_RANGE="$(git merge-base origin/HEAD $LOCAL_HEAD)..$LOCAL_HEAD"
     UPSTREAM_RANGE="$(git merge-base origin/HEAD $REMOTE_HEAD)..$REMOTE_HEAD"
-    vimdiff <($CMD "$LOCAL_RANGE" "$@") <($CMD "$UPSTREAM_RANGE" "$@")
+
+    $CMD "$LOCAL_RANGE" "$@" > "$SCRATCH_DIR/local"
+    $CMD "$UPSTREAM_RANGE" "$@" > "$SCRATCH_DIR/upstream"
+
+    chmod -w "$SCRATCH_DIR/local" "$SCRATCH_DIR/upstream"
+    vimdiff "$SCRATCH_DIR/local" "$SCRATCH_DIR/upstream"
   )
 }
 
