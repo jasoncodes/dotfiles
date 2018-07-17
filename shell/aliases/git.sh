@@ -309,7 +309,11 @@ _gbr_log() {
 }
 
 _gbr_diff() {
-  git diff "$@"
+  (
+    set -e
+    set -o pipefail
+    git diff "$@" | grep -v '^index'
+  )
 }
 
 # git branch rebased log
