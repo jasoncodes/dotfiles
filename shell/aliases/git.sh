@@ -33,6 +33,7 @@ alias gwd='git update-ref -d refs/wip/$(git_current_branch)'
 alias gdt='git difftool'
 alias grl="git reflog --format='%C(auto)%h %<|(17)%gd %C(blue)%ci%C(reset) %gs'"
 alias gtl='grep -v -F -f <(git ls-remote --tags origin | cut -d / -f 3) <(git tag)'
+alias gcs='git commit --allow-empty --squash'
 
 # helper for git aliases
 function git_current_branch()
