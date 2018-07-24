@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-if [ -z "${DOCKER_HOST:-}" ] && which docker-machine &> /dev/null; then
+if [ -z "${DOCKER_HOST:-}" ] && which docker-machine &> /dev/null && [[ "${1:-}" != "--version" ]]; then
   if [ "$(docker-machine status dinghy)" == "Stopped" ]; then
     PATH="/usr/local/bin:$PATH" dinghy start
   fi
