@@ -1,7 +1,4 @@
 if which direnv &> /dev/null; then
+  export DIRENV_LOG_FORMAT=
   eval "$(direnv hook $SHELL)"
-
-  _direnv_hook() {
-    eval "$(direnv export zsh 2> >( egrep -v -e '^direnv: (loading|export|unloading)' ))"
-  };
 fi
