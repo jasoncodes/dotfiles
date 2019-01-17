@@ -103,6 +103,7 @@ entries = time_entries.map do |entry|
   time_stop = entry['stop'] ? Time.parse(entry['stop']).getlocal : Time.now
   date = time_start.to_date
   name = entry['description'] || '(no description)'
+  name = 'overhead' if name =~ /^overhead\s*\|/
   max_name_len = [max_name_len, name.size].max
 
   {
