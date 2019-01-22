@@ -18,6 +18,13 @@ cat > "$DATA_DIR/Default/Preferences" <<JSON
   }
 }
 JSON
+cat > "$DATA_DIR/Local State" <<JSON
+{
+  "browser": {
+    "confirm_to_quit": false
+  }
+}
+JSON
 
 if killall -0 Google\ Chrome &> /dev/null; then
   open -a Google\ Chrome --new --wait-apps --args --user-data-dir="$DATA_DIR" --incognito "$@"
