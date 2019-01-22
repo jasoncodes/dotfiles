@@ -8,6 +8,7 @@ cat > "$DATA_DIR/Default/Preferences" <<JSON
 {
   "browser": {
     "check_default_browser": false,
+    "default_browser_infobar_last_declined": "1",
     "window_placement": {
       "left": 22,
       "top": 44,
