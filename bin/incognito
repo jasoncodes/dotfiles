@@ -15,7 +15,21 @@ cat > "$DATA_DIR/Default/Preferences" <<JSON
       "right": 1302,
       "bottom": 1004,
       "maximized": false
-   }
+   },
+    "app_window_placement": {
+      "DevToolsApp": {
+        "left": 322,
+        "top": 88,
+        "right": 1346,
+        "bottom": 800,
+        "maximized": false
+      }
+    }
+  },
+  "devtools": {
+    "preferences": {
+      "currentDockState": "\"undocked\""
+    }
   }
 }
 JSON
