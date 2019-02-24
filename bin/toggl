@@ -140,9 +140,16 @@ def format_duration(duration)
   "#{hours.floor.to_s.rjust 2}:#{(hours*60%60).round(0).to_s.rjust(2,'0')} (#{'%0.02f' % hours} hours)"
 end
 
+first_future_date = days.keys.sort.detect { |date| date > Date.today }
+
 case options.fetch(:format)
 when :default
   days.each do |date, tasks|
+    if date == first_future_date
+      puts "--- FUTURE ---"
+      puts
+    end
+
     puts date.strftime '%Y-%m-%d %A'
     tasks.each do |name, duration|
       puts "  #{name.ljust max_name_len} #{format_duration duration}"
@@ -157,6 +164,11 @@ when :'bulk-create'
   raise unless $?.success?
 
   days.each do |date, tasks|
+    if date == first_future_date
+      puts "--- FUTURE ---"
+      puts
+    end
+
     tasks_by_work_reference = {}
 
     tasks.each do |name, duration|
