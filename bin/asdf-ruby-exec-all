@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+asdf list ruby | while read ASDF_RUBY_VERSION; do
+  ASDF_RUBY_VERSION=$ASDF_RUBY_VERSION "$@"
+done
