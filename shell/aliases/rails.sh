@@ -25,6 +25,8 @@ function rails_command
     script/rails "$cmd" "$@"
   elif [ -e "script/$cmd" ]; then
     "script/$cmd" "$@"
+  elif [ "$cmd" == "new" ]; then
+    command rails "$cmd" "$@"
   else
     echo "Not a Rails app?" >&2
     return 1
