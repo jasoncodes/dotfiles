@@ -1,5 +1,4 @@
 alias zs='zeus start'
-alias ss='bin/spring server'
 alias rails=rails_command
 alias rc='rails console'
 alias rs='rails server'
@@ -10,6 +9,14 @@ zeus() {
   RETVAL=$?
   stty sane
   return $RETVAL
+}
+
+ss() {
+  if [ -x bin/spring ]; then
+    bin/spring server "$@"
+  else
+    command ss "$@"
+  fi
 }
 
 function rails_command
