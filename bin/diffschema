@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+normalize() {
+  cat |
+    sed '/^COPY.* FROM stdin;$/,/^\\\.$/d' |
+    grep -v '^--' |
+    grep . |
+    tr '\n;' '\0\n' |
+    sort |
+    egrep -av 'CREATE( MATERIALIZED)? VIEW' |
+    egrep -av 'COMMENT ON EXTENSION' |
+    tr '\0\n' '\n;' |
+    sed 's/;$/;\'$'\n/g'
+}
+
+vimdiff <(normalize < "${1:-}") <(normalize < "${2:-}")
