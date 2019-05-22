@@ -321,3 +321,5 @@ _gbr_diff() {
 alias gbrl='_gbr _gbr_log'
 # git branch rebased diff
 alias gbrd='_gbr _gbr_diff'
+
+alias grs='git rebase --show-current-patch'
