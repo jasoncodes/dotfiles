@@ -323,3 +323,13 @@ alias gbrl='_gbr _gbr_log'
 alias gbrd='_gbr _gbr_diff'
 
 alias grs='git rebase --show-current-patch'
+
+grds() {
+  (
+    set -e
+    (cd .git && mkdir -p tmp)
+    git rebase --show-current-patch > .git/tmp/rebase-expected.patch
+    git diff --staged > .git/tmp/rebase-actual.patch
+    vimdiff .git/tmp/rebase-{expected,actual}.patch
+  )
+}
