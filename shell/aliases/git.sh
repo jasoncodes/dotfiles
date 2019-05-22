@@ -1,6 +1,6 @@
 alias gl='glg $(git show-ref | cut -d " " -f 2 | grep -v stash$) HEAD'
 alias glw='glp --word-diff'
-alias gsw='git show --format=fuller'
+alias gsw='git show --format=fuller --stat --patch'
 alias gco='git checkout'
 alias gcp='git checkout -p'
 alias gs='git status --untracked-files=all'
