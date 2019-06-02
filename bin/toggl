@@ -162,8 +162,9 @@ when :default
 when :'bulk-create'
   COLUMNS = %w[Date Person Work\ Reference Usage\ Code Docket Purchase\ Order UoM Rate\ Code Quantity Note]
 
-  person_name = `osascript -e 'tell application "System Events" to get full name of current user'`.chomp
-  raise unless $?.success?
+  me = HTTParty.get 'https://www.toggl.com/api/v8/me', basic_auth: auth
+  me.error! unless me.success?
+  person_name = me.fetch('data').fetch('fullname')
 
   days.each do |date, tasks|
     if date == first_future_date
