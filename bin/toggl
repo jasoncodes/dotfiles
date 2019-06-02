@@ -86,7 +86,7 @@ if options.fetch(:on_call)
         },
       }.to_json,
     )
-    fail create_response.to_s unless create_response.success?
+    create_response.error! unless create_response.success?
   end
 end
 
