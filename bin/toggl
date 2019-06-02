@@ -64,6 +64,7 @@ if options.fetch(:on_call)
       end_date: on_call_entries.map { |on_call_entry| on_call_entry.fetch(:start) }.max.iso8601,
     },
   )
+  time_entries.error! unless time_entries.success?
 
   on_call_entries.each do |on_call_entry|
     existing_entry = time_entries.detect do |entry|
@@ -94,6 +95,7 @@ start_date = Date.today - 14
 end_date = Date.today + 7
 
 time_entries = HTTParty.get 'https://www.toggl.com/api/v8/time_entries', basic_auth: auth, query: {start_date: start_date.to_time.iso8601, end_date: end_date.to_time.iso8601}
+time_entries.error! unless time_entries.success?
 
 footer_text = "Total:"
 max_name_len = footer_text.size
