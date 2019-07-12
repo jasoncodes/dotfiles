@@ -8,4 +8,21 @@ if [ ! -e /var/run/docker.sock ] && [ -z "${DOCKER_HOST:-}" ] && which docker-ma
   fi
   eval $(docker-machine env dinghy 2> /dev/null)
 fi
-exec /usr/local/bin/"$(basename "$0")" "$@"
+
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
+SELF_NAME="$(basename "$0")"
+
+TARGET=
+while read PATH; do
+  if [[ "$PATH" != "$SELF_DIR/$SELF_NAME" ]]; then
+    TARGET="$PATH"
+    break
+  fi
+done < <(which -a "$SELF_NAME")
+
+if [[ -z "$TARGET" ]]; then
+  echo "Could not find $SELF_NAME in PATH" >&2
+  exit 1
+fi
+
+exec "$TARGET" "$@"
