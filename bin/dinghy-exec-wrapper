@@ -13,9 +13,9 @@ SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 SELF_NAME="$(basename "$0")"
 
 TARGET=
-while read PATH; do
-  if [[ "$PATH" != "$SELF_DIR/$SELF_NAME" ]]; then
-    TARGET="$PATH"
+while read CANDIDATE_PATH; do
+  if [[ "$CANDIDATE_PATH" != "$SELF_DIR/$SELF_NAME" ]]; then
+    TARGET="$CANDIDATE_PATH"
     break
   fi
 done < <(which -a "$SELF_NAME")
