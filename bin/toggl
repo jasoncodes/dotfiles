@@ -51,9 +51,13 @@ if options.fetch(:on_call)
   week_start = date - (date - 1).wday
 
   on_call_entries = [
+    {start: (week_start + 1).to_time + 17*3600, duration: 2*3600},
+    {start: (week_start + 2).to_time + 17*3600, duration: 2*3600},
+    {start: (week_start + 3).to_time + 17*3600, duration: 2*3600},
     {start: (week_start + 4).to_time + 17*3600, duration: 2*3600},
-    {start: (week_start + 5).to_time + 9*3600, duration: 8*3600},
-    {start: (week_start + 6).to_time + 9*3600, duration: 8*3600},
+    {start: (week_start + 5).to_time + 9*3600, duration: 10*3600},
+    {start: (week_start + 6).to_time + 9*3600, duration: 10*3600},
+    {start: (week_start + 7).to_time + 17*3600, duration: 2*3600},
   ]
 
   time_entries = HTTParty.get(
