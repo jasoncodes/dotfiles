@@ -89,3 +89,6 @@ if [[ -f ~/.bashrc.local ]]
 then
    source ~/.bashrc.local
 fi
+
+# disable "default interactive shell is now zsh" message on macOS Catalina
+export BASH_SILENCE_DEPRECATION_WARNING=1
