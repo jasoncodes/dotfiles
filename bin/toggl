@@ -181,7 +181,7 @@ when :'bulk-create'
     tasks.each do |name, duration|
       work_reference, note = name.split('|', 2).map(&:to_s).map(&:strip)
 
-      if work_reference.split.first =~ /\A[A-Z]*\d+\z/
+      if work_reference.split.first =~ /\A[A-Z]*[0-9.]{3,}[A-Z]*\z/
         work_reference = work_reference.split.first
       end
 
