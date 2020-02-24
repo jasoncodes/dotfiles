@@ -74,7 +74,7 @@ _git_rebase_target() {
   if git rev-parse @{u} &> /dev/null; then
     echo "@{u}"
   else
-    _git_assert_origin_head
+    _git_assert_origin_head || return 1
     echo "origin/HEAD"
   fi
 }
@@ -249,7 +249,11 @@ gcf() {
 
 # git rebase tracking
 grt() {
-  git rebase --interactive --keep-empty $(git merge-base HEAD $(_git_rebase_target)) "$@"
+  (
+    set -e
+    TARGET="$(_git_rebase_target)"
+    git rebase --interactive --keep-empty $(git merge-base HEAD "$TARGET") "$@"
+  )
 }
 
 # git rebase branch
@@ -257,7 +261,7 @@ grb() {
   if git_current_branch | grep -q ^hotfix/; then
     local TARGET_BRANCH=origin/master
   else
-    _git_assert_origin_head
+    _git_assert_origin_head || return 1
     local TARGET_BRANCH=origin/HEAD
   fi
   git rebase --interactive --keep-empty $(git merge-base HEAD $TARGET_BRANCH) "$@"
