@@ -3,7 +3,7 @@
 require 'optparse'
 require 'httparty'
 
-ON_CALL_DESC = '5050 on call'
+ON_CALL_DESC = '0820.4 on call'
 ON_CALL_RATE = 'On Call'
 
 options = {
