@@ -20,7 +20,7 @@ def colour(name, text)
 end
 
 # pretty prompt
-Pry.config.prompt = [
+prompt_procs = [
   proc { |target_self, nest_level, pry|
     prompt = colour :bright_black, Pry.view_clip(target_self)
     prompt += ":#{nest_level}" if nest_level > 0
@@ -30,6 +30,11 @@ Pry.config.prompt = [
     colour :red, '?> '
   }
 ]
+Pry.config.prompt = if defined?(Pry::Prompt)
+  Pry::Prompt.new(nil, nil, prompt_procs)
+else
+  prompt_procs
+end
 
 # tell Readline when the window resizes
 old_winch = trap 'WINCH' do
