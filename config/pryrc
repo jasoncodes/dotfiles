@@ -2,7 +2,11 @@
 
 Pry.config.pager = false
 Pry.config.color = true
-Pry.config.history.should_save = true
+if Pry.config.respond_to?(:history_save)
+  Pry.config.history_save = true
+else
+  Pry.config.history.should_save = true
+end
 Pry.config.should_load_local_rc = Dir.pwd != Dir.home
 
 require 'readline'
