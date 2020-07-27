@@ -11,6 +11,9 @@ ui = auto
 [color "diff"]
 commit = yellow reverse
 
+[init]
+defaultBranch = main
+
 [core]
 excludesfile = ~/.gitignore
 pager = (which diff-highlight &> /dev/null && diff-highlight || cat) | ${PAGER:-less}
