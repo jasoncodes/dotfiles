@@ -139,7 +139,7 @@ end
 weeks = {}
 
 days.each do |date, tasks|
-  week = date.strftime('%Y %W')
+  week = date.strftime('%GW%V')
   day = date.strftime('%u').to_i
   duration = tasks.values.inject(:+)
 
