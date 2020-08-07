@@ -140,11 +140,17 @@ weeks = {}
 
 days.each do |date, tasks|
   week = date.strftime('%GW%V')
-  day = date.strftime('%u').to_i
   duration = tasks.values.inject(:+)
 
-  weeks[week] ||= {}
-  weeks[week][day] = duration
+  weeks[week] ||= begin
+    monday = date - date.wday + 1
+    sunday = monday + 6
+    raise unless monday.monday? && sunday.sunday?
+
+    (monday..sunday).map { |date| [date, 0] }.to_h
+  end
+
+  weeks[week][date] = duration
 end
 
 def format_hours(duration)
@@ -231,8 +237,8 @@ when :'bulk-create'
 
   puts (1..7).map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
   weeks.sort.last(2).each do |_, days|
-    total = days.values.inject(:+)
-    puts (1..7).map { |day| str = days[day] ? format_hours(days[day]) : ''; str.rjust(5) }.join('  ') + ' ' + format_hours(total).rjust(7)
+    week_total = days.values.inject(:+)
+    puts days.values.map { |day_total| str = day_total ? format_hours(day_total) : ''; str.rjust(5) }.join('  ') + ' ' + format_hours(week_total).rjust(7)
   end
 else
   raise 'unknown format'
