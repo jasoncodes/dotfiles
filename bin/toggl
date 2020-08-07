@@ -136,6 +136,17 @@ days.values.each do |tasks|
   tasks[ON_CALL_DESC] = on_call if on_call
 end
 
+weeks = {}
+
+days.each do |date, tasks|
+  week = date.strftime('%Y %W')
+  day = date.strftime('%u').to_i
+  duration = tasks.values.inject(:+)
+
+  weeks[week] ||= {}
+  weeks[week][day] = duration
+end
+
 def format_hours(duration)
   hours = (duration / 3600.0).round 2
   '%0.02f' % hours
@@ -216,17 +227,6 @@ when :'bulk-create'
       puts row.values_at(*COLUMNS).join("\t")
     end
     puts
-  end
-
-  weeks = {}
-
-  days.each do |date, tasks|
-    week = date.strftime('%Y %W')
-    day = date.strftime('%u').to_i
-    duration = tasks.values.inject(:+)
-
-    weeks[week] ||= {}
-    weeks[week][day] = duration
   end
 
   puts (1..7).map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
