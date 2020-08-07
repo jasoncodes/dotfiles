@@ -14,7 +14,7 @@ options = {
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename $0} [options]"
 
-  opts.on '--format=[default|bulk-create]', %i[default bulk-create] do |format|
+  opts.on '--format=[default|bulk-create|json]', %i[default bulk-create json] do |format|
     raise OptionParser::MissingArgument unless format
     options[:format] = format
   end
@@ -244,6 +244,20 @@ when :'bulk-create'
 
     puts line
   end
+when :json
+  data = {}
+
+  data[:weeks] = weeks.sort.last(2).map do |week, week_days|
+    total = week_days.values.inject(:+)
+
+    {
+      week: week,
+      days: week_days.map { |date, value| [date, value.round(2)] }.to_h,
+      total: total.round(2),
+    }
+  end
+
+  puts JSON.pretty_generate(data)
 else
   raise 'unknown format'
 end
