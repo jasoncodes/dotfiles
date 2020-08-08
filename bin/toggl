@@ -238,7 +238,11 @@ when :'bulk-create'
   puts (1..7).map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
   weeks.sort.last(2).each do |_, days|
     week_total = days.values.inject(:+)
-    puts days.values.map { |day_total| str = day_total ? format_hours(day_total) : ''; str.rjust(5) }.join('  ') + ' ' + format_hours(week_total).rjust(7)
+
+    line = days.values.map { |day_total| str = day_total ? format_hours(day_total) : ''; str.rjust(5) }.join('  ')
+    line += ' ' + format_hours(week_total).rjust(7)
+
+    puts line
   end
 else
   raise 'unknown format'
