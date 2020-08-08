@@ -137,10 +137,12 @@ days.values.each do |tasks|
 end
 
 weeks = {}
+weeks_on_call = {}
 
 days.each do |date, tasks|
   week = date.strftime('%GW%V')
   duration = tasks.values.inject(:+)
+  duration_on_call = tasks.fetch(ON_CALL_DESC, 0)
 
   weeks[week] ||= begin
     monday = date - date.wday + 1
@@ -149,8 +151,10 @@ days.each do |date, tasks|
 
     (monday..sunday).map { |date| [date, 0] }.to_h
   end
+  weeks_on_call[week] ||= weeks[week].dup
 
   weeks[week][date] = duration
+  weeks_on_call[week][date] = duration_on_call
 end
 
 def format_hours(duration)
@@ -236,11 +240,18 @@ when :'bulk-create'
   end
 
   puts (1..7).map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
-  weeks.sort.last(2).each do |_, days|
+  weeks.sort.last(2).each do |week, days|
     week_total = days.values.inject(:+)
+    week_total_on_call = weeks_on_call.fetch(week).values.inject(:+)
+    week_total_normal = week_total - week_total_on_call
 
     line = days.values.map { |day_total| str = day_total ? format_hours(day_total) : ''; str.rjust(5) }.join('  ')
     line += ' ' + format_hours(week_total).rjust(7)
+    if week_total_on_call > 0
+      line += '  (' + format_hours(week_total_normal).rjust(5)
+      line += ' normal + ' + format_hours(week_total_on_call).rjust(5)
+      line += ' on call)'
+    end
 
     puts line
   end
@@ -249,11 +260,15 @@ when :json
 
   data[:weeks] = weeks.sort.last(2).map do |week, week_days|
     total = week_days.values.inject(:+)
+    total_on_call = weeks_on_call.fetch(week).values.inject(:+)
+    total_normal = total - total_on_call
 
     {
       week: week,
       days: week_days.map { |date, value| [date, value.round(2)] }.to_h,
       total: total.round(2),
+      total_normal: total_normal.round(2),
+      total_on_call: total_on_call.round(2),
     }
   end
 
