@@ -245,7 +245,7 @@ when :'bulk-create'
     week_total_on_call = weeks_on_call.fetch(week).values.inject(:+)
     week_total_normal = week_total - week_total_on_call
 
-    line = days.values.map { |day_total| str = day_total ? format_hours(day_total) : ''; str.rjust(5) }.join('  ')
+    line = days.values.map { |day_total| str = day_total != 0 ? format_hours(day_total) : ''; str.rjust(5) }.join('  ')
     line += ' ' + format_hours(week_total).rjust(7)
     if week_total_on_call > 0
       line += '  (' + format_hours(week_total_normal).rjust(5)
