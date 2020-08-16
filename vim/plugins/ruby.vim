@@ -18,6 +18,7 @@ let g:ruby_indent_assignment_style = 'variable'
 let g:ruby_refactoring_map_keys = 0
 
 let g:rails_projections = {
+  \'app/lib/*.rb':{'test':'spec/lib/%s_spec.rb'},
   \'app/models/*.rb':{'related':['app/models/%s.sql','app/models/%s.sql.erb']},
   \'app/models/*.sql':{'related':'app/models/%s.rb'},
   \'app/models/*.sql.erb':{'related':'app/models/%s.rb'},
