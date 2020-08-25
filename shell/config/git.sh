@@ -20,16 +20,17 @@ function first_file_match()
 
 if which git &> /dev/null
 then
-  GIT_COMPLETION_PATH="$(dirname $(realpath "$(which git)"))/../etc/bash_completion.d/git-completion.bash"
+  GIT_BASE_DIR="$(dirname $(realpath "$(which git)"))/.."
 fi
-if [ ! -f "$GIT_COMPLETION_PATH" ]
-then
-  GIT_COMPLETION_PATH=$(first_file_match -f \
-    "/usr/local/git/contrib/completion/git-completion.bash" \
-    "/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
-    "/etc/bash_completion.d/git" \
-  )
-fi
+
+GIT_COMPLETION_PATH=$(first_file_match -f \
+  "$GIT_BASE_DIR/etc/bash_completion.d/git-completion.bash" \
+  "$GIT_BASE_DIR/share/git/contrib/completion/git-completion.bash" \
+  "/usr/local/git/contrib/completion/git-completion.bash" \
+  "/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
+  "/etc/bash_completion.d/git" \
+)
+
 if [ -f "$GIT_COMPLETION_PATH" ]
 then
   source "$GIT_COMPLETION_PATH"
