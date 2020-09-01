@@ -10,8 +10,8 @@ let g:gitgutter_sign_modified = '⇔'
 let g:gitgutter_sign_removed = '⇐'
 let g:gitgutter_sign_modified_removed = '⇎'
 
-nmap ]d <Plug>GitGutterNextHunk
-nmap [d <Plug>GitGutterPrevHunk
+nmap ]d <Plug>(GitGutterNextHunk)
+nmap [d <Plug>(GitGutterPrevHunk)
 
 function! ToggleGitGutterMode()
   if g:gitgutter_diff_base == ''
