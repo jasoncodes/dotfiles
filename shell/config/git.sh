@@ -20,7 +20,7 @@ function first_file_match()
 
 if which git &> /dev/null
 then
-  GIT_BASE_DIR="$(dirname $(realpath "$(which git)"))/.."
+  GIT_BASE_DIR="$(dirname $(realpath "$(which git)") | sed -e 's#/bin##' -e 's#/libexec/git-core##')"
 fi
 
 GIT_COMPLETION_PATH=$(first_file_match -f \
