@@ -7,7 +7,7 @@ Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'tpope/vim-haml'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'rking/vim-ruby-refactoring'
-Bundle 'aliou/sql-heredoc.vim'
+Bundle 'joker1007/vim-ruby-heredoc-syntax'
 
 autocmd FileType ruby,rails,haml,hamlc,eruby,yaml,ru,cucumber set ai sw=2 sts=2 et
 autocmd BufRead,BufNewFile Podfile,*.podspec set ft=ruby
