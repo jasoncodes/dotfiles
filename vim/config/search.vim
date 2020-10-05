@@ -8,6 +8,7 @@ let g:grepper.rg = {}
 let g:grepper.rg.grepprg = 'rg -H --no-heading --vimgrep --smart-case --sort-files'
 let g:grepper.ack = {}
 let g:grepper.ack.grepprg = 'ack -s -H --nocolor --nogroup --column'
+let g:grepper.prompt = 0
 
 function! ResizeGrepper()
   if winnr('$') > 1
