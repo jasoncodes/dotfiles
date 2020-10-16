@@ -62,6 +62,8 @@ Pry.config.print = proc do |output, value, _pry_|
         output.print ' (HTML safe)'
       end
       output.puts
+    when defined?(ActionController::Parameters) && value.is_a?(ActionController::Parameters)
+      output.puts value.to_unsafe_h.ai
     when defined?(Heroics) && value.is_a?(Heroics::Client)
       output.puts value.instance_variable_get('@resources').keys.ai(multiline: false)
     when defined?(Heroics) && value.is_a?(Heroics::Resource)
