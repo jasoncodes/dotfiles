@@ -5,7 +5,6 @@
 \set VERBOSITY verbose
 \set HISTCONTROL ignoredups
 \set COMP_KEYWORD_CASE upper
-\set PROMPT1 '%[%033]0;psql %/%007%]%/%R%# '
 \set ON_ERROR_ROLLBACK interactive
 \set ON_ERROR_STOP on
 \set rtsize '(select table_schema, table_name, pg_relation_size( quote_ident( table_schema ) || \'.\' || quote_ident( table_name ) ) as size, pg_total_relation_size( quote_ident( table_schema ) || \'.\' || quote_ident( table_name ) ) as total_size, reltuples from information_schema.tables inner join pg_class ON oid = concat(table_schema,\'.\',table_name)::regclass where table_type = \'BASE TABLE\' and table_schema not in (\'information_schema\', \'pg_catalog\') order by pg_relation_size( quote_ident( table_schema ) || \'.\' || quote_ident( table_name ) ) desc, table_schema, table_name)'
