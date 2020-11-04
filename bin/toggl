@@ -24,6 +24,14 @@ option_parser = OptionParser.new do |opts|
     raise OptionParser::MissingArgument unless on_call
     options[:on_call] = on_call
   end
+
+  opts.on '--rename [from] [to]' do |name_from|
+    raise OptionParser::MissingArgument if ARGV.size < 1
+    raise OptionParser::InvalidArgument if ARGV.size > 1
+
+    options[:rename_from] = name_from
+    options[:rename_to] = ARGV.shift
+  end
 end
 
 begin
@@ -38,6 +46,37 @@ if ARGV.size > 0
 end
 
 auth = {username: File.read(File.expand_path('~/.toggl')).chomp, password: 'api_token'}
+
+if options.key?(:rename_from)
+  start_date = Date.today - 7
+  end_date = Date.today + 7
+
+  time_entries = HTTParty.get 'https://www.toggl.com/api/v8/time_entries', basic_auth: auth, query: {start_date: start_date.to_time.iso8601, end_date: end_date.to_time.iso8601}
+  time_entries.error! unless time_entries.success?
+
+  time_entries.each do |entry|
+    old_description = entry.fetch('description', '')
+    new_description = old_description.sub(/^#{Regexp.escape options.fetch(:rename_from)}($| \|)/, "#{options.fetch(:rename_to)}\\1")
+    if new_description != old_description
+      puts "#{Time.parse(entry.fetch('start')).to_date} #{((Time.parse(entry.fetch('stop', Time.now.to_s)) - Time.parse(entry.fetch('start'))) / 3600.0).round(2)} #{old_description.inspect} => #{new_description.inspect}"
+      update_response = HTTParty.post(
+        "https://www.toggl.com/api/v8/time_entries/#{entry.fetch('id')}",
+        basic_auth: auth,
+        headers: {
+          'Content-Type' => 'application/json',
+        },
+        body: {
+          time_entry: {
+            description: new_description,
+          },
+        }.to_json,
+      )
+      update_response.error! unless update_response.success?
+    end
+  end
+
+  exit
+end
 
 options = default_options.merge(options)
 
