@@ -6,11 +6,12 @@ require 'httparty'
 ON_CALL_DESC = '0820.4 on call'
 ON_CALL_RATE = 'On Call'
 
-options = {
+default_options = {
   format: :default,
   on_call: nil,
-}
+}.freeze
 
+options = {}
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename $0} [options]"
 
@@ -37,6 +38,8 @@ if ARGV.size > 0
 end
 
 auth = {username: File.read(File.expand_path('~/.toggl')).chomp, password: 'api_token'}
+
+options = default_options.merge(options)
 
 if options.fetch(:on_call)
   date = case options.fetch(:on_call)
