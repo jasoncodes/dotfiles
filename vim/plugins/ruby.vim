@@ -24,5 +24,7 @@ let g:rails_projections = {
   \'app/models/*.sql.erb':{'related':'app/models/%s.rb'},
   \'app/sql/*.rb':{'related':['app/sql/%s.sql','app/sql/%s.sql.erb']},
   \'app/sql/*.sql':{'related':'app/sql/%s.rb'},
-  \'app/sql/*.sql.erb':{'related':'app/sql/%s.rb'}
+  \'app/sql/*.sql.erb':{'related':'app/sql/%s.rb'},
+  \'config/initializers/*.rb':{'test':'spec/initializers/{}_spec.rb'},
+  \'spec/initializers/*_spec.rb':{'alternate':'config/initializers/{}.rb'}
 \}
