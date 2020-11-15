@@ -45,8 +45,6 @@ fresh bin/wemux/\* --bin
 fresh bin/dinghy-exec-wrapper --bin=~/bin/docker
 fresh bin/dinghy-exec-wrapper --bin=~/bin/docker-compose
 
-fresh hammerspoon/\*.lua --file=~/.hammerspoon/init.lua
-
 fresh twe4ked/dotfiles bin/heroku-remote-add --bin
 fresh pengwynn/dotfiles bin/git-pr --bin
 fresh bartman/git-wip git-wip --bin
