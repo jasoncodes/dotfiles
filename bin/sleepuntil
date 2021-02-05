@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ $# != 1 ]; then
+  echo "Usage: $(basename "$0") TARGET" >&2
+  exit 1
+fi
+TARGET="$1"
+
+if which gdate >& /dev/null; then
+  DATE="gdate"
+else
+  DATE="date"
+fi
+
+TARGET_UNIX="$("$DATE" --date="$TARGET" +%s)"
+
+while true; do
+  NOW_UNIX="$("$DATE" +%s)"
+  REMAINING="$((TARGET_UNIX - NOW_UNIX))"
+
+  if [ "$REMAINING" -lt 1 ]; then
+    exit
+  elif [ "$REMAINING" -lt 2 ]; then
+    sleep 0.1
+  else
+    sleep "$((REMAINING / 2))"
+  fi
+done
