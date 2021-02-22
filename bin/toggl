@@ -305,9 +305,11 @@ when :json
     total_on_call = weeks_on_call.fetch(week).values.inject(:+)
     total_normal = total - total_on_call
 
+    days = week_days.map { |date, value| [date, value.round(2)] }.to_h
+
     {
       week: week,
-      days: week_days.map { |date, value| [date, value.round(2)] }.to_h,
+      days: days,
       total: total.round(2),
       total_normal: total_normal.round(2),
       total_on_call: total_on_call.round(2),
