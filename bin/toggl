@@ -122,18 +122,25 @@ days.values.each do |tasks|
   end
 end
 
+week_strftime_format = '%GW%V'
+weekday_start = 1
+
+weekdays = (weekday_start..weekday_start+6).map { |n| n % 7 }
+
 weeks = {}
 
 days.each do |date, tasks|
-  week = date.strftime('%GW%V')
+  week = date.strftime(week_strftime_format)
   duration = tasks.values.inject(:+)
 
   weeks[week] ||= begin
-    monday = date - date.wday + 1
-    sunday = monday + 6
-    raise unless monday.monday? && sunday.sunday?
+    week_date_start = date - date.wday + weekdays.first
+    week_date_end = week_date_start + 6
 
-    (monday..sunday).map { |date| [date, 0] }.to_h
+    raise unless week_date_start.wday == weekdays.first
+    raise unless week_date_end.wday == weekdays.last
+
+    (week_date_start..week_date_end).map { |date| [date, 0] }.to_h
   end
 
   weeks[week][date] = duration
@@ -221,7 +228,7 @@ when :'bulk-create'
     puts
   end
 
-  puts (1..7).map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
+  puts weekdays.map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
   weeks.sort.last(2).each do |week, days|
     week_total = days.values.inject(:+)
 
