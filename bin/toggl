@@ -3,12 +3,8 @@
 require 'optparse'
 require 'httparty'
 
-ON_CALL_DESC = '0820.4 on call'
-ON_CALL_RATE = 'On Call'
-
 default_options = {
   format: :default,
-  on_call: nil,
 }.freeze
 
 options = {}
@@ -18,11 +14,6 @@ option_parser = OptionParser.new do |opts|
   opts.on '--format=[default|bulk-create|json]', %i[default bulk-create json] do |format|
     raise OptionParser::MissingArgument unless format
     options[:format] = format
-  end
-
-  opts.on '--on-call=[this-week|last-week]', %i[this-week last-week] do |on_call|
-    raise OptionParser::MissingArgument unless on_call
-    options[:on_call] = on_call
   end
 
   opts.on '--rename [from] [to]' do |name_from|
@@ -80,63 +71,6 @@ end
 
 options = default_options.merge(options)
 
-if options.fetch(:on_call)
-  date = case options.fetch(:on_call)
-  when :'this-week'
-    Date.today
-  when :'last-week'
-    Date.today - 7
-  else
-    raise
-  end
-
-  week_start = date - (date - 1).wday
-
-  on_call_entries = [
-    {start: (week_start + 1).to_time + 17*3600, duration: 2*3600},
-    {start: (week_start + 2).to_time + 17*3600, duration: 2*3600},
-    {start: (week_start + 3).to_time + 17*3600, duration: 2*3600},
-    {start: (week_start + 4).to_time + 17*3600, duration: 2*3600},
-    {start: (week_start + 5).to_time + 9*3600, duration: 10*3600},
-    {start: (week_start + 6).to_time + 9*3600, duration: 10*3600},
-    {start: (week_start + 7).to_time + 17*3600, duration: 2*3600},
-  ]
-
-  time_entries = HTTParty.get(
-    'https://api.track.toggl.com/api/v8/time_entries',
-    basic_auth: auth,
-    query: {
-      start_date: on_call_entries.map { |on_call_entry| on_call_entry.fetch(:start) }.min.iso8601,
-      end_date: on_call_entries.map { |on_call_entry| on_call_entry.fetch(:start) }.max.iso8601,
-    },
-  )
-  time_entries.error! unless time_entries.success?
-
-  on_call_entries.each do |on_call_entry|
-    existing_entry = time_entries.detect do |entry|
-      entry.fetch('description') == ON_CALL_DESC && (Time.parse(entry.fetch('start')) - on_call_entry.fetch(:start)).abs < 60
-    end
-    next if existing_entry
-
-    create_response = HTTParty.post(
-      'https://api.track.toggl.com/api/v8/time_entries',
-      basic_auth: auth,
-      headers: {
-        'Content-Type' => 'application/json',
-      },
-      body: {
-        time_entry: {
-          description: ON_CALL_DESC,
-          start: on_call_entry.fetch(:start).iso8601,
-          duration: on_call_entry.fetch(:duration),
-          created_with: 'jasoncodes/dotfiles',
-        },
-      }.to_json,
-    )
-    create_response.error! unless create_response.success?
-  end
-end
-
 start_date = Date.today - 14
 end_date = Date.today + 7
 
@@ -168,23 +102,19 @@ entries.each do |entry|
 end
 
 days.values.each do |tasks|
-  on_call = tasks.delete(ON_CALL_DESC)
   if tasks.size > 1 && overhead = tasks.delete('overhead')
     total = tasks.values.inject(:+)
     tasks.keys.each do |name|
       tasks[name] *= (total + overhead) / total
     end
   end
-  tasks[ON_CALL_DESC] = on_call if on_call
 end
 
 weeks = {}
-weeks_on_call = {}
 
 days.each do |date, tasks|
   week = date.strftime('%GW%V')
   duration = tasks.values.inject(:+)
-  duration_on_call = tasks.fetch(ON_CALL_DESC, 0)
 
   weeks[week] ||= begin
     monday = date - date.wday + 1
@@ -193,10 +123,8 @@ days.each do |date, tasks|
 
     (monday..sunday).map { |date| [date, 0] }.to_h
   end
-  weeks_on_call[week] ||= weeks[week].dup
 
   weeks[week][date] = duration
-  weeks_on_call[week][date] = duration_on_call
 end
 
 def format_hours(duration)
@@ -273,7 +201,7 @@ when :'bulk-create'
         'Usage Code' => 'Normal',
         'UoM' => 'hours',
         'Quantity' => format_hours(duration),
-        'Rate Code' => work_reference == ON_CALL_DESC.split.first ? ON_CALL_RATE : nil,
+        'Rate Code' => nil,
         'Note' => note,
       }
       puts row.values_at(*COLUMNS).join("\t")
@@ -284,16 +212,9 @@ when :'bulk-create'
   puts (1..7).map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
   weeks.sort.last(2).each do |week, days|
     week_total = days.values.inject(:+)
-    week_total_on_call = weeks_on_call.fetch(week).values.inject(:+)
-    week_total_normal = week_total - week_total_on_call
 
     line = days.values.map { |day_total| str = day_total != 0 ? format_hours(day_total) : ''; str.rjust(5) }.join('  ')
     line += ' ' + format_hours(week_total).rjust(7)
-    if week_total_on_call > 0
-      line += '  (' + format_hours(week_total_normal).rjust(5)
-      line += ' normal + ' + format_hours(week_total_on_call).rjust(5)
-      line += ' on call)'
-    end
 
     puts line
   end
@@ -302,21 +223,13 @@ when :json
 
   data[:weeks] = weeks.sort.last(2).map do |week, week_days|
     total = week_days.values.inject(:+)
-    total_on_call = weeks_on_call.fetch(week).values.inject(:+)
-    total_normal = total - total_on_call
 
     days = week_days.map { |date, value| [date, value.round(2)] }.to_h
-    days_on_call = weeks_on_call.fetch(week).map { |date, value| [date, value.round(2)] }.to_h
-    days_normal = days.map { |date, value| [date, value - days_on_call.fetch(date)] }.to_h
 
     {
       week: week,
       days: days,
-      days_normal: days_normal,
-      days_on_call: days_on_call,
       total: total.round(2),
-      total_normal: total_normal.round(2),
-      total_on_call: total_on_call.round(2),
     }
   end
 
