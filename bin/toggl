@@ -233,7 +233,7 @@ when :projector
   end
 
   puts weekdays.map { |day| '  ' + Date::ABBR_DAYNAMES.fetch(day%7) }.join('  ') + '   Total'
-  weeks.sort.last(2).each do |week, days|
+  weeks.sort.each do |week, days|
     week_total = days.values.inject(:+)
 
     line = days.values.map { |day_total| str = day_total != 0 ? format_hours(day_total) : ''; str.rjust(5) }.join('  ')
