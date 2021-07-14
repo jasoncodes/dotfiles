@@ -36,8 +36,17 @@ if ARGV.size > 0
   abort option_parser.help
 end
 
+require 'yaml'
+
+config = YAML.safe_load(File.read(File.expand_path('~/.toggl')))
+if config.is_a? String
+  config = {
+    'api_token' => config,
+  }
+end
+
 auth = {
-  username: File.read(File.expand_path('~/.toggl')).chomp,
+  username: config.fetch('api_token'),
   password: 'api_token',
 }
 
