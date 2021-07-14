@@ -98,8 +98,10 @@ end
 
 weekdays = (weekday_start..weekday_start+6).map { |n| n % 7 }
 
-start_date = Date.today - 14
-end_date = Date.today + 7
+ref_date = Date.today - 1
+start_date = ref_date - ref_date.wday + weekdays.first - 14
+end_date = start_date + 6
+end_date += 7 until end_date >= Date.today + 7
 
 time_entries = HTTParty.get 'https://api.track.toggl.com/api/v8/time_entries', basic_auth: auth, query: {start_date: start_date.to_time.iso8601, end_date: end_date.to_time.iso8601}
 time_entries.error! unless time_entries.success?
