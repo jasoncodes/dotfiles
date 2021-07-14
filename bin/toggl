@@ -85,6 +85,19 @@ end
 
 options = default_options.merge(options)
 
+case options.fetch(:week_start)
+when :monday
+  week_strftime_format = '%GW%V'
+  weekday_start = 1
+when :sunday
+  week_strftime_format = '%Y %U'
+  weekday_start = 0
+else
+  raise ArgumentError
+end
+
+weekdays = (weekday_start..weekday_start+6).map { |n| n % 7 }
+
 start_date = Date.today - 14
 end_date = Date.today + 7
 
@@ -123,19 +136,6 @@ days.values.each do |tasks|
     end
   end
 end
-
-case options.fetch(:week_start)
-when :monday
-  week_strftime_format = '%GW%V'
-  weekday_start = 1
-when :sunday
-  week_strftime_format = '%Y %U'
-  weekday_start = 0
-else
-  raise ArgumentError
-end
-
-weekdays = (weekday_start..weekday_start+6).map { |n| n % 7 }
 
 weeks = {}
 
