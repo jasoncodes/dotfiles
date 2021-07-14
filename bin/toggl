@@ -12,9 +12,10 @@ options = {}
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename $0} [options]"
 
-  opts.on '--format=[default|bulk-create|json]', %i[default bulk-create json] do |format|
+  opts.on '--format=[default|projector|json]', %i[default projector json] do |format|
     raise OptionParser::MissingArgument unless format
     options[:format] = format
+    options[:week_start] = :sunday if format == :projector
   end
 
   opts.on '--rename [from] [to]' do |name_from|
@@ -182,12 +183,8 @@ when :default
     puts "  #{footer_text.rjust max_name_len} #{format_duration tasks.values.inject(:+)}"
     puts
   end
-when :'bulk-create'
-  COLUMNS = %w[Date Person Work\ Reference Usage\ Code Docket Purchase\ Order UoM Rate\ Code Quantity Note]
-
-  me = HTTParty.get 'https://api.track.toggl.com/api/v8/me', basic_auth: auth
-  me.error! unless me.success?
-  person_name = me.fetch('data').fetch('fullname')
+when :projector
+  COLUMNS = %w[Work\ Date Project Task Description Work\ Hours]
 
   days.each do |date, tasks|
     if date == first_future_date
@@ -195,44 +192,40 @@ when :'bulk-create'
       puts
     end
 
-    tasks_by_work_reference = {}
+    projector_durations = {}
 
     tasks.each do |name, duration|
-      work_reference, note = name.split('|', 2).map(&:to_s).map(&:strip)
+      projector_code, description = name.split('|', 2).map(&:to_s).map(&:strip)
 
-      if work_reference.split.first =~ /\A[A-Z]*[0-9.]{3,}[A-Z]*\z/
-        work_reference = work_reference.split.first
+      if projector_preset = config.dig('projector', projector_code)
+        projector_key = {
+          'description' => nil,
+        }.merge(projector_preset)
+        if description
+          projector_key['description'] = [projector_key['description'], description].compact.uniq.join(' | ')
+        end
+      else
+        projector_key = {
+          'project' => nil,
+          'task' => nil,
+          'description' => name,
+        }
       end
 
-      tasks_by_work_reference[work_reference] ||= Hash.new(0)
-      tasks_by_work_reference[work_reference][note] += duration
+      projector_durations[projector_key] ||= 0
+      projector_durations[projector_key] += duration
     end
 
-    tasks_by_work_reference.each do |work_reference, tasks|
-      duration = tasks.values.inject(:+)
-
-      note = if tasks.size == 1
-        tasks.keys.first
-      else
-        tasks = tasks.sort_by do |note, duration|
-          [note ? 1 : 2, -duration]
-        end
-        tasks.map do |note, duration|
-          "#{format_hours duration} #{note || 'other'}"
-        end.join(', ')
-      end
-
+    $stdout.write COLUMNS.to_csv
+    projector_durations.each do |projector_key, duration|
       row = {
-        'Date' => date.strftime('%Y-%m-%d'),
-        'Person' => person_name,
-        'Work Reference' => work_reference,
-        'Usage Code' => 'Normal',
-        'UoM' => 'hours',
-        'Quantity' => format_hours(duration),
-        'Rate Code' => nil,
-        'Note' => note,
+        'Work Date' => date.strftime('%Y-%m-%d'),
+        'Project' => projector_key.fetch('project'),
+        'Task' => projector_key.fetch('task'),
+        'Description' => projector_key.fetch('description'),
+        'Work Hours' => format_hours(duration),
       }
-      puts row.values_at(*COLUMNS).join("\t")
+      $stdout.write row.values_at(*COLUMNS).to_csv
     end
     puts
   end
