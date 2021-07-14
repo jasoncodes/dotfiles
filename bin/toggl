@@ -5,6 +5,7 @@ require 'httparty'
 
 default_options = {
   format: :default,
+  week_start: :monday,
 }.freeze
 
 options = {}
@@ -122,8 +123,16 @@ days.values.each do |tasks|
   end
 end
 
-week_strftime_format = '%GW%V'
-weekday_start = 1
+case options.fetch(:week_start)
+when :monday
+  week_strftime_format = '%GW%V'
+  weekday_start = 1
+when :sunday
+  week_strftime_format = '%Y %U'
+  weekday_start = 0
+else
+  raise ArgumentError
+end
 
 weekdays = (weekday_start..weekday_start+6).map { |n| n % 7 }
 
