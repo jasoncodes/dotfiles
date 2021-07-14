@@ -36,7 +36,10 @@ if ARGV.size > 0
   abort option_parser.help
 end
 
-auth = {username: File.read(File.expand_path('~/.toggl')).chomp, password: 'api_token'}
+auth = {
+  username: File.read(File.expand_path('~/.toggl')).chomp,
+  password: 'api_token',
+}
 
 if options.key?(:rename_from)
   start_date = Date.today - 7
