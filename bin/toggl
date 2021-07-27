@@ -199,23 +199,28 @@ when :projector
     tasks.each do |name, duration|
       projector_code, description = name.split('|', 2).map(&:to_s).map(&:strip)
 
-      if projector_preset = config.dig('projector', projector_code.tr(' ', '_'))
-        projector_key = {
-          'description' => nil,
-        }.merge(projector_preset)
-        if description
-          projector_key['description'] = [projector_key['description'], description].compact.uniq.join(' | ')
-        end
-      else
-        projector_key = {
-          'project' => nil,
-          'task' => nil,
-          'description' => name,
-        }
-      end
+      projector_presets = config.dig('projector', projector_code.tr(' ', '_'))
+      projector_presets = [projector_presets] unless projector_presets.is_a?(Array)
 
-      projector_durations[projector_key] ||= 0
-      projector_durations[projector_key] += duration
+      projector_presets.each do |projector_preset|
+        if projector_preset
+          projector_key = {
+            'description' => nil,
+          }.merge(projector_preset)
+          if description
+            projector_key['description'] = [projector_key['description'], description].compact.uniq.join(' | ')
+          end
+        else
+          projector_key = {
+            'project' => nil,
+            'task' => nil,
+            'description' => name,
+          }
+        end
+
+        projector_durations[projector_key] ||= 0
+        projector_durations[projector_key] += duration / projector_presets.size
+      end
     end
 
     $stdout.write COLUMNS.to_csv
