@@ -25,4 +25,5 @@ endfunction
 
 nmap <silent> cog :call ToggleGitGutterMode()<CR>
 
+autocmd BufReadPost * GitGutter
 autocmd BufWritePost * GitGutter
