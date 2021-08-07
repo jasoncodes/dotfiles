@@ -9,7 +9,6 @@ set showcmd                                " Show incomplete cmds down the botto
 set showmode                               " Show current mode down the bottom
 set history=1000                           " Remember more history for commands and search patterns
 set ttyfast                                " More smooth screen redrawing
-set noesckeys                              " Disable extended key support (cursor keys, function keys). Improves <Esc> time dramatically.
 set ruler                                  " Show ruler
 set number                                 " Show line numbers
 set mouse=                                 " Disable the mouse
