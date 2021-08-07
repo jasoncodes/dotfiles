@@ -50,6 +50,7 @@ set scrolloff=3                            " Keep 3 context lines above and belo
 set backspace=2                            " Allow backspacing over autoindent, EOL, and BOL
 set showmatch                              " Briefly jump to a paren once it's balanced
 set matchtime=2                            " (for only .2 seconds).
+set nrformats-=octal                       " Treat numbers with leading zeros as decimal for increment/decrement
 
 " Searching
 set ignorecase                             " Ignore case by default when searching
