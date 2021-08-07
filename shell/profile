@@ -29,6 +29,7 @@ alias nano='echo Use vim :\) >&2; false'
 
 # handy aliases
 alias timestamp='gawk "{now=strftime(\"%F %T \"); print now \$0; fflush(); }"'
+alias hd='hexdump -C'
 
 # notify of bg job completion immediately
 set -o notify
