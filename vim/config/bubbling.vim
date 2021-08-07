@@ -32,5 +32,5 @@ nmap <silent> <A-h> :SidewaysLeft<CR>
 nmap <silent> <A-l> :SidewaysRight<CR>
 nmap <F33> :SidewaysLeft<CR>
 nmap <F34> :SidewaysRight<CR>
-nmap ˙ :SidewaysLeft<CR>
-nmap ¬ :SidewaysRight<CR>
+nmap <silent> ˙ :SidewaysLeft<CR>
+nmap <silent> ¬ :SidewaysRight<CR>
