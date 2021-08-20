@@ -18,13 +18,13 @@ let g:ruby_indent_assignment_style = 'variable'
 let g:ruby_refactoring_map_keys = 0
 
 let g:rails_projections = {
-  \'app/lib/*.rb':{'test':'spec/lib/%s_spec.rb'},
-  \'app/models/*.rb':{'related':['app/models/%s.sql','app/models/%s.sql.erb']},
-  \'app/models/*.sql':{'related':'app/models/%s.rb'},
-  \'app/models/*.sql.erb':{'related':'app/models/%s.rb'},
-  \'app/sql/*.rb':{'related':['app/sql/%s.sql','app/sql/%s.sql.erb']},
-  \'app/sql/*.sql':{'related':'app/sql/%s.rb'},
-  \'app/sql/*.sql.erb':{'related':'app/sql/%s.rb'},
+  \'app/lib/*.rb':{'test':'spec/lib/{}_spec.rb'},
+  \'app/models/*.rb':{'related':['app/models/{}.sql','app/models/{}.sql.erb']},
+  \'app/models/*.sql':{'related':'app/models/{}.rb'},
+  \'app/models/*.sql.erb':{'related':'app/models/{}.rb'},
+  \'app/sql/*.rb':{'related':['app/sql/{}.sql','app/sql/{}.sql.erb']},
+  \'app/sql/*.sql':{'related':'app/sql/{}.rb'},
+  \'app/sql/*.sql.erb':{'related':'app/sql/{}.rb'},
   \'config/initializers/*.rb':{'test':'spec/initializers/{}_spec.rb'},
   \'spec/initializers/*_spec.rb':{'alternate':'config/initializers/{}.rb'}
 \}
