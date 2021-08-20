@@ -113,7 +113,7 @@ function rubocop-branch {
 
 function __database_yml {
   if [[ -f config/database.yml ]]; then
-    ruby -ryaml -rerb -e "t = ERB.new(IO.read('config/database.yml')); t.filename = 'config/database.yml'; puts YAML::load(t.result)['${RAILS_ENV:-development}']['$1']"
+    ruby -ryaml -rerb -e "t = ERB.new(IO.read('config/database.yml')); t.filename = 'config/database.yml'; puts YAML::load(t.result).dig(*ARGV)" "${RAILS_ENV:-development}" "$@"
   fi
 }
 
