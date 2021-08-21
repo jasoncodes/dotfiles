@@ -122,6 +122,9 @@ function psql
   if [[ "$(__database_yml url)" =~ ^postgres ]]; then
     command psql "$(__database_yml url)" "$@"
     return $?
+  elif [[ "$DATABASE_URL" =~ ^postgres ]]; then
+    command psql "$DATABASE_URL" "$@"
+    return $?
   elif [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
     PGDATABASE="$(__database_yml database)" command psql "$@"
     return $?
