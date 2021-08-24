@@ -11,6 +11,7 @@ require 'cgi'
 default_options = {
   format: :default,
   week_start: :monday,
+  previous_weeks: 2,
 }.freeze
 
 options = {}
@@ -21,6 +22,11 @@ option_parser = OptionParser.new do |opts|
     raise OptionParser::MissingArgument unless format
     options[:format] = format
     options[:week_start] = :sunday if format == :projector
+  end
+
+  opts.on '--previous-weeks=n', Integer, "default: #{default_options.fetch(:previous_weeks)}" do |previous_weeks|
+    raise OptionParser::InvalidArgument if previous_weeks < 0
+    options[:previous_weeks] = previous_weeks
   end
 
   opts.on '--rename [from] [to]' do |name_from|
@@ -121,7 +127,7 @@ end
 weekdays = (weekday_start..weekday_start+6).map { |n| n % 7 }
 
 ref_date = Date.today - 1
-start_date = ref_date - ref_date.wday + weekdays.first - 14
+start_date = ref_date - ref_date.wday + weekdays.first - 7 * options.fetch(:previous_weeks)
 end_date = start_date + 6
 end_date += 7 until end_date >= Date.today + 7
 
