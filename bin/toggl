@@ -281,7 +281,7 @@ when :projector
 when :json
   data = {}
 
-  data[:weeks] = weeks.sort.last(2).map do |week, week_days|
+  data[:weeks] = weeks.sort.map do |week, week_days|
     total = week_days.values.inject(:+)
 
     days = week_days.map { |date, value| [date, value.round(2)] }.to_h
