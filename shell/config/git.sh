@@ -29,6 +29,8 @@ GIT_COMPLETION_PATH=$(first_file_match -f \
   "/usr/local/git/contrib/completion/git-completion.bash" \
   "/opt/local/share/doc/git-core/contrib/completion/git-completion.bash" \
   "/etc/bash_completion.d/git" \
+  "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash" \
+  "/Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash" \
 )
 
 if [ -f "$GIT_COMPLETION_PATH" ]
