@@ -193,21 +193,21 @@ gaur() {
 
 # git commit fixup
 gcf() {
-  if [[ $# -gt 0 ]]; then
-    git commit --fixup "$@"
-    return
-  fi
-
   if [[ $(git diff --staged --name-only | wc -l) -lt 1 ]]; then
     echo Nothing staged to commit. >&2
     return 1
   fi
 
-  COMMITS="$(
-    git diff --staged --name-only -z |
-      xargs -0 git log --pretty=format:'%H %s' $(git merge-base origin/HEAD HEAD).. -- |
-      awk '{ if ($2 != "fixup!" && $2 != "squash!") { print $1} }'
-  )"
+  if [[ $# -gt 0 ]]; then
+    git commit --fixup "$@"
+    return
+  else
+    COMMITS="$(
+      git diff --staged --name-only -z |
+        xargs -0 git log --pretty=format:'%H %s' $(git merge-base origin/HEAD HEAD).. -- |
+        awk '{ if ($2 != "fixup!" && $2 != "squash!") { print $1} }'
+    )"
+  fi
 
   case $(echo "$COMMITS" | grep . | wc -l | tr -d -c 0-9) in
     0)
