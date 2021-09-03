@@ -70,7 +70,7 @@ function _git_assert_origin_head() {
   fi
 }
 
-_git_rebase_target() {
+_git_branch_target() {
   if git rev-parse @{u} &> /dev/null; then
     echo "@{u}"
   else
@@ -251,7 +251,7 @@ gcf() {
 grt() {
   (
     set -e
-    TARGET="$(_git_rebase_target)"
+    TARGET="$(_git_branch_target)"
     git rebase --interactive --keep-empty $(git merge-base HEAD "$TARGET") "$@"
   )
 }
