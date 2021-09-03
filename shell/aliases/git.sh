@@ -79,6 +79,15 @@ _git_branch_target() {
   fi
 }
 
+_git_branch_base() {
+  if git_current_branch | grep -q ^hotfix/; then
+    echo origin/master
+  else
+    _git_assert_origin_head || return 1
+    echo origin/HEAD
+  fi
+}
+
 function git-log() {
   git log -M40 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(green bold)- %an %C(black bold)%cd (%cr)%Creset' --abbrev-commit --date=short "$@"
 }
@@ -258,13 +267,11 @@ grt() {
 
 # git rebase branch
 grb() {
-  if git_current_branch | grep -q ^hotfix/; then
-    local TARGET_BRANCH=origin/master
-  else
-    _git_assert_origin_head || return 1
-    local TARGET_BRANCH=origin/HEAD
-  fi
-  git rebase --interactive --keep-empty $(git merge-base HEAD $TARGET_BRANCH) "$@"
+  (
+    set -e
+    TARGET="$(_git_branch_base)"
+    git rebase --interactive --keep-empty $(git merge-base HEAD "$TARGET") "$@"
+  )
 }
 
 # git cleanup
