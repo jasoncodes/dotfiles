@@ -199,8 +199,18 @@ gcf() {
   fi
 
   if [[ $# -gt 0 ]]; then
-    git commit --fixup "$@"
-    return
+    if git rev-parse --quiet --verify "$1" &> /dev/null; then
+      git commit --fixup "$@"
+      return
+    else
+      COMMITS="$(
+        set -e
+        TARGET="$(_git_branch_base)"
+        git log --reverse --pretty=format:'%h %s' "$(git merge-base HEAD "$TARGET").." |
+          egrep -i -- "$@" |
+          awk '{ if ($2 != "fixup!" && $2 != "squash!") { print $1} }'
+      )"
+    fi
   else
     COMMITS="$(
       set -e
