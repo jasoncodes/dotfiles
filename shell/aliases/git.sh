@@ -11,11 +11,11 @@ alias gdw='gd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gbdw='gbd --word-diff=color --word-diff-regex="[A-z0-9_-]+"'
 alias gds='gd --cached'
 alias gdsw='gdw --cached'
-alias gbd='_git_assert_origin_head && gd $(git merge-base origin/HEAD HEAD)..'
-alias gbdd='_git_assert_origin_head && git diffall $(git merge-base origin/HEAD HEAD) HEAD'
-alias gbdt='_git_assert_origin_head && git difftool $(git merge-base origin/HEAD HEAD)..'
-alias gbl='_git_assert_origin_head && git-log --reverse $(git merge-base origin/HEAD HEAD)..'
-alias gblp='_git_assert_origin_head && glp $(git merge-base origin/HEAD HEAD)..'
+alias gbd='_git_branch_base > /dev/null && gd $(git merge-base $(_git_branch_base) HEAD)..'
+alias gbdd='_git_branch_base && git diffall $(git merge-base $(_git_branch_base) HEAD) HEAD'
+alias gbdt='_git_branch_base && git difftool $(git merge-base $(_git_branch_base) HEAD)..'
+alias gbl='_git_branch_base && git-log --reverse $(git merge-base $(_git_branch_base) HEAD)..'
+alias gblp='_git_branch_base && glp $(git merge-base $(_git_branch_base) HEAD)..'
 alias gblg='gblp --no-patch'
 alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
@@ -316,9 +316,9 @@ _gbr() {
     SCRATCH_DIR="$(mktemp -d -t gbr.XXXXXX)"
     trap '{ rm -rf "$SCRATCH_DIR"; }' EXIT
 
-    _git_assert_origin_head
-    LOCAL_RANGE="$(git merge-base origin/HEAD $LOCAL_HEAD)..$LOCAL_HEAD"
-    UPSTREAM_RANGE="$(git merge-base origin/HEAD $REMOTE_HEAD)..$REMOTE_HEAD"
+    BASE="$(_git_branch_base)"
+    LOCAL_RANGE="$(git merge-base $BASE $LOCAL_HEAD)..$LOCAL_HEAD"
+    UPSTREAM_RANGE="$(git merge-base $BASE $REMOTE_HEAD)..$REMOTE_HEAD"
 
     $CMD "$LOCAL_RANGE" "$@" > "$SCRATCH_DIR/local"
     $CMD "$UPSTREAM_RANGE" "$@" > "$SCRATCH_DIR/upstream"
