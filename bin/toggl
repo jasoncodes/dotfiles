@@ -226,6 +226,8 @@ when :default
 when :projector
   COLUMNS = %w[Work\ Date Project Task Description Work\ Hours]
 
+  config_projector_presets = config.fetch('projector', {})
+
   days.each do |date, tasks|
     if date == first_future_date
       puts "--- FUTURE ---"
@@ -237,7 +239,7 @@ when :projector
     tasks.each do |name, duration|
       projector_code, description = name.split('|', 2).map(&:to_s).map(&:strip)
 
-      projector_presets = config.dig('projector', projector_code.tr(' ', '_'))
+      projector_presets = config_projector_presets.fetch(projector_code.tr(' ', '_'), nil)
       projector_presets = [projector_presets] unless projector_presets.is_a?(Array)
 
       projector_presets.each do |projector_preset|
