@@ -226,9 +226,10 @@ when :default
 when :projector
   COLUMNS = %w[Work\ Date Project Task Description Work\ Hours]
 
-  normalize_key = -> (key) { key.tr(' ', '_') }
+  normalize_key = -> (key) { key.downcase.tr(' ', '_') }
 
   config_projector_presets = config.fetch('projector', {})
+    .transform_keys(&normalize_key)
 
   days.each do |date, tasks|
     if date == first_future_date
