@@ -227,9 +227,11 @@ when :projector
   COLUMNS = %w[Work\ Date Project Task Description Work\ Hours]
 
   normalize_key = -> (key) { key.downcase.tr(' ', '_') }
+  array_wrap = -> (value) { value.is_a?(Array) ? value : [value] }
 
   config_projector_presets = config.fetch('projector', {})
     .transform_keys(&normalize_key)
+    .transform_values(&array_wrap)
 
   days.each do |date, tasks|
     if date == first_future_date
@@ -242,9 +244,7 @@ when :projector
     tasks.each do |name, duration|
       projector_code, description = name.split('|', 2).map(&:to_s).map(&:strip)
 
-      projector_presets = config_projector_presets.fetch(normalize_key.call(projector_code), nil)
-      projector_presets = [projector_presets] unless projector_presets.is_a?(Array)
-
+      projector_presets = config_projector_presets.fetch(normalize_key.call(projector_code), [nil])
       projector_presets.each do |projector_preset|
         if projector_preset
           projector_key = {
