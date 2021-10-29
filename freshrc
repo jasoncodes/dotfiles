@@ -42,8 +42,6 @@ init_vim() {
 
 fresh bin/\* --bin
 fresh bin/wemux/\* --bin
-fresh bin/dinghy-exec-wrapper --bin=~/bin/docker
-fresh bin/dinghy-exec-wrapper --bin=~/bin/docker-compose
 
 fresh twe4ked/dotfiles bin/heroku-remote-add --bin
 fresh pengwynn/dotfiles bin/git-pr --bin
