@@ -17,7 +17,11 @@ end
 # wrap ANSI codes so Readline knows where the prompt ends
 def colour(name, text)
   if Pry.color
-    "\001#{Pry::Helpers::Text.send name, '{text}'}\002".sub '{text}', "\002#{text}\001"
+    str = Pry::Helpers::Text.send(name, text)
+    unless str.start_with?("\001")
+      str = "\001#{Pry::Helpers::Text.send name, '{text}'}\002".sub '{text}', "\002#{text}\001"
+    end
+    str
   else
     text
   end
