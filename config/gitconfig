@@ -69,4 +69,4 @@ support = support/
 versiontag =
 
 [git-up "rebase"]
-arguments = --preserve-merges
+arguments = --rebase-merges
