@@ -49,8 +49,6 @@ fresh bartman/git-wip git-wip --bin
 fresh twe4ked/catacomb bin/catacomb --bin
 fresh thenigan/git-diffall git-diffall --bin
 
-fresh git/git contrib/diff-highlight/diff-highlight --ref=0c977db~ --bin
-
 fresh_after_build() {
   init_vim
 }
