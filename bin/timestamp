@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
+STDOUT->autoflush(1);
+
+while (<>) {
+  my $t = time;
+
+  my $str = strftime "%Y-%m-%d %H:%M:%S", localtime $t;
+  $str .= sprintf ".%03d", ($t-int($t)) * 1000;
+
+  print $str, " ";
+} continue {
+  print or die "-p destination: $!\n";
+}
