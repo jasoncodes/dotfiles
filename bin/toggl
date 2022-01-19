@@ -90,7 +90,7 @@ if options.key?(:rename_from)
     old_description = entry.fetch('description', '')
     new_description = old_description.sub(/^#{Regexp.escape options.fetch(:rename_from)}($| \|)/, "#{options.fetch(:rename_to)}\\1")
     if new_description != old_description
-      puts "#{Time.parse(entry.fetch('start')).to_date} #{((Time.parse(entry.fetch('stop', Time.now.to_s)) - Time.parse(entry.fetch('start'))) / 3600.0).round(2)} #{old_description.inspect} => #{new_description.inspect}"
+      puts "#{Time.parse(entry.fetch('start')).getlocal.to_date} #{((Time.parse(entry.fetch('stop', Time.now.to_s)) - Time.parse(entry.fetch('start'))) / 3600.0).round(2)} #{old_description.inspect} => #{new_description.inspect}"
 
       uri = URI.parse("https://api.track.toggl.com/api/v8/time_entries/#{entry.fetch('id')}")
       request = Net::HTTP::Post.new(uri)
