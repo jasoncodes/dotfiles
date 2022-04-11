@@ -28,7 +28,7 @@ alias mate='echo Use mvim :\) >&2; false'
 alias nano='echo Use vim :\) >&2; false'
 
 # handy aliases
-alias hd='hexdump -C'
+alias hd='LC_CTYPE=C hexdump -C'
 
 # notify of bg job completion immediately
 set -o notify
