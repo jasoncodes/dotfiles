@@ -290,7 +290,7 @@ grb() {
 gcu() {
   if _git_assert_origin_head; then
     HEAD_NAME="$(git rev-parse --abbrev-ref origin/HEAD | sed 's/^origin\///')"
-    git branch --merged origin/HEAD | grep -v '^\*' | awk '{print $1}' | grep -Fxv -e "$HEAD_NAME" -e develop -e master | xargs git branch -d
+    git branch --merged origin/HEAD | grep -v '^[*+]' | awk '{print $1}' | grep -Fxv -e "$HEAD_NAME" -e develop -e master | xargs git branch -d
     git branch --remotes --merged origin/HEAD | grep -v origin/HEAD | grep '^ *origin/' | sed 's#^ *origin/##' | grep -v ^pr/ | grep -Fxv "$HEAD_NAME"
   fi
 }
