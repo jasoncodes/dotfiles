@@ -22,3 +22,11 @@ json() {
     cat
   fi
 }
+
+urlencode() {
+  python3 -c "import sys, urllib.parse as ul; sys.stdout.write(ul.quote_plus(sys.stdin.read()))"
+}
+
+urldecode() {
+  python3 -c "import sys, urllib.parse as ul; sys.stdout.write(ul.unquote_plus(sys.stdin.read()))"
+}
