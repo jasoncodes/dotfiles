@@ -2,15 +2,12 @@
 
 normalize() {
   cat |
-    sed '/^COPY.* FROM stdin;$/,/^\\\.$/d' |
-    grep -v '^--' |
-    grep . |
-    tr '\n;' '\0\n' |
-    sort |
-    egrep -av 'CREATE( MATERIALIZED)? VIEW' |
-    egrep -av 'COMMENT ON EXTENSION' |
-    tr '\0\n' '\n;' |
-    sed 's/;$/;\'$'\n/g'
+    (
+      echo $'\0'
+      perl -pe 'BEGIN{undef $/;} s/(--\n-- Name:)/\x00\1/g'
+    ) |
+    sort -z |
+    tr -d '\0'
 }
 
 SCRATCH_DIR="$(mktemp -d -t diffschema.XXXXXX)"
