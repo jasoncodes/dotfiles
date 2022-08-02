@@ -13,4 +13,10 @@ normalize() {
     sed 's/;$/;\'$'\n/g'
 }
 
-vimdiff <(normalize < "${1:-}") <(normalize < "${2:-}")
+SCRATCH_DIR="$(mktemp -d -t diffschema.XXXXXX)"
+trap '{ rm -rf "$SCRATCH_DIR"; }' EXIT
+
+normalize < "${1:-}" > "$SCRATCH_DIR/1.sql"
+normalize < "${2:-}" > "$SCRATCH_DIR/2.sql"
+
+vimdiff "$SCRATCH_DIR/1.sql" "$SCRATCH_DIR/2.sql"
