@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -euo pipefail
+
+SELF_NAME="$(basename "$0")"
+
+if [ $# -ne 4 ]; then
+  cat <<EOF >&2
+Tunnel SSH over HTTPS CONNECT
+
+Usage: $SELF_NAME <proxy-host> <proxy-port> <target-host> <target-port>"
+
+Example client SSH config:
+
+  Host example-https
+    ProxyCommand $SELF_NAME example.com 443 example.com 22
+    HostKeyAlias example.com
+    ControlMaster no
+    ServerAliveInterval 30
+
+Example server Apache config:
+
+  <IfModule mod_proxy.c>
+    ProxyRequests On
+    AllowCONNECT 22
+    ProxyVia on
+
+    <Proxy *>
+      Order deny,allow
+      Deny from all
+    </Proxy>
+    <ProxyMatch example.com>
+      Order deny,allow
+      Allow from all
+    </ProxyMatch>
+  </IfModule>
+EOF
+  exit 1
+fi
+
+PROXY_HOST="$1"
+PROXY_PORT="$2"
+TARGET_HOST="$3"
+TARGET_PORT="$4"
+
+TMP_LOG_FILE="$(mktemp "${TMPDIR:-/tmp}/$SELF_NAME.XXXXXX")"
+trap '{ rm -f "$TMP_LOG_FILE"; }' EXIT
+
+socat -lf "$TMP_LOG_FILE" -d -d tcp4-listen:0,bind=127.0.0.1,accept-timeout=5 "ssl:$PROXY_HOST:$PROXY_PORT" &
+SOCAT_SSL_PID=$!
+
+while kill -0 "$SOCAT_SSL_PID" &> /dev/null && ! grep -q . "$TMP_LOG_FILE"; do
+  sleep 0.1
+done
+
+if ! SOCAT_SSL_PORT="$(grep -E -m 1 -o '127.0.0.1:[0-9]+$' "$TMP_LOG_FILE" | cut -d : -f 2)"; then
+  echo Could not detect socat listening port. >&2
+  cat "$TMP_LOG_FILE" >&2
+  exit 1
+fi
+
+rm "$TMP_LOG_FILE"
+
+socat "stdio" "proxy:127.0.0.1:$TARGET_HOST:$TARGET_PORT,proxyport=$SOCAT_SSL_PORT"
