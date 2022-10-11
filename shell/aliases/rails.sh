@@ -111,9 +111,17 @@ function rubocop-branch {
   )
 }
 
+function __ruby {
+  if [ -x /usr/bin/ruby ]; then
+    /usr/bin/ruby "$@"
+  else
+    ruby "$@"
+  fi
+}
+
 function __database_yml {
   if [[ -f config/database.yml ]]; then
-    ruby -ryaml -rerb - <<RUBY "$@"
+    __ruby -ryaml -rerb - <<RUBY "$@"
 t = ERB.new(IO.read('config/database.yml'))
 t.filename = 'config/database.yml'
 c = YAML::load(t.result)
@@ -125,7 +133,7 @@ RUBY
 }
 
 function __pg_url_env {
-  ruby -ruri -rcgi -rshellwords - <<RUBY "$@"
+  __ruby -ruri -rcgi -rshellwords - <<RUBY "$@"
   fail ArgumentError unless ARGV.size == 1
   uri = URI.parse(ARGV.first)
   fail ArgumentError, "invalid URL: #{uri}" unless uri.scheme == 'postgresql'
