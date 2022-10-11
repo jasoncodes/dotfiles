@@ -131,6 +131,10 @@ ARGV.each do |key|
   puts c.dig(key)
 end
 RUBY
+  else
+    for KEY in "$@"; do
+      echo
+    done
   fi
 }
 
