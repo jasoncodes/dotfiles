@@ -131,12 +131,3 @@ function psql
   fi
   command psql "$@"
 }
-
-function mysql
-{
-  if [[ $# == 0 && "$(__database_yml adapter)" =~ 'mysql' ]]; then
-    mysql -uroot "$(__database_yml database)"
-    return $?
-  fi
-  command mysql "$@"
-}
