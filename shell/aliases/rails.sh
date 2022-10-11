@@ -124,17 +124,43 @@ RUBY
   fi
 }
 
+function __pg_url_env {
+  ruby -ruri -rcgi -rshellwords - <<RUBY "$@"
+  fail ArgumentError unless ARGV.size == 1
+  uri = URI.parse(ARGV.first)
+  fail ArgumentError, "invalid URL: #{uri}" unless uri.scheme == 'postgresql'
+
+  %i[host port user password database].each do |key|
+    value = case key
+    when :database
+      File.basename(CGI.unescape(uri.path))
+    else
+      uri.public_send(key)
+    end
+
+    if value
+      puts "PG#{key.upcase}=#{Shellwords.escape value}"
+    end
+  end
+RUBY
+}
+
 function psql
 {
-  if [[ "$(__database_yml url)" =~ ^postgres ]]; then
-    command psql "$(__database_yml url)" "$@"
-    return $?
-  elif [[ "$DATABASE_URL" =~ ^postgres ]]; then
-    command psql "$DATABASE_URL" "$@"
-    return $?
-  elif [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
-    PGDATABASE="$(__database_yml database)" command psql "$@"
-    return $?
-  fi
-  command psql "$@"
+  (
+    set -ueo pipefail
+
+    if [ -z "${DATABASE_URL:-}" ]; then
+      export DATABASE_URL="$(__database_yml url)"
+    fi
+
+    if [ -n "${DATABASE_URL:-}" ]; then
+      pg_env="$(__pg_url_env "$DATABASE_URL")"
+      eval "$(echo "$pg_env" | sed 's/^/export /')"
+    elif [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
+      export PGDATABASE="$(__database_yml database)"
+    fi
+
+    exec psql "$@"
+  )
 }
