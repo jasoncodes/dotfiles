@@ -113,10 +113,13 @@ function rubocop-branch {
 
 function __database_yml {
   if [[ -f config/database.yml ]]; then
-    ruby -ryaml -rerb - <<RUBY "${RAILS_ENV:-development}" "$@"
+    ruby -ryaml -rerb - <<RUBY "$@"
 t = ERB.new(IO.read('config/database.yml'))
 t.filename = 'config/database.yml'
-puts YAML::load(t.result).dig(*ARGV)
+c = YAML::load(t.result)
+c = c.fetch(ENV.fetch('RAILS_ENV', 'development'))
+c = c.fetch('primary') if c.key?('primary')
+puts c.dig(*ARGV)
 RUBY
   fi
 }
