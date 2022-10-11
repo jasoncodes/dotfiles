@@ -127,7 +127,9 @@ t.filename = 'config/database.yml'
 c = YAML::load(t.result)
 c = c.fetch(ENV.fetch('RAILS_ENV', 'development'))
 c = c.fetch('primary') if c.key?('primary')
-puts c.dig(*ARGV)
+ARGV.each do |key|
+  puts c.dig(key)
+end
 RUBY
   fi
 }
