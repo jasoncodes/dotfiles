@@ -160,15 +160,21 @@ function psql
   (
     set -ueo pipefail
 
+    {
+      read -r adapter
+      read -r url
+      read -r database
+    } < <(__database_yml adapter url database)
+
     if [ -z "${DATABASE_URL:-}" ]; then
-      export DATABASE_URL="$(__database_yml url)"
+      export DATABASE_URL="$url"
     fi
 
     if [ -n "${DATABASE_URL:-}" ]; then
       pg_env="$(__pg_url_env "$DATABASE_URL")"
       eval "$(echo "$pg_env" | sed 's/^/export /')"
-    elif [[ "$(__database_yml adapter)" == 'postgresql' ]]; then
-      export PGDATABASE="$(__database_yml database)"
+    elif [[ "$adapter" == 'postgresql' ]]; then
+      export PGDATABASE="$database"
     fi
 
     exec psql "$@"
