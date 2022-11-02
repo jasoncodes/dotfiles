@@ -87,7 +87,11 @@ org_logger_rails = nil
 
 Pry.hooks.add_hook :before_session, :rails do |output, target, pry|
   require 'logger'
-  new_logger = Logger.new(STDOUT)
+  new_logger = if defined?(ActiveSupport::Logger)
+    ActiveSupport::Logger.new(STDOUT)
+  else
+    Logger.new(STDOUT)
+  end
   if defined?(ActiveSupport::TaggedLogging)
     new_logger = ActiveSupport::TaggedLogging.new(new_logger)
   end
