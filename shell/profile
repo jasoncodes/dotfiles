@@ -64,12 +64,14 @@ then
 fi
 
 # lesspipe lets us do cool things like view gzipped files
-if which lesspipe &> /dev/null
-then
-  eval "$(lesspipe)"
-elif which lesspipe.sh &> /dev/null
-then
-  eval "$(lesspipe.sh)"
+if [ -t 1 ]; then
+  if which lesspipe &> /dev/null
+  then
+    eval "$(lesspipe)"
+  elif which lesspipe.sh &> /dev/null
+  then
+    eval "$(lesspipe.sh)"
+  fi
 fi
 
 # alias Debian's `ack-grep` to `ack`
