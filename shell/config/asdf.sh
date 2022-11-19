@@ -4,6 +4,8 @@
 
 if [ -e "$HOME/.asdf/asdf.sh" ]; then
   source "$HOME/.asdf/asdf.sh"
+elif [ -e "/usr/local/opt/asdf/libexec/asdf.sh" ]; then
+  source "/usr/local/opt/asdf/libexec/asdf.sh"
 elif [ -e "/usr/local/opt/asdf/asdf.sh" ]; then
   source "/usr/local/opt/asdf/asdf.sh"
 fi
