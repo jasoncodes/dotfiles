@@ -8,7 +8,18 @@ fi
 PRIMARY_NS="$1"
 DUMP_FILE=/var/cache/bind/named_dump.db
 
+rm -f "$DUMP_FILE"
 rndc dumpdb -zones
+
+I=0
+until [ -f "$DUMP_FILE" ] && tail -1 "$DUMP_FILE" | grep -q -F '; Dump complete'; do
+  ((I+=1))
+  if [ $I -gt 10 ]; then
+    echo "Timeout waiting for dump to complete." >&2
+    exit 1
+  fi
+  sleep 0.5
+done
 
 RET=0
 
