@@ -6,6 +6,7 @@ if [ $# != 1 ]; then
   exit 1
 fi
 PRIMARY_NS="$1"
+DUMP_FILE=/var/cache/bind/named_dump.db
 
 rndc dumpdb -zones
 
@@ -16,6 +17,6 @@ while read NAME; do
     echo $NAME
     RET=1
   fi
-done < <(egrep "\s+IN\s+NS\s+$PRIMARY_NS\.?$" /var/cache/bind/named_dump.db | awk '{print $1}' | sort -u)
+done < <(egrep "\s+IN\s+NS\s+$PRIMARY_NS\.?$" "$DUMP_FILE" | awk '{print $1}' | sort -u)
 
 exit $RET
