@@ -124,7 +124,11 @@ function __database_yml {
     __ruby -ryaml -rerb - <<RUBY "$@"
 t = ERB.new(IO.read('config/database.yml'))
 t.filename = 'config/database.yml'
-c = YAML.safe_load(t.result, [], [], true)
+c = if Gem::Version.new(Psych::VERSION) >= Gem::Version.new('4')
+  YAML.safe_load(t.result, aliases: true)
+else
+  YAML.safe_load(t.result, [], [], true)
+end
 c = c.fetch(ENV.fetch('RAILS_ENV', 'development'))
 c = c.fetch('primary') if c.key?('primary')
 ARGV.each do |key|
