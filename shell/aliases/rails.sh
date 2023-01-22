@@ -124,7 +124,7 @@ function __database_yml {
     __ruby -ryaml -rerb - <<RUBY "$@"
 t = ERB.new(IO.read('config/database.yml'))
 t.filename = 'config/database.yml'
-c = YAML::load(t.result)
+c = YAML.safe_load(t.result, [], [], true)
 c = c.fetch(ENV.fetch('RAILS_ENV', 'development'))
 c = c.fetch('primary') if c.key?('primary')
 ARGV.each do |key|
