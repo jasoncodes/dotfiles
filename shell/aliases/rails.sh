@@ -185,6 +185,6 @@ function psql
       export PGDATABASE="$database"
     fi
 
-    exec psql "$@"
+    exec command psql "$@"
   )
 }
