@@ -46,7 +46,7 @@ if executable('rg')
  set grepformat=%f:%l:%c:%m,%f:%l:%m
 
  " Use rg in CtrlP for listing files. Lightning fast and respects .gitignore
- let g:ctrlp_user_command = 'rg --files %s'
+ let g:ctrlp_user_command = 'rg --files --hidden --glob "!.git" %s'
 
  " rg is fast enough that CtrlP doesn't need to cache
  let g:ctrlp_use_caching = 0

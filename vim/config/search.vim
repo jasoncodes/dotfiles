@@ -5,7 +5,7 @@ map <Leader>f :Grepper -query<Space>
 let g:grepper = {}
 let g:grepper.tools = ['rg', 'ag', 'ack', 'grep']
 let g:grepper.rg = {}
-let g:grepper.rg.grepprg = 'rg -H --no-heading --vimgrep --smart-case --sort-files'
+let g:grepper.rg.grepprg = 'rg -H --no-heading --vimgrep --smart-case --sort-files --hidden --glob "!.git"'
 let g:grepper.ack = {}
 let g:grepper.ack.grepprg = 'ack -s -H --nocolor --nogroup --column'
 let g:grepper.prompt = 0
