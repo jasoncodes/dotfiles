@@ -9,3 +9,5 @@ if command -v rtx > /dev/null; then
     eval "$(rtx activate zsh)"
   fi
 fi
+
+export RTX_EXPERIMENTAL=1
