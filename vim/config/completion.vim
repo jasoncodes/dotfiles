@@ -1,5 +1,5 @@
 Bundle 'ervandew/supertab'
-Bundle 'szw/vim-kompleter'
+Bundle 'jasoncodes/vim-kompleter'
 
 let g:SuperTabDefaultCompletionType = '<C-x><C-u>' " use completion plugin
 
