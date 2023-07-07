@@ -268,6 +268,14 @@ gcf() {
   esac
 }
 
+# git commit reword
+gcr() {
+  local commit="${1?commit required}"
+  shift
+
+  git commit --fixup=reword:"${commit?}" "$@"
+}
+
 # git rebase tracking
 grt() {
   (
