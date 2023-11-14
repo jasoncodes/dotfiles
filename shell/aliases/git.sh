@@ -337,10 +337,6 @@ _gbr() {
   )
 }
 
-_gbr_log() {
-  git log --pretty='format:%h %s' --reverse "$@"
-}
-
 _gbr_diff() {
   (
     set -e
@@ -350,7 +346,7 @@ _gbr_diff() {
 }
 
 # git branch rebased log
-alias gbrl='_gbr _gbr_log'
+alias gbrl='_git_branch_base > /dev/null && git range-diff "$(git merge-base $(_git_branch_base) HEAD)..HEAD" "$(git merge-base $(_git_branch_base) @{u})..@{u}"'
 # git branch rebased diff
 alias gbrd='_gbr _gbr_diff'
 
