@@ -8,7 +8,7 @@ if [ $# -ne 4 ]; then
   cat <<EOF >&2
 Tunnel SSH over HTTPS CONNECT
 
-Usage: $SELF_NAME <proxy-host> <proxy-port> <target-host> <target-port>"
+Usage: $SELF_NAME <proxy-host> <proxy-port> <target-host> <target-port>
 
 Example client SSH config:
 
