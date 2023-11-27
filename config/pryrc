@@ -2,11 +2,7 @@
 
 Pry.config.pager = false
 Pry.config.color = true
-if Pry.config.respond_to?(:history_save)
-  Pry.config.history_save = true
-else
-  Pry.config.history.should_save = true
-end
+Pry.config.history_save = true
 Pry.config.should_load_local_rc = Dir.pwd != Dir.home
 
 require 'readline'
@@ -79,7 +75,6 @@ Pry.config.print = proc do |output, value, _pry_|
   rescue LoadError => err
     org_print.call(output, value, _pry_)
   end
-  Pry.history.save if Pry.history.respond_to? :save
 end
 
 org_logger_active_record = nil
