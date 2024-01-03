@@ -1,5 +1,7 @@
 require 'rubygems'
 
+# prefer readline over editline
+IRB.conf[:USE_READLINE] = true
 
 # ANSI colour constants
 ANSI = {}
