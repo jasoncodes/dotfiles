@@ -1,4 +1,4 @@
-# brew install jdxcode/tap/rtx
+# brew install rtx
 # rtx install
 
 if command -v rtx > /dev/null; then
