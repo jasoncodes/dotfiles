@@ -2,4 +2,4 @@
 *.tmproj
 *.rbc
 /.envrc
-/.rtx.local.toml
+/.mise.local.toml
