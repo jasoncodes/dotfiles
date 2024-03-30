@@ -1,6 +1,6 @@
 tmux() {
   if [[ $# -eq 0 ]]; then
-    command tmux attach || command tmux
+    command tmux new -A
   else
     command tmux "$@"
   fi
