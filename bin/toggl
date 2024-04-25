@@ -73,7 +73,7 @@ if options.key?(:rename_from)
   start_date = Date.today - 7
   end_date = Date.today + 7
 
-  uri = URI.parse('https://api.track.toggl.com/api/v8/time_entries')
+  uri = URI.parse('https://api.track.toggl.com/api/v9/me/time_entries')
   uri.query = build_query(
     start_date: start_date.to_time.iso8601,
     end_date: end_date.to_time.iso8601,
@@ -92,7 +92,7 @@ if options.key?(:rename_from)
     if new_description != old_description
       puts "#{Time.parse(entry.fetch('start')).getlocal.to_date} #{((Time.parse(entry.fetch('stop', Time.now.to_s)) - Time.parse(entry.fetch('start'))) / 3600.0).round(2)} #{old_description.inspect} => #{new_description.inspect}"
 
-      uri = URI.parse("https://api.track.toggl.com/api/v8/time_entries/#{entry.fetch('id')}")
+      uri = URI.parse("https://api.track.toggl.com/api/v9/me/time_entries/#{entry.fetch('id')}")
       request = Net::HTTP::Post.new(uri)
       request.basic_auth(*auth)
       request['Content-Type'] = 'application/json'
@@ -131,7 +131,7 @@ start_date = ref_date - ref_date.wday + weekdays.first - 7 * options.fetch(:prev
 end_date = start_date + 6
 end_date += 7 until end_date >= Date.today + 7
 
-uri = URI.parse('https://api.track.toggl.com/api/v8/time_entries')
+uri = URI.parse('https://api.track.toggl.com/api/v9/me/time_entries')
 uri.query = build_query(
   start_date: start_date.to_time.iso8601,
   end_date: end_date.to_time.iso8601,
