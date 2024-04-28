@@ -85,6 +85,9 @@ if options.key?(:rename_from)
   end
   response.error! unless response.is_a?(Net::HTTPOK)
   time_entries = JSON.parse(response.body)
+  time_entries = time_entries.sort_by do |entry|
+    entry.fetch('start')
+  end
 
   time_entries.each do |entry|
     old_description = entry.fetch('description', '')
@@ -143,6 +146,9 @@ response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') d
 end
 response.error! unless response.is_a?(Net::HTTPOK)
 time_entries = JSON.parse(response.body)
+time_entries = time_entries.sort_by do |entry|
+  entry.fetch('start')
+end
 
 footer_text = "Total:"
 max_name_len = footer_text.size
