@@ -29,6 +29,7 @@ alias nano='echo Use vim :\) >&2; false'
 
 # handy aliases
 alias hd='LC_CTYPE=C hexdump -C'
+alias clear!="clear && printf '\033[3J'"
 
 # notify of bg job completion immediately
 set -o notify
