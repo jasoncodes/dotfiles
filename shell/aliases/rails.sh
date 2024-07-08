@@ -146,7 +146,7 @@ function __pg_url_env {
   __ruby -ruri -rcgi -rshellwords - <<RUBY "$@"
   fail ArgumentError unless ARGV.size == 1
   uri = URI.parse(ARGV.first)
-  fail ArgumentError, "invalid URL: #{uri}" unless uri.scheme == 'postgresql'
+  fail ArgumentError, "invalid URL: #{uri}" unless %w[postgresql postgres].include?(uri.scheme)
 
   %i[host port user password database].each do |key|
     value = case key
