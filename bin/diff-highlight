@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ! command -v delta > /dev/null; then
+  echo 'warning: delta not installed. visit https://github.com/dandavison/delta' >&2
+  exec cat
+fi
+
+exec delta --color-only --syntax-theme=none --24-bit-color=never --max-line-distance 1.0

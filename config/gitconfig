@@ -19,10 +19,10 @@ defaultBranch = main
 
 [core]
 excludesfile = ~/.gitignore
-pager = (which delta > /dev/null 2> /dev/null && delta --color-only --syntax-theme=none --24-bit-color=never --max-line-distance 1.0 || cat) | ${PAGER:-less}
+pager = "(if command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi) | ${PAGER:-less}"
 
 [interactive]
-diffFilter=(which delta > /dev/null 2> /dev/null && delta --color-only --syntax-theme=none --24-bit-color=never --max-line-distance 1.0 || cat)
+diffFilter = "(if command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi)"
 
 [push]
 default = tracking
