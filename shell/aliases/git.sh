@@ -361,3 +361,52 @@ grds() {
     vimdiff .git/tmp/rebase-{expected,actual}.patch
   )
 }
+
+# git diff with grep
+# greps diff for hunks matching pattern
+gdg() {
+  (
+    set -euo pipefail
+
+    if [[ $# -lt 1 ]] || [[ "$1" == -* ]]; then
+      echo 'usage: gdg <pattern> [git-diff-options]' >&2
+      exit 1
+    fi
+
+    if ! command -v grepdiff > /dev/null; then
+      echo gdg: patchutils not installed. >&2
+      exit 1
+    fi
+
+    local pattern="$1"; shift
+
+    git diff -G "$pattern" -U0 "$@" |
+      grepdiff --extended-regexp "$pattern" --output-matching=hunk |
+      (if [ -t 1 ] && command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi)
+  )
+}
+
+# git add patch with grep
+# only asks about files where the diff matches a pattern
+gapg() {
+  (
+    set -euo pipefail
+
+    if [[ $# -lt 1 ]] || [[ "$1" == -* ]]; then
+      echo 'usage: gapg <pattern> [git-diff-options]' >&2
+      exit 1
+    fi
+
+    if ! command -v grepdiff > /dev/null; then
+      echo gapg: patchutils not installed. >&2
+      exit 1
+    fi
+
+    local pattern="$1"; shift
+
+    git diff -G "$pattern" -U0 "$@" |
+      grepdiff --extended-regexp "$pattern" --strip=1 |
+      tr '\n' '\0' |
+      xargs -0 -o -- git add --patch --
+  )
+}
