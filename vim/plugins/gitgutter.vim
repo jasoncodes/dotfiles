@@ -23,7 +23,7 @@ function! ToggleGitGutterMode()
   GitGutterAll
 endfunction
 
-nmap <silent> cog :call ToggleGitGutterMode()<CR>
+nmap <silent> yog :call ToggleGitGutterMode()<CR>
 
 autocmd BufReadPost * GitGutter
 autocmd BufWritePost * GitGutter
