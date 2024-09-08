@@ -13,6 +13,18 @@ let g:gitgutter_sign_modified_removed = '⇎'
 nmap ]d <Plug>(GitGutterNextHunk)
 nmap [d <Plug>(GitGutterPrevHunk)
 
+function! GitGutterModeMergeBase()
+  let g:gitgutter_diff_base='$(git merge-base origin/HEAD HEAD)'
+
+  GitGutterAll
+endfunction
+
+function! GitGutterModeUnstaged()
+  let g:gitgutter_diff_base=''
+
+  GitGutterAll
+endfunction
+
 function! GitGutterModeToggle()
   if g:gitgutter_diff_base == ''
     let g:gitgutter_diff_base='$(git merge-base origin/HEAD HEAD)'
@@ -23,6 +35,8 @@ function! GitGutterModeToggle()
   GitGutterAll
 endfunction
 
+nmap <silent> [og :call GitGutterModeMergeBase()<CR>
+nmap <silent> ]og :call GitGutterModeUnstaged()<CR>
 nmap <silent> yog :call GitGutterModeToggle()<CR>
 
 autocmd BufReadPost * GitGutter
