@@ -401,7 +401,7 @@ gdg() {
 
     local pattern="$1"; shift
 
-    git diff -G "$pattern" -U0 "$@" |
+    git diff -G "$pattern" "$@" |
       grepdiff-hunk "$pattern"
   )
 }
