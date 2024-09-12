@@ -362,6 +362,27 @@ grds() {
   )
 }
 
+grepdiff-hunk() {
+  (
+    set -euo pipefail
+
+    if [[ $# -ne 1 ]] || [[ "$1" == -* ]]; then
+      echo 'usage: grepdiff-hunk <pattern>' >&2
+      exit 1
+    fi
+
+    if ! command -v grepdiff > /dev/null; then
+      echo grepdiff-hunk: patchutils not installed. >&2
+      exit 1
+    fi
+
+    local pattern="$1"; shift
+
+    grepdiff --extended-regexp "$pattern" --output-matching=hunk |
+      (if [ -t 1 ] && command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi)
+  )
+}
+
 # git diff with grep
 # greps diff for hunks matching pattern
 gdg() {
@@ -381,8 +402,7 @@ gdg() {
     local pattern="$1"; shift
 
     git diff -G "$pattern" -U0 "$@" |
-      grepdiff --extended-regexp "$pattern" --output-matching=hunk |
-      (if [ -t 1 ] && command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi)
+      grepdiff-hunk "$pattern"
   )
 }
 
