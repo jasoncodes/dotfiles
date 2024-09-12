@@ -378,7 +378,7 @@ grepdiff-hunk() {
 
     local pattern="$1"; shift
 
-    grepdiff --extended-regexp "$pattern" --output-matching=hunk |
+    grepdiff --extended-regexp "$pattern" --only-match=modifications --output-matching=hunk |
       (if [ -t 1 ] && command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi)
   )
 }
