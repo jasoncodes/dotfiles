@@ -24,6 +24,11 @@ if command -v docker &> /dev/null && ! docker ps -q &> /dev/null; then
   fi
 fi
 
+if command -v jq >&1 && [ -f ~/.docker/config.json ]; then
+  jq --arg BREW_PREFIX "$(brew --prefix)" '.cliPluginsExtraDirs=[$BREW_PREFIX+"/lib/docker/cli-plugins"]' ~/.docker/config.json > ~/.docker/config.json.new
+  mv ~/.docker/config.json.new ~/.docker/config.json
+fi
+
 podman start --filter restart-policy=always --all
 podman start --filter restart-policy=unless-stopped --all
 
