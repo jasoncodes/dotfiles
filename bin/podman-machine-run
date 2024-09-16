@@ -14,6 +14,9 @@ if ! podman ps -q &> /dev/null; then
   podman machine start
 fi
 
+podman start --filter restart-policy=always --all
+podman start --filter restart-policy=unless-stopped --all
+
 while podman ps -q &> /dev/null; do
   sleep 10
 done
