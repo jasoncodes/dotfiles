@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+if ! command -v podman &> /dev/null; then
+  echo Podman not install. >&2
+  exit 1
+fi
+
+if ! podman machine inspect &> /dev/null; then
+  podman machine init --memory 4096 --disk-size 100
+fi
+
+if ! podman ps -q &> /dev/null; then
+  podman machine start
+fi
+
+while podman ps -q &> /dev/null; do
+  sleep 10
+done

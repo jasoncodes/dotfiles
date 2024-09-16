@@ -49,6 +49,18 @@ fresh bartman/git-wip git-wip --bin
 fresh twe4ked/catacomb bin/catacomb --bin
 fresh thenigan/git-diffall git-diffall --bin
 
+if command -v podman &> /dev/null; then
+  fresh LaunchAgents/podman-machine.plist --file=~/Library/LaunchAgents/podman-machine.plist
+fi
+
+start_podman()
+{
+  if [ -f ~/Library/LaunchAgents/podman-machine.plist ] && ! launchctl list podman-machine &> /dev/null; then
+    launchctl load ~/Library/LaunchAgents/podman-machine.plist
+  fi
+}
+
 fresh_after_build() {
   init_vim
+  start_podman
 }
