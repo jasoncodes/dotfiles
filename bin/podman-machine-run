@@ -14,6 +14,16 @@ if ! podman ps -q &> /dev/null; then
   podman machine start
 fi
 
+if command -v docker &> /dev/null && ! docker ps -q &> /dev/null; then
+  output="$(podman machine inspect --format '{{.Name}}\t{{.ConnectionInfo.PodmanSocket.Path}}')"
+  IFS=$'\037' read -r machine_name machine_socket_path < <(tr '\t' '\037' <<<"$output")
+
+  if ! docker context update "$machine_name" --docker "host=unix://$machine_socket_path"; then
+    docker context create "$machine_name" --docker "host=unix://$machine_socket_path"
+    docker context use "$machine_name"
+  fi
+fi
+
 podman start --filter restart-policy=always --all
 podman start --filter restart-policy=unless-stopped --all
 
