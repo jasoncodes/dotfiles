@@ -366,8 +366,8 @@ grepdiff-hunk() {
   (
     set -euo pipefail
 
-    if [[ $# -ne 1 ]] || [[ "$1" == -* ]]; then
-      echo 'usage: grepdiff-hunk <pattern>' >&2
+    if [[ $# -lt 1 ]] || [[ "$1" == -* ]]; then
+      echo 'usage: grepdiff-hunk <pattern> [options]' >&2
       exit 1
     fi
 
@@ -378,7 +378,7 @@ grepdiff-hunk() {
 
     local pattern="$1"; shift
 
-    grepdiff --extended-regexp "$pattern" --only-match=modifications --output-matching=hunk |
+    grepdiff --extended-regexp "$pattern" --only-match=modifications --output-matching=hunk "$@" |
       (if [ -t 1 ] && command -v diff-highlight > /dev/null; then diff-highlight | ${PAGER:-less}; else exec cat; fi)
   )
 }
