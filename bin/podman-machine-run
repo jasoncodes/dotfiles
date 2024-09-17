@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if ! command -v podman &> /dev/null; then
-  echo Podman not install. >&2
+  echo Podman not installed. >&2
   exit 1
 fi
 
