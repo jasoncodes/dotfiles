@@ -8,7 +8,11 @@ Pry.config.should_load_local_rc = Dir.pwd != Dir.home
 
 require 'readline'
 if Readline::VERSION =~ /editline/i
-  warn "Warning: Using Editline instead of Readline."
+  msg = "Warning: Using Editline instead of Readline."
+  if RUBY_PLATFORM.include?('darwin')
+    msg << "\nTry running `gem install readline-ext -- --with-readline-dir=\"$(brew --prefix readline)\"`."
+  end
+  warn msg
 end
 
 # wrap ANSI codes so Readline knows where the prompt ends
