@@ -20,7 +20,6 @@ alias gblg='gblp --no-patch'
 alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
 alias ga='git add'
-alias gap='git add -p'
 alias gld="git fsck --lost-found | grep '^dangling commit' | cut -d ' ' -f 3- | xargs git show -s --format='%ct %H' | sort -nr | cut -d ' ' -f 2 | xargs git show --stat"
 alias gc='git commit -v'
 alias gca='gc --amend'
@@ -86,6 +85,18 @@ _git_branch_base() {
     _git_assert_origin_head || return 1
     echo origin/HEAD
   fi
+}
+
+# git add --patch
+function gap() {
+  (
+    if [[ "$1" =~ ^-U[0-9]+$ ]]; then
+      export GIT_DIFF_OPTS="${1/-U/-u}"
+      shift
+    fi
+
+    git add --patch "$@"
+  )
 }
 
 function git-log() {
