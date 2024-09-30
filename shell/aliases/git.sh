@@ -90,10 +90,16 @@ _git_branch_base() {
 # git add --patch
 function gap() {
   (
-    if [[ "$1" =~ ^-U[0-9]+$ ]]; then
-      export GIT_DIFF_OPTS="${1/-U/-u}"
-      shift
-    fi
+    local args=("$@")
+    local i arg
+    for i in "${!args[@]}"; do
+      arg="${args[$i]}"
+      if [[ "$arg" =~ ^-U[0-9]+$ ]]; then
+        export GIT_DIFF_OPTS="${arg/-U/-u}"
+        unset args[$i]
+      fi
+    done
+    set -- "${args[@]}"
 
     git add --patch "$@"
   )
