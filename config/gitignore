@@ -3,3 +3,4 @@
 *.rbc
 /.envrc
 /.mise.local.toml
+/components/*/tags
