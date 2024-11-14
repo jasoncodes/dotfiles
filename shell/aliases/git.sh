@@ -93,12 +93,13 @@ _git_branch_base() {
 function gap() {
   (
     local args=("$@")
-    local i arg
-    for i in "${!args[@]}"; do
-      arg="${args[$i]}"
+    local c i arg
+    if test "$ZSH_VERSION"; then c=1; else c=0; fi
+    for ((i = 0; i < "${#args}"; i++)); do
+      arg="${args[$i+$c]}"
       if [[ "$arg" =~ ^-U[0-9]+$ ]]; then
         export GIT_DIFF_OPTS="${arg/-U/-u}"
-        unset args[$i]
+        if test "$ZSH_VERSION"; then args[$i+$c]=(); else unset args[$i]; fi
       fi
     done
     set -- "${args[@]}"
