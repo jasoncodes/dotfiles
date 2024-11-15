@@ -13,7 +13,7 @@ rndc dumpdb -zones
 
 I=0
 until [ -f "$DUMP_FILE" ] && tail -1 "$DUMP_FILE" | grep -q -F '; Dump complete'; do
-  ((I+=1))
+  I=$((I+1))
   if [ $I -gt 10 ]; then
     echo "Timeout waiting for dump to complete." >&2
     exit 1
