@@ -29,8 +29,8 @@ if command -v jq >&1 && [ -f ~/.docker/config.json ]; then
   mv ~/.docker/config.json.new ~/.docker/config.json
 fi
 
-podman start --filter restart-policy=always --all
-podman start --filter restart-policy=unless-stopped --all
+podman start --filter restart-policy=always --all || true
+podman start --filter restart-policy=unless-stopped --all || true
 
 while podman ps -q &> /dev/null; do
   sleep 10
