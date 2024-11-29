@@ -8,7 +8,7 @@ if [[ $# -lt 1 ]]; then
 fi
 
 DELAY=0
-if echo "$1" | egrep -q '^\d+(\.\d+)?$'; then
+if echo "$1" | egrep -q '^[0-9]+(\.[0-9]+)?$'; then
   DELAY="$1"
   shift
 fi
