@@ -1,4 +1,4 @@
-\pset pager
+\pset pager 0
 \timing
 \pset null '∅'
 \x auto
