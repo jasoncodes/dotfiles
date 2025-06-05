@@ -24,6 +24,9 @@ then
   export PS1="$PS1"'\[\033[01;30m\]$(__my_rvm_ps1)'
 fi
 
+# disable application cursor if enabled
+export PS1="$PS1\[\033[?1l\]"
+
 # add user@host:path
 export PS1="$PS1\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w"
 
