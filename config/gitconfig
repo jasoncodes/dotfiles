@@ -47,6 +47,7 @@ prompt = false
 [rebase]
 autosquash = true
 autostash = true
+instructionFormat = "%s (%an)"
 
 [tag]
 sort = version:refname
