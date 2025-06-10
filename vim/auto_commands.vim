@@ -1,5 +1,5 @@
 " Save on FocusLost
-autocmd FocusLost * nested :silent! wall
+autocmd FocusLost * nested if mode() !=# 'i' | silent! wall | endif
 
 " Markdown files
 autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown} setlocal ft=markdown wrap iskeyword+='
