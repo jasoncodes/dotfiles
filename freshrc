@@ -44,7 +44,6 @@ fresh bin/\* --bin
 fresh bin/wemux/\* --bin
 
 fresh twe4ked/dotfiles bin/heroku-remote-add --bin
-fresh pengwynn/dotfiles bin/git-pr --bin
 fresh bartman/git-wip git-wip --bin
 fresh twe4ked/catacomb bin/catacomb --bin
 fresh thenigan/git-diffall git-diffall --bin

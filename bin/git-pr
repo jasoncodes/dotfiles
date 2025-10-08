@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+# Opens a pull request for the current branch on GitHub or Azure DevOps
+
+branch="$(git symbolic-ref --short -q HEAD)"
+
+if ! git rev-parse "refs/remotes/origin/$branch" &> /dev/null; then
+  echo "\"$branch\" has not yet been pushed upstream." >&2
+  exit 1
+fi
+
+if [ "$(git rev-parse HEAD)" != "$(git rev-parse "refs/remotes/origin/$branch")" ]; then
+  echo "upstream \"$branch\" seems to be out of date." >&2
+  exit 1
+fi
+
+remote_url=$(git config --get remote.origin.url)
+
+case "$remote_url" in
+  git@github.com:*)
+    owner_repo="$(echo "$remote_url" | cut -d : -f 2 | sed 's/\.git$//')"
+    pr_url="https://github.com/$owner_repo/pull/$branch"
+    ;;
+  https://dev.azure.com/*/_git/*|https://*@dev.azure.com/*/_git/*)
+    pr_url="$(echo "$remote_url/pullrequestcreate?sourceRef=$branch" | sed 's#//.*@#//#')"
+    ;;
+  *)
+    echo "Unknown git remote URL format: $remote_url" >&2
+    exit 1
+    ;;
+esac
+
+open "$pr_url"
