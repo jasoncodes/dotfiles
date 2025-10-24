@@ -1,0 +1,20 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <path>"
+  exit 1
+fi
+path="$1"
+
+tmpdir="$(mktemp -dt "git-edit-staged$(mktemp -qt test.XXXXXX | grep -q 'XXXXXX' || echo '.XXXXXX')")"
+trap '{ rm -rf "$tmpdir"; }' EXIT
+
+tmpfile="$tmpdir/$(basename "$path")"
+git show ":$path" > "$tmpfile"
+
+"${EDITOR:-vim}" "$tmpfile"
+
+blob_hash=$(git hash-object -w "$tmpfile")
+mode=$(git ls-files --stage "$path" | awk '{print $1}')
+git update-index --cacheinfo "$mode" "$blob_hash" "$path"
