@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ $# -ne 1 ]; then
+  echo "usage: $(basename "$0") <image.qcow2>" >&2
+  exit 1
+fi
+img="$1"
+
+set -x
+qemu-img convert -p -O qcow2 -c "$img" "$img.new"
+mv "$img.new" "$img"
