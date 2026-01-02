@@ -21,7 +21,7 @@ alias gar='git reset HEAD'
 alias garp='git reset -p HEAD'
 alias ga='git add'
 alias gld="git fsck --lost-found | grep '^dangling commit' | cut -d ' ' -f 3- | xargs git show -s --format='%ct %H' | sort -nr | cut -d ' ' -f 2 | xargs git show --stat"
-alias gc='git commit -v'
+alias gc='git commit'
 alias gca='gc --amend'
 alias gru='git rebase @{u}'
 alias grc='git rebase --continue'

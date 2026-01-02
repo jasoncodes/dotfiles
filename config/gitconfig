@@ -17,6 +17,9 @@ commit = yellow reverse
 [init]
 defaultBranch = main
 
+[commit]
+verbose = true
+
 [core]
 excludesfile = ~/.gitignore
 pager = "(if command -v diff-highlight > /dev/null; then exec diff-highlight; else exec cat; fi) | ${PAGER:-less}"
