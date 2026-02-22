@@ -9,6 +9,11 @@ if ! which brew &> /dev/null && [ -x /home/linuxbrew/.linuxbrew/bin ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
+# Rancher Desktop
+if [ -d "$HOME/.rd/bin" ]; then
+  export PATH="$HOME/.rd/bin:$PATH"
+fi
+
 # add libpq to the path for PostgreSQL client tools
 homebrew_libpq_bin="${HOMEBREW_PREFIX:-/usr/local}/opt/libpq/bin"
 if [ -d "$homebrew_libpq_bin" ]; then
