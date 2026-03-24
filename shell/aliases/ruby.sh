@@ -1,4 +1,4 @@
-alias b='bundle check || bundle'
+alias b='bundle check || bundle install'
 alias bo='bundle open'
 alias be='bundle exec'
 alias cap='bundle exec cap'
