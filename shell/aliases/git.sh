@@ -403,6 +403,15 @@ grepdiff-hunk() {
   )
 }
 
+grepdiff-file() {
+  local args=()
+  for file in "$@"; do
+    args+=(-i "$file")
+    args+=(-i "a/$file")
+  done
+  grepdiff-hunk . "${args[@]}"
+}
+
 # git diff with grep
 # greps diff for hunks matching pattern
 gdg() {
