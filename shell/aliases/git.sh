@@ -58,10 +58,10 @@ function _git_assert_origin_head() {
   if ! git rev-parse origin/HEAD &> /dev/null; then
     if git rev-parse origin/develop &> /dev/null; then
       local TARGET=develop
-    elif git rev-parse origin/main &> /dev/null; then
-      local TARGET=main
-    else
+    elif git rev-parse origin/master &> /dev/null; then
       local TARGET=master
+    else
+      local TARGET=main
     fi
 
     echo fatal: origin/HEAD is not set. >&2
