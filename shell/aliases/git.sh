@@ -81,7 +81,9 @@ _git_branch_target() {
 }
 
 _git_branch_base() {
-  if git_current_branch | grep -q ^hotfix/; then
+  if ! git remote | grep -q . && git show-ref --verify --quiet refs/heads/main; then
+    echo main
+  elif git_current_branch | grep -q ^hotfix/; then
     echo origin/master
   else
     _git_assert_origin_head || return 1
