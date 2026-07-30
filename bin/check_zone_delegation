@@ -22,10 +22,13 @@ until [ -f "$DUMP_FILE" ] && tail -1 "$DUMP_FILE" | grep -q -F '; Dump complete'
 done
 
 RET=0
+DIG_OUTPUT=$(mktemp)
+trap 'rm -f "$DIG_OUTPUT"' EXIT
 
 while read NAME; do
-  if ! dig -t NS +short "$NAME" | grep -q -F "$PRIMARY_NS."; then
-    echo $NAME
+  if ! dig -t NS "$NAME" > "$DIG_OUTPUT" 2>&1 || ! grep -q -F "$PRIMARY_NS." "$DIG_OUTPUT"; then
+    echo "$NAME"
+    cat "$DIG_OUTPUT"
     RET=1
   fi
 done < <(egrep "\s+IN\s+NS\s+$PRIMARY_NS\.?$" "$DUMP_FILE" | awk '{print $1}' | sort -u)
