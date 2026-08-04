@@ -368,7 +368,15 @@ _gbr_diff() {
 }
 
 # git branch rebased log
-alias gbrl='_git_branch_base > /dev/null && git range-diff "$(git merge-base $(_git_branch_base) HEAD)..HEAD" "$(git merge-base $(_git_branch_base) @{u})..@{u}"'
+gbrl() {
+  local remote_head="$1"
+  [[ -n "$remote_head" ]] || remote_head='@{u}'
+
+  _git_branch_base > /dev/null &&
+    git range-diff "$(git merge-base "$(_git_branch_base)" HEAD)..HEAD" \
+      "$(git merge-base "$(_git_branch_base)" "$remote_head")..$remote_head"
+}
+
 # git branch rebased diff
 alias gbrd='_gbr _gbr_diff'
 
