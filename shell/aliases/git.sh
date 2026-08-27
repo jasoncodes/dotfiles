@@ -369,6 +369,12 @@ _gbr_diff() {
 
 # git branch rebased log
 gbrl() {
+  local reverse=false
+  if [[ "$1" == '-r' || "$1" == '--reverse' ]]; then
+    reverse=true
+    shift
+  fi
+
   local remote_head="$1"
   [[ -n "$remote_head" ]] || remote_head='@{u}'
 
@@ -380,7 +386,11 @@ gbrl() {
   local local_range="$local_base..HEAD"
   local remote_range="$remote_base..$remote_head"
 
-  git range-diff "$local_range" "$remote_range"
+  if $reverse; then
+    git range-diff "$remote_range" "$local_range"
+  else
+    git range-diff "$local_range" "$remote_range"
+  fi
 }
 
 # git branch rebased diff
