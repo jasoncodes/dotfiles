@@ -372,9 +372,15 @@ gbrl() {
   local remote_head="$1"
   [[ -n "$remote_head" ]] || remote_head='@{u}'
 
-  _git_branch_base > /dev/null &&
-    git range-diff "$(git merge-base "$(_git_branch_base)" HEAD)..HEAD" \
-      "$(git merge-base "$(_git_branch_base)" "$remote_head")..$remote_head"
+  local base local_base remote_base
+  base="$(_git_branch_base)" || return
+  local_base="$(git merge-base "$base" HEAD)" || return
+  remote_base="$(git merge-base "$base" "$remote_head")" || return
+
+  local local_range="$local_base..HEAD"
+  local remote_range="$remote_base..$remote_head"
+
+  git range-diff "$local_range" "$remote_range"
 }
 
 # git branch rebased diff
