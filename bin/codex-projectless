@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: codex-projectless [NAME] [--] [CODEX_ARGS...]
+
+Create ~/Documents/Codex/yyyy-mm-dd/NAME and launch Codex CLI there
+using your default Codex configuration.
+
+NAME defaults to untitled. Existing names get a numeric suffix.
+Quote names containing spaces. Remaining arguments are passed to Codex.
+Use -- before Codex arguments to omit NAME or separate it from arguments.
+
+Examples:
+  codex-projectless
+  codex-projectless research
+  codex-projectless -- --help
+  codex-projectless "Trip planning" "Help me plan a trip"
+EOF
+}
+
+case "${1:-}" in
+  -h|--help) usage; exit 0 ;;
+esac
+
+name=untitled
+if (( $# > 0 )) && [[ "$1" != -- ]]; then
+  name=$1
+  shift
+fi
+if [[ "${1:-}" == -- ]]; then
+  shift
+fi
+case "$name" in
+  ''|.|..|*/*|-*)
+    printf 'Invalid directory name: %s\n' "$name" >&2
+    exit 2
+    ;;
+esac
+
+if ! command -v codex >/dev/null 2>&1; then
+  printf 'codex was not found in PATH\n' >&2
+  exit 127
+fi
+
+day_dir="$HOME/Documents/Codex/$(date +%F)"
+mkdir -p "$day_dir"
+workspace="$day_dir/$name"
+suffix=2
+while ! mkdir "$workspace" 2>/dev/null; do
+  if [[ ! -e "$workspace" && ! -L "$workspace" ]]; then
+    printf 'Could not create directory: %s\n' "$workspace" >&2
+    exit 1
+  fi
+  workspace="$day_dir/$name-$suffix"
+  suffix=$((suffix + 1))
+done
+
+printf 'Launching Codex in %s\n' "$workspace"
+cd "$workspace"
+exec codex "$@"
