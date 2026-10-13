@@ -1,0 +1,54 @@
+#!/bin/bash
+set -euo pipefail
+
+usage() {
+  cat <<EOF
+Usage: $0 [options]
+
+  --filter    Apply diff-highlight without paging
+  -h, --help  Show this help
+EOF
+}
+
+mode=pager
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --filter)
+      mode=filter
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      printf 'git-pager: unexpected argument: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+if [[ $# -gt 0 ]]; then
+  printf 'git-pager: unexpected argument: %s\n' "$1" >&2
+  usage >&2
+  exit 2
+fi
+
+case "$mode" in
+  filter)
+    diff-highlight
+    ;;
+  pager)
+    diff-highlight | ${PAGER:-less}
+    ;;
+  *)
+    echo "unknown mode: $mode" >&2
+    exit 1
+    ;;
+esac
