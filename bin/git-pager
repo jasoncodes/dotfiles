@@ -6,6 +6,7 @@ usage() {
 Usage: $0 [options]
 
 Pages terminal output; passes non-terminal output through unchanged.
+Uses git-ultrapager for diffs and commits when available.
 
   --filter    Apply diff-highlight without paging
   --install   Install git-ultrapager
@@ -73,6 +74,8 @@ capture_first() {
   elif [[ -z "$first" ]]; then
     exit 0
   fi
+  esc=$(printf '\033')
+  plain=$(printf '%s\n' "$first" | sed "s/${esc}\[[0-9;:]*m//g")
 }
 
 replay() {
@@ -81,6 +84,17 @@ replay() {
 }
 
 pager() {
+  PATH="$PATH:$HOME/.cargo/bin"
+
+  case "$plain" in
+    diff[[:space:]]*|commit[[:space:]]*)
+      if command -v git-ultrapager >/dev/null; then
+        exec git-ultrapager
+      fi
+      printf 'warning: git-ultrapager not found. run `git-pager --install`\n' >&2
+      ;;
+  esac
+
   diff-highlight | ${PAGER:-less}
 }
 
