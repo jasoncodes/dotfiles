@@ -8,6 +8,7 @@ Usage: $0 [options]
 Pages terminal output; passes non-terminal output through unchanged.
 
   --filter    Apply diff-highlight without paging
+  --install   Install git-ultrapager
   -h, --help  Show this help
 EOF
 }
@@ -18,6 +19,9 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --filter)
       mode=filter
+      ;;
+    --install)
+      mode=install
       ;;
     -h|--help)
       usage
@@ -42,6 +46,26 @@ if [[ $# -gt 0 ]]; then
   exit 2
 fi
 
+install_ultrapager() {
+  PATH="$PATH:$HOME/.cargo/bin"
+
+  if ! command -v cargo >/dev/null; then
+    if ! command -v brew >/dev/null; then
+      printf 'git-pager: Rust tooling is required; install Cargo or Homebrew first.\n' >&2
+      exit 1
+    fi
+
+    brew install rust
+
+    if ! command -v cargo >/dev/null; then
+      printf 'git-pager: Cargo was not found after installing Rust; add the Rust tooling to PATH.\n' >&2
+      exit 1
+    fi
+  fi
+
+  cargo install --git https://github.com/cryks/git-ultrapager --locked git-ultrapager
+}
+
 capture_first() {
   first_newline=
   if IFS= read -r first; then
@@ -61,6 +85,9 @@ pager() {
 }
 
 case "$mode" in
+  install)
+    install_ultrapager
+    ;;
   filter)
     diff-highlight
     ;;
