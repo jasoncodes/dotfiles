@@ -5,6 +5,8 @@ usage() {
   cat <<EOF
 Usage: $0 [options]
 
+Pages terminal output; passes non-terminal output through unchanged.
+
   --filter    Apply diff-highlight without paging
   -h, --help  Show this help
 EOF
@@ -45,6 +47,9 @@ case "$mode" in
     diff-highlight
     ;;
   pager)
+    if [[ ! -t 1 ]]; then
+      exec cat
+    fi
     diff-highlight | ${PAGER:-less}
     ;;
   *)

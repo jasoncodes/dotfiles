@@ -425,7 +425,7 @@ grepdiff-hunk() {
     local pattern="$1"; shift
 
     grepdiff --extended-regexp "$pattern" --only-match=modifications --output-matching=hunk "$@" |
-      (if [ -t 1 ]; then exec git-pager; else exec cat; fi)
+      git-pager
   )
 }
 
