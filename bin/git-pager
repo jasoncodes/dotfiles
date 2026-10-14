@@ -42,6 +42,20 @@ if [[ $# -gt 0 ]]; then
   exit 2
 fi
 
+capture_first() {
+  first_newline=
+  if IFS= read -r first; then
+    first_newline=$'\n'
+  elif [[ -z "$first" ]]; then
+    exit 0
+  fi
+}
+
+replay() {
+  printf '%s%s' "$first" "$first_newline"
+  cat
+}
+
 pager() {
   diff-highlight | ${PAGER:-less}
 }
@@ -54,7 +68,8 @@ case "$mode" in
     if [[ ! -t 1 ]]; then
       exec cat
     fi
-    pager
+    capture_first
+    replay | pager
     ;;
   *)
     echo "unknown mode: $mode" >&2
