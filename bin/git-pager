@@ -42,6 +42,10 @@ if [[ $# -gt 0 ]]; then
   exit 2
 fi
 
+pager() {
+  diff-highlight | ${PAGER:-less}
+}
+
 case "$mode" in
   filter)
     diff-highlight
@@ -50,7 +54,7 @@ case "$mode" in
     if [[ ! -t 1 ]]; then
       exec cat
     fi
-    diff-highlight | ${PAGER:-less}
+    pager
     ;;
   *)
     echo "unknown mode: $mode" >&2
