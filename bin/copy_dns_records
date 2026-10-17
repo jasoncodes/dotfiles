@@ -6,6 +6,7 @@ OPTS=$(getopt --options '' --long 'help,source:,source-ns:,dest:,types:,server:,
 eval set -- $OPTS
 
 SRC=""
+SRC_NS=""
 DST=""
 TYPES="AAAA A"
 SERVER="localhost"
@@ -31,6 +32,7 @@ while [ $# -gt 0 ]; do
 			shift 2
 			;;
 		--source-ns)
+			SRC_NS="$2"
 			SRC_NS_DIG="@$2"
 			shift 2
 			;;
@@ -122,15 +124,20 @@ then
 	diff -B -U 0 "$CACHE_FILE_DST" "$CACHE_FILE_SRC" | egrep '^[+-]' | egrep -v '^(\+\+\+|---)'
 	echo
 	
-	dig "$SRC" +noall +authority $SRC_NS_DIG | gawk '{ if ($3=="IN" && $4=="NS") { print $5; } }' > "$WORK_DIR/src_ns.txt"
-	
-	if [ ! "${PIPESTATUS[0]}" -eq 0 ]
+	if [ -n "$SRC_NS" ]
 	then
-		echo "Cannot locate source name servers" >&2
-		exit 1
+		printf '%s\n' "$SRC_NS" > "$WORK_DIR/src_ns.txt"
+	else
+		dig "$SRC" +noall +authority | gawk '{ if ($3=="IN" && $4=="NS") { print $5; } }' > "$WORK_DIR/src_ns.txt"
+		if [ ! "${PIPESTATUS[0]}" -eq 0 ] || [ ! -s "$WORK_DIR/src_ns.txt" ]
+		then
+			echo "Cannot locate source name servers; specify --source-ns" >&2
+			exit 1
+		fi
 	fi
 	
 	SRC_RECORDS="$WORK_DIR/src_records.txt"
+	touch "$SRC_RECORDS"
 	
 	SRC_REGEX="`echo -n "$SRC" | awk '{gsub("[^A-Za-z0-9]", "\\\\\\\\&");print}'`"
 	
