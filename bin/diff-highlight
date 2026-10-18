@@ -5,4 +5,4 @@ if ! command -v delta > /dev/null; then
   exec cat
 fi
 
-exec delta --color-only --syntax-theme=none --24-bit-color=never --max-line-distance 1.0
+exec delta --color-only --syntax-theme=none --max-line-distance 1.0

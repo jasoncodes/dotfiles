@@ -14,6 +14,12 @@ colorMoved = default
 [color "diff"]
 commit = yellow reverse
 
+[delta]
+minus-style = "#f38ba8" "#411f2a"
+minus-emph-style = "#f38ba8" "#692f3d"
+plus-style = "#a6e3a1" "#183723"
+plus-emph-style = "#a6e3a1" "#2d5f3b"
+
 [init]
 defaultBranch = main
 
