@@ -19,8 +19,22 @@ trap '{ rm -f "$TMP_LOOKUP"; }' EXIT
 RET=0
 
 for DOMAIN in "$@"; do
-  if ! dig -t MX +short "$DOMAIN" | sort -n | head -1 | grep -q -F "$PRIMARY_MX."; then
+  : > "$TMP_LOOKUP"
+  for ATTEMPT in 1 2 3; do
+    DIG_STATUS=0
+    RESPONSE=$(dig -t MX "$DOMAIN" 2>&1) || DIG_STATUS=$?
+    printf 'Attempt %s:\n%s\n' "$ATTEMPT" "$RESPONSE" >> "$TMP_LOOKUP"
+
+    # Retry only SERVFAIL; other errors and changed records fail immediately.
+    if ! grep -q 'status: SERVFAIL,' <<< "$RESPONSE" || [ "$ATTEMPT" -eq 3 ]; then
+      break
+    fi
+    sleep 2
+  done
+
+  if [ "$DIG_STATUS" -ne 0 ] || grep -q 'status: SERVFAIL,' <<< "$RESPONSE" || ! awk '$3 == "IN" && $4 == "MX" { print $5, $6 }' <<< "$RESPONSE" | sort -n | head -1 | grep -q -F "$PRIMARY_MX."; then
     echo "$DOMAIN"
+    cat "$TMP_LOOKUP"
     RET=1
   fi
 done

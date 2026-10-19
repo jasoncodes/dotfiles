@@ -26,7 +26,20 @@ DIG_OUTPUT=$(mktemp)
 trap 'rm -f "$DIG_OUTPUT"' EXIT
 
 while read NAME; do
-  if ! dig -t NS "$NAME" > "$DIG_OUTPUT" 2>&1 || ! grep -q -F "$PRIMARY_NS." "$DIG_OUTPUT"; then
+  : > "$DIG_OUTPUT"
+  for ATTEMPT in 1 2 3; do
+    DIG_STATUS=0
+    RESPONSE=$(dig -t NS "$NAME" 2>&1) || DIG_STATUS=$?
+    printf 'Attempt %s:\n%s\n' "$ATTEMPT" "$RESPONSE" >> "$DIG_OUTPUT"
+
+    # Retry only SERVFAIL; other errors and changed records fail immediately.
+    if ! grep -q 'status: SERVFAIL,' <<< "$RESPONSE" || [ "$ATTEMPT" -eq 3 ]; then
+      break
+    fi
+    sleep 2
+  done
+
+  if [ "$DIG_STATUS" -ne 0 ] || grep -q 'status: SERVFAIL,' <<< "$RESPONSE" || ! grep -q -F "$PRIMARY_NS." <<< "$RESPONSE"; then
     echo "$NAME"
     cat "$DIG_OUTPUT"
     RET=1
