@@ -42,7 +42,6 @@ init_vim() {
 fresh bin/\* --bin
 
 fresh twe4ked/dotfiles bin/heroku-remote-add --bin
-fresh bartman/git-wip git-wip --bin
 fresh twe4ked/catacomb bin/catacomb --bin
 fresh thenigan/git-diffall git-diffall --bin
 
